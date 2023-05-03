@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmRegiones(object):
     def setupUi(self, frmRegiones):
@@ -119,7 +119,7 @@ class Ui_frmRegiones(object):
 "")
         self.btn_regresar.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../Downloads/IconosPDA/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_regresar.setIcon(icon)
         self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
         self.btn_regresar.setObjectName("btn_regresar")
@@ -139,6 +139,9 @@ class Ui_frmRegiones(object):
         self.lbl_foto.setGeometry(QtCore.QRect(350, 0, 50, 50))
         self.lbl_foto.setMinimumSize(QtCore.QSize(50, 50))
         self.lbl_foto.setMaximumSize(QtCore.QSize(50, 50))
+        self.lbl_foto.setText("")
+        self.lbl_foto.setPixmap(QtGui.QPixmap(":/iconos/fotoUsuario.png"))
+        self.lbl_foto.setScaledContents(True)
         self.lbl_foto.setObjectName("lbl_foto")
         self.lbl_nombre_usuario = QtWidgets.QLabel(self.frame)
         self.lbl_nombre_usuario.setGeometry(QtCore.QRect(120, 10, 211, 31))
@@ -232,7 +235,7 @@ class Ui_frmRegiones(object):
 "")
         self.btn_filtro.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("../../Downloads/IconosPDA/Filtro.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/iconos/Filtro.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_filtro.setIcon(icon1)
         self.btn_filtro.setIconSize(QtCore.QSize(70, 70))
         self.btn_filtro.setObjectName("btn_filtro")
@@ -245,7 +248,7 @@ class Ui_frmRegiones(object):
 "")
         self.btn_buscar.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("../../Downloads/IconosPDA/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_buscar.setIcon(icon2)
         self.btn_buscar.setIconSize(QtCore.QSize(70, 70))
         self.btn_buscar.setObjectName("btn_buscar")
@@ -260,14 +263,19 @@ class Ui_frmRegiones(object):
         _translate = QtCore.QCoreApplication.translate
         frmRegiones.setWindowTitle(_translate("frmRegiones", "Información de regiones"))
         self.txt_nombre_region.setPlaceholderText(_translate("frmRegiones", "Nombre de la región*"))
-        self.lbl_foto.setText(_translate("frmRegiones", "Foto"))
         self.lbl_nombre_usuario.setText(_translate("frmRegiones", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
+        self.btn_limpiar.setToolTip(_translate("frmRegiones", "Limpiar información seleccionada"))
         self.btn_limpiar.setText(_translate("frmRegiones", "Limpiar"))
+        self.btn_eliminar.setToolTip(_translate("frmRegiones", "Eliminar información de región"))
         self.btn_eliminar.setText(_translate("frmRegiones", "Eliminar"))
         self.txt_codigo.setPlaceholderText(_translate("frmRegiones", "Código*"))
+        self.btn_editar.setToolTip(_translate("frmRegiones", "Editar información de región"))
         self.btn_editar.setText(_translate("frmRegiones", "Editar"))
+        self.btn_agregar.setToolTip(_translate("frmRegiones", "Agregar información de región"))
         self.btn_agregar.setText(_translate("frmRegiones", "Agregar"))
         self.txt_buscar.setPlaceholderText(_translate("frmRegiones", "Buscar"))
+        self.btn_filtro.setToolTip(_translate("frmRegiones", "Filtrar por..."))
+        self.btn_buscar.setToolTip(_translate("frmRegiones", "Buscar"))
 
 
 if __name__ == "__main__":

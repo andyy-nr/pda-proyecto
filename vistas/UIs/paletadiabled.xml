@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<palette>
+ <active>
+  <colorrole role="PlaceholderText">
+   <brush brushstyle="SolidPattern">
+    <color alpha="255">
+     <red>235</red>
+     <green>232</green>
+     <blue>235</blue>
+    </color>
+   </brush>
+  </colorrole>
+ </active>
+ <inactive>
+  <colorrole role="PlaceholderText">
+   <brush brushstyle="SolidPattern">
+    <color alpha="255">
+     <red>235</red>
+     <green>232</green>
+     <blue>235</blue>
+    </color>
+   </brush>
+  </colorrole>
+ </inactive>
+ <disabled>
+  <colorrole role="PlaceholderText">
+   <brush brushstyle="SolidPattern">
+    <color alpha="255">
+     <red>235</red>
+     <green>232</green>
+     <blue>235</blue>
+    </color>
+   </brush>
+  </colorrole>
+ </disabled>
+</palette>

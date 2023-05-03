@@ -1,0 +1,19 @@
+<RCC>
+  <qresource prefix="iconos">
+    <file>Usuario.png</file>
+    <file>Trabajos.png</file>
+    <file>Roles.png</file>
+    <file>Regiones.png</file>
+    <file>Paises.png</file>
+    <file>Lupa.png</file>
+    <file>Localidades.png</file>
+    <file>JAPI1.png</file>
+    <file>imagenes.qrc</file>
+    <file>fotoUsuario.png</file>
+    <file>Flecha.png</file>
+    <file>Filtro.png</file>
+    <file>Empleados.png</file>
+    <file>Dependientes.png</file>
+    <file>Departamentos.png</file>
+  </qresource>
+</RCC>
