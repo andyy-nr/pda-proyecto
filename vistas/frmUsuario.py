@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmUsuario(object):
     def setupUi(self, frmUsuario):
@@ -313,7 +313,7 @@ class Ui_frmUsuario(object):
         self.le_contrasena.setPlaceholderText(_translate("frmUsuario", "Contraseña*"))
         self.btn_limpiar.setToolTip(_translate("frmUsuario", "Limpiar información seleccionada"))
         self.btn_limpiar.setText(_translate("frmUsuario", "Limpiar"))
-import imagenes_rc
+
 
 
 if __name__ == "__main__":
