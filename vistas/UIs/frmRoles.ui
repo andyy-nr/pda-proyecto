@@ -375,53 +375,10 @@ background-color: :#494D5F;
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QPushButton" name="btn_filtrar">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>60</width>
-        <height>60</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>60</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>60</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>Filtrar por...</string>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border-style: outset;
-background-color: :#494D5F;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="../imagenes/imagenes.qrc">
-        <normaloff>:/iconos/Filtro.png</normaloff>:/iconos/Filtro.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>70</width>
-        <height>70</height>
-       </size>
-      </property>
-     </widget>
      <widget class="QPushButton" name="btn_buscar">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>40</x>
         <y>0</y>
         <width>60</width>
         <height>60</height>

@@ -15,5 +15,7 @@
     <file>Empleados.png</file>
     <file>Dependientes.png</file>
     <file>Departamentos.png</file>
+    <file>RolOpcion.png</file>
+    <file>RolUsuario.png</file>
   </qresource>
 </RCC>

@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmRegiones(object):
     def setupUi(self, frmRegiones):
@@ -226,30 +226,17 @@ class Ui_frmRegiones(object):
         self.frame_2.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
-        self.btn_filtro = QtWidgets.QPushButton(self.frame_2)
-        self.btn_filtro.setGeometry(QtCore.QRect(10, 0, 60, 60))
-        self.btn_filtro.setMinimumSize(QtCore.QSize(60, 0))
-        self.btn_filtro.setMaximumSize(QtCore.QSize(60, 60))
-        self.btn_filtro.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"")
-        self.btn_filtro.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Filtro.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_filtro.setIcon(icon1)
-        self.btn_filtro.setIconSize(QtCore.QSize(70, 70))
-        self.btn_filtro.setObjectName("btn_filtro")
         self.btn_buscar = QtWidgets.QPushButton(self.frame_2)
-        self.btn_buscar.setGeometry(QtCore.QRect(80, 0, 60, 60))
+        self.btn_buscar.setGeometry(QtCore.QRect(40, 0, 60, 60))
         self.btn_buscar.setStyleSheet("border-style: outset;\n"
 "background-color: :#494D5F;\n"
 "\n"
 "\n"
 "")
         self.btn_buscar.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_buscar.setIcon(icon2)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_buscar.setIcon(icon1)
         self.btn_buscar.setIconSize(QtCore.QSize(70, 70))
         self.btn_buscar.setObjectName("btn_buscar")
         self.gridLayout.addWidget(self.frame_2, 3, 0, 1, 1)
@@ -274,8 +261,8 @@ class Ui_frmRegiones(object):
         self.btn_agregar.setToolTip(_translate("frmRegiones", "Agregar información de región"))
         self.btn_agregar.setText(_translate("frmRegiones", "Agregar"))
         self.txt_buscar.setPlaceholderText(_translate("frmRegiones", "Buscar"))
-        self.btn_filtro.setToolTip(_translate("frmRegiones", "Filtrar por..."))
         self.btn_buscar.setToolTip(_translate("frmRegiones", "Buscar"))
+from vistas.imagenes import imagenes
 
 
 if __name__ == "__main__":
