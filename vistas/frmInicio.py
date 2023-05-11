@@ -10,25 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from vistas.imagenes import imagenes
-from frmDepartamentos import Ui_frmDepartamentos
-from frmDependientes import Ui_frmDependientes
-from frmEmpleados import Ui_frmEmpleados
-from frmLocalidades import Ui_frmLocalidades
-from frmOpcion import Ui_frmOpcion
-from frmOpcionRol import Ui_frmOpcionRol
-from frmPaises import Ui_frmPaises
-from frmRegiones import Ui_frmRegiones
-from frmRoles import Ui_frmRoles
-from frmRolesUsuario import Ui_frmRolesUsuario
-from frmTrabajo import Ui_frmTrabajo
-from frmUsuario import Ui_frmUsuario
 
 class Ui_mw_inicio(object):
-    def mostrarFormulario(self, form):
-        self.window = QtWidgets.QWidget()
-        self.ui = form()
-        self.ui.setupUi(self.window)
-        self.window.showMaximized()
     def setupUi(self, mw_inicio):
         mw_inicio.setObjectName("mw_inicio")
         mw_inicio.resize(1382, 1040)
@@ -338,7 +321,7 @@ class Ui_mw_inicio(object):
         self.lbl_departamentos.setScaledContents(True)
         self.lbl_departamentos.setObjectName("lbl_departamentos")
         self.horizontalLayout_37.addWidget(self.lbl_departamentos, 0, QtCore.Qt.AlignVCenter)
-        self.btn_departamentos = QtWidgets.QPushButton(self.frame_15, clicked = lambda : self.mostrarFormulario(Ui_frmDepartamentos))
+        self.btn_departamentos = QtWidgets.QPushButton(self.frame_15)
         self.btn_departamentos.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_departamentos.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -366,7 +349,7 @@ class Ui_mw_inicio(object):
         self.lbl_localidades.setScaledContents(True)
         self.lbl_localidades.setObjectName("lbl_localidades")
         self.horizontalLayout_57.addWidget(self.lbl_localidades, 0, QtCore.Qt.AlignVCenter)
-        self.btn_localidades = QtWidgets.QPushButton(self.frame_14, clicked = lambda : self.mostrarFormulario(Ui_frmLocalidades))
+        self.btn_localidades = QtWidgets.QPushButton(self.frame_14)
         self.btn_localidades.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_localidades.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -394,7 +377,7 @@ class Ui_mw_inicio(object):
         self.lbl_paises.setScaledContents(True)
         self.lbl_paises.setObjectName("lbl_paises")
         self.horizontalLayout_58.addWidget(self.lbl_paises, 0, QtCore.Qt.AlignVCenter)
-        self.btn_paises = QtWidgets.QPushButton(self.frame_13, clicked = lambda : self.mostrarFormulario(Ui_frmPaises))
+        self.btn_paises = QtWidgets.QPushButton(self.frame_13)
         self.btn_paises.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_paises.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -422,7 +405,7 @@ class Ui_mw_inicio(object):
         self.lbl_regiones.setScaledContents(True)
         self.lbl_regiones.setObjectName("lbl_regiones")
         self.horizontalLayout_59.addWidget(self.lbl_regiones)
-        self.btn_regiones = QtWidgets.QPushButton(self.frame_11, clicked = lambda : self.mostrarFormulario(Ui_frmRegiones))
+        self.btn_regiones = QtWidgets.QPushButton(self.frame_11)
         self.btn_regiones.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_regiones.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -450,7 +433,7 @@ class Ui_mw_inicio(object):
         self.lbl_trabajos.setScaledContents(True)
         self.lbl_trabajos.setObjectName("lbl_trabajos")
         self.horizontalLayout_60.addWidget(self.lbl_trabajos)
-        self.btn_trabajos = QtWidgets.QPushButton(self.frame_12, clicked = lambda : self.mostrarFormulario(Ui_frmTrabajo))
+        self.btn_trabajos = QtWidgets.QPushButton(self.frame_12)
         self.btn_trabajos.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_trabajos.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -478,7 +461,7 @@ class Ui_mw_inicio(object):
         self.lbl_dependientes.setScaledContents(True)
         self.lbl_dependientes.setObjectName("lbl_dependientes")
         self.horizontalLayout_61.addWidget(self.lbl_dependientes)
-        self.btn_dependientes = QtWidgets.QPushButton(self.frame_9, clicked = lambda : self.mostrarFormulario(Ui_frmDependientes))
+        self.btn_dependientes = QtWidgets.QPushButton(self.frame_9)
         self.btn_dependientes.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_dependientes.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -506,7 +489,7 @@ class Ui_mw_inicio(object):
         self.lbl_rolUsuario.setScaledContents(True)
         self.lbl_rolUsuario.setObjectName("lbl_rolUsuario")
         self.horizontalLayout_66.addWidget(self.lbl_rolUsuario, 0, QtCore.Qt.AlignVCenter)
-        self.btn_rolUsuario = QtWidgets.QPushButton(self.frame_5, clicked = lambda : self.mostrarFormulario(Ui_frmRolesUsuario))
+        self.btn_rolUsuario = QtWidgets.QPushButton(self.frame_5)
         self.btn_rolUsuario.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_rolUsuario.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -534,7 +517,7 @@ class Ui_mw_inicio(object):
         self.lbl_roles.setScaledContents(True)
         self.lbl_roles.setObjectName("lbl_roles")
         self.horizontalLayout_67.addWidget(self.lbl_roles)
-        self.btn_roles = QtWidgets.QPushButton(self.frame_4, clicked = lambda : self.mostrarFormulario(Ui_frmRoles))
+        self.btn_roles = QtWidgets.QPushButton(self.frame_4)
         self.btn_roles.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_roles.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -562,7 +545,7 @@ class Ui_mw_inicio(object):
         self.lbl_opcion.setScaledContents(True)
         self.lbl_opcion.setObjectName("lbl_opcion")
         self.horizontalLayout_68.addWidget(self.lbl_opcion)
-        self.btn_opcion = QtWidgets.QPushButton(self.frame_7, clicked = lambda : self.mostrarFormulario(Ui_frmOpcion))
+        self.btn_opcion = QtWidgets.QPushButton(self.frame_7)
         self.btn_opcion.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_opcion.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -590,7 +573,7 @@ class Ui_mw_inicio(object):
         self.lbl_empleados.setScaledContents(True)
         self.lbl_empleados.setObjectName("lbl_empleados")
         self.horizontalLayout_69.addWidget(self.lbl_empleados, 0, QtCore.Qt.AlignVCenter)
-        self.btn_empleados = QtWidgets.QPushButton(self.frame_8, clicked = lambda : self.mostrarFormulario(Ui_frmEmpleados))
+        self.btn_empleados = QtWidgets.QPushButton(self.frame_8)
         self.btn_empleados.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_empleados.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -618,7 +601,7 @@ class Ui_mw_inicio(object):
         self.lbl_usuarios.setScaledContents(True)
         self.lbl_usuarios.setObjectName("lbl_usuarios")
         self.horizontalLayout_70.addWidget(self.lbl_usuarios, 0, QtCore.Qt.AlignVCenter)
-        self.btn_usuarios = QtWidgets.QPushButton(self.frame_2, clicked = lambda : self.mostrarFormulario(Ui_frmUsuario))
+        self.btn_usuarios = QtWidgets.QPushButton(self.frame_2)
         self.btn_usuarios.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_usuarios.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
@@ -646,7 +629,7 @@ class Ui_mw_inicio(object):
         self.lbl_opcioRol.setScaledContents(True)
         self.lbl_opcioRol.setObjectName("lbl_opcioRol")
         self.horizontalLayout_71.addWidget(self.lbl_opcioRol, 0, QtCore.Qt.AlignVCenter)
-        self.btn_opcionRol = QtWidgets.QPushButton(self.frame_6, clicked = lambda : self.mostrarFormulario(Ui_frmOpcionRol))
+        self.btn_opcionRol = QtWidgets.QPushButton(self.frame_6)
         self.btn_opcionRol.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_opcionRol.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()
