@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmLocalidades(object):
     def setupUi(self, frmLocalidades):
@@ -172,17 +172,6 @@ class Ui_frmLocalidades(object):
 "")
         self.pushButton_5.setObjectName("pushButton_5")
         self.gridLayout.addWidget(self.pushButton_5, 6, 7, 1, 1, QtCore.Qt.AlignLeft)
-        self.tbl_localidades = QtWidgets.QTableView(frmLocalidades)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tbl_localidades.sizePolicy().hasHeightForWidth())
-        self.tbl_localidades.setSizePolicy(sizePolicy)
-        self.tbl_localidades.setMinimumSize(QtCore.QSize(0, 500))
-        self.tbl_localidades.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.tbl_localidades.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.tbl_localidades.setObjectName("tbl_localidades")
-        self.gridLayout.addWidget(self.tbl_localidades, 5, 0, 1, 8)
         self.txt_buscar = QtWidgets.QLineEdit(frmLocalidades)
         self.txt_buscar.setMinimumSize(QtCore.QSize(0, 35))
         self.txt_buscar.setText("")
@@ -251,20 +240,6 @@ class Ui_frmLocalidades(object):
 "")
         self.pushButton_3.setObjectName("pushButton_3")
         self.gridLayout.addWidget(self.pushButton_3, 6, 5, 1, 1)
-        self.btn_regresar = QtWidgets.QPushButton(frmLocalidades)
-        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setMaximumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"\n"
-"")
-        self.btn_regresar.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_regresar.setIcon(icon)
-        self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
-        self.btn_regresar.setObjectName("btn_regresar")
-        self.gridLayout.addWidget(self.btn_regresar, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
         self.frame_2 = QtWidgets.QFrame(frmLocalidades)
         self.frame_2.setMinimumSize(QtCore.QSize(150, 60))
         self.frame_2.setMaximumSize(QtCore.QSize(16777215, 60))
@@ -277,19 +252,53 @@ class Ui_frmLocalidades(object):
 "background-color: :#494D5F;\n"
 "")
         self.btn_buscar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_buscar.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_buscar.setIcon(icon)
         self.btn_buscar.setIconSize(QtCore.QSize(70, 70))
         self.btn_buscar.setObjectName("btn_buscar")
         self.gridLayout.addWidget(self.frame_2, 4, 0, 1, 1)
+        self.label = QtWidgets.QLabel(frmLocalidades)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.tbl_localidades = QtWidgets.QTableWidget(frmLocalidades)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tbl_localidades.sizePolicy().hasHeightForWidth())
+        self.tbl_localidades.setSizePolicy(sizePolicy)
+        self.tbl_localidades.setMinimumSize(QtCore.QSize(0, 500))
+        self.tbl_localidades.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.tbl_localidades.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tbl_localidades.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.tbl_localidades.setObjectName("tbl_localidades")
+        self.tbl_localidades.setColumnCount(6)
+        self.tbl_localidades.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_localidades.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_localidades.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_localidades.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_localidades.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_localidades.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_localidades.setHorizontalHeaderItem(5, item)
+        self.tbl_localidades.horizontalHeader().setDefaultSectionSize(236)
+        self.tbl_localidades.horizontalHeader().setStretchLastSection(True)
+        self.gridLayout.addWidget(self.tbl_localidades, 5, 0, 1, 8)
 
         self.retranslateUi(frmLocalidades)
         QtCore.QMetaObject.connectSlotsByName(frmLocalidades)
 
     def retranslateUi(self, frmLocalidades):
         _translate = QtCore.QCoreApplication.translate
-        frmLocalidades.setWindowTitle(_translate("frmLocalidades", "Información de localidad"))
+        frmLocalidades.setWindowTitle(_translate("frmLocalidades", "Gestión de Localidades"))
         self.cbox_ciudad.setPlaceholderText(_translate("frmLocalidades", "Ciudad *"))
         self.txt_codigo.setPlaceholderText(_translate("frmLocalidades", "Código"))
         self.pushButton.setToolTip(_translate("frmLocalidades", "Editar información de localidad"))
@@ -307,7 +316,20 @@ class Ui_frmLocalidades(object):
         self.pushButton_3.setToolTip(_translate("frmLocalidades", "Eliminar información de localidad"))
         self.pushButton_3.setText(_translate("frmLocalidades", "Eliminar"))
         self.btn_buscar.setToolTip(_translate("frmLocalidades", "Buscar"))
-from vistas.imagenes import imagenes
+        self.label.setText(_translate("frmLocalidades", "Datos de Localidad"))
+        item = self.tbl_localidades.horizontalHeaderItem(0)
+        item.setText(_translate("frmLocalidades", "Código"))
+        item = self.tbl_localidades.horizontalHeaderItem(1)
+        item.setText(_translate("frmLocalidades", "Código de País"))
+        item = self.tbl_localidades.horizontalHeaderItem(2)
+        item.setText(_translate("frmLocalidades", "Código Postal"))
+        item = self.tbl_localidades.horizontalHeaderItem(3)
+        item.setText(_translate("frmLocalidades", "Ciudad"))
+        item = self.tbl_localidades.horizontalHeaderItem(4)
+        item.setText(_translate("frmLocalidades", "Provincia"))
+        item = self.tbl_localidades.horizontalHeaderItem(5)
+        item.setText(_translate("frmLocalidades", "Dirección"))
+
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmPaises(object):
     def setupUi(self, frmPaises):
@@ -133,20 +133,6 @@ class Ui_frmPaises(object):
         self.gridLayout.addWidget(self.frame_2, 3, 0, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 5, 4, 1, 1)
-        self.btn_regresar = QtWidgets.QPushButton(frmPaises)
-        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setMaximumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"\n"
-"")
-        self.btn_regresar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_regresar.setIcon(icon1)
-        self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
-        self.btn_regresar.setObjectName("btn_regresar")
-        self.gridLayout.addWidget(self.btn_regresar, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 5, 6, 1, 1)
         self.txt_codigo = QtWidgets.QLineEdit(frmPaises)
@@ -189,17 +175,6 @@ class Ui_frmPaises(object):
 "")
         self.btn_eliminar.setObjectName("btn_eliminar")
         self.gridLayout.addWidget(self.btn_eliminar, 5, 5, 1, 1)
-        self.tbl_paises = QtWidgets.QTableView(frmPaises)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tbl_paises.sizePolicy().hasHeightForWidth())
-        self.tbl_paises.setSizePolicy(sizePolicy)
-        self.tbl_paises.setMinimumSize(QtCore.QSize(0, 500))
-        self.tbl_paises.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.tbl_paises.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.tbl_paises.setObjectName("tbl_paises")
-        self.gridLayout.addWidget(self.tbl_paises, 4, 0, 1, 8)
         self.txt_nombre = QtWidgets.QLineEdit(frmPaises)
         self.txt_nombre.setMinimumSize(QtCore.QSize(400, 40))
         self.txt_nombre.setObjectName("txt_nombre")
@@ -258,13 +233,41 @@ class Ui_frmPaises(object):
         self.txt_cod_region.setMinimumSize(QtCore.QSize(400, 40))
         self.txt_cod_region.setObjectName("txt_cod_region")
         self.gridLayout.addWidget(self.txt_cod_region, 1, 3, 1, 3)
+        self.label = QtWidgets.QLabel(frmPaises)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.tbl_paises = QtWidgets.QTableWidget(frmPaises)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tbl_paises.sizePolicy().hasHeightForWidth())
+        self.tbl_paises.setSizePolicy(sizePolicy)
+        self.tbl_paises.setMinimumSize(QtCore.QSize(0, 500))
+        self.tbl_paises.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.tbl_paises.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tbl_paises.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.tbl_paises.setObjectName("tbl_paises")
+        self.tbl_paises.setColumnCount(3)
+        self.tbl_paises.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_paises.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_paises.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_paises.setHorizontalHeaderItem(2, item)
+        self.tbl_paises.horizontalHeader().setDefaultSectionSize(419)
+        self.tbl_paises.horizontalHeader().setStretchLastSection(True)
+        self.gridLayout.addWidget(self.tbl_paises, 4, 0, 1, 8)
 
         self.retranslateUi(frmPaises)
         QtCore.QMetaObject.connectSlotsByName(frmPaises)
 
     def retranslateUi(self, frmPaises):
         _translate = QtCore.QCoreApplication.translate
-        frmPaises.setWindowTitle(_translate("frmPaises", "Información de paises"))
+        frmPaises.setWindowTitle(_translate("frmPaises", "Gestión de Países"))
         self.btn_buscar.setToolTip(_translate("frmPaises", "Buscar"))
         self.txt_codigo.setPlaceholderText(_translate("frmPaises", "Código"))
         self.btn_agregar.setToolTip(_translate("frmPaises", "Agregar información de paises"))
@@ -279,7 +282,14 @@ class Ui_frmPaises(object):
         self.txt_buscar.setPlaceholderText(_translate("frmPaises", "Buscar"))
         self.lbl_nombre_usuario.setText(_translate("frmPaises", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.txt_cod_region.setPlaceholderText(_translate("frmPaises", "Código Región"))
-from vistas.imagenes import imagenes
+        self.label.setText(_translate("frmPaises", "Datos del País"))
+        item = self.tbl_paises.horizontalHeaderItem(0)
+        item.setText(_translate("frmPaises", "Código"))
+        item = self.tbl_paises.horizontalHeaderItem(1)
+        item.setText(_translate("frmPaises", "Región"))
+        item = self.tbl_paises.horizontalHeaderItem(2)
+        item.setText(_translate("frmPaises", "País"))
+
 
 
 if __name__ == "__main__":

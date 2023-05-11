@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmRoles(object):
     def setupUi(self, frmRoles):
@@ -110,21 +110,6 @@ class Ui_frmRoles(object):
         frmRoles.setPalette(palette)
         self.gridLayout = QtWidgets.QGridLayout(frmRoles)
         self.gridLayout.setObjectName("gridLayout")
-        self.btn_regresar = QtWidgets.QPushButton(frmRoles)
-        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setMaximumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"\n"
-"\n"
-"")
-        self.btn_regresar.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_regresar.setIcon(icon)
-        self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
-        self.btn_regresar.setObjectName("btn_regresar")
-        self.gridLayout.addWidget(self.btn_regresar, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 5, 6, 1, 1)
         self.frame_2 = QtWidgets.QFrame(frmRoles)
@@ -140,9 +125,9 @@ class Ui_frmRoles(object):
 "\n"
 "")
         self.btn_buscar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_buscar.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_buscar.setIcon(icon)
         self.btn_buscar.setIconSize(QtCore.QSize(70, 70))
         self.btn_buscar.setObjectName("btn_buscar")
         self.gridLayout.addWidget(self.frame_2, 3, 0, 1, 1)
@@ -217,17 +202,6 @@ class Ui_frmRoles(object):
         self.gridLayout.addWidget(self.txt_codigo, 1, 0, 1, 3)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem3, 5, 2, 1, 1)
-        self.tbl_roles = QtWidgets.QTableView(frmRoles)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tbl_roles.sizePolicy().hasHeightForWidth())
-        self.tbl_roles.setSizePolicy(sizePolicy)
-        self.tbl_roles.setMinimumSize(QtCore.QSize(0, 500))
-        self.tbl_roles.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.tbl_roles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.tbl_roles.setObjectName("tbl_roles")
-        self.gridLayout.addWidget(self.tbl_roles, 4, 0, 1, 8)
         self.btn_editar = QtWidgets.QPushButton(frmRoles)
         self.btn_editar.setMinimumSize(QtCore.QSize(150, 50))
         font = QtGui.QFont()
@@ -352,13 +326,40 @@ class Ui_frmRoles(object):
         self.cbox_rol.setFrame(True)
         self.cbox_rol.setObjectName("cbox_rol")
         self.gridLayout.addWidget(self.cbox_rol, 1, 6, 1, 2)
+        self.tbl_roles = QtWidgets.QTableWidget(frmRoles)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tbl_roles.sizePolicy().hasHeightForWidth())
+        self.tbl_roles.setSizePolicy(sizePolicy)
+        self.tbl_roles.setMinimumSize(QtCore.QSize(0, 500))
+        self.tbl_roles.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.tbl_roles.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tbl_roles.setObjectName("tbl_roles")
+        self.tbl_roles.setColumnCount(3)
+        self.tbl_roles.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_roles.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_roles.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_roles.setHorizontalHeaderItem(2, item)
+        self.tbl_roles.horizontalHeader().setDefaultSectionSize(419)
+        self.tbl_roles.horizontalHeader().setStretchLastSection(True)
+        self.gridLayout.addWidget(self.tbl_roles, 4, 0, 1, 8)
+        self.label = QtWidgets.QLabel(frmRoles)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
 
         self.retranslateUi(frmRoles)
         QtCore.QMetaObject.connectSlotsByName(frmRoles)
 
     def retranslateUi(self, frmRoles):
         _translate = QtCore.QCoreApplication.translate
-        frmRoles.setWindowTitle(_translate("frmRoles", "Información de roles"))
+        frmRoles.setWindowTitle(_translate("frmRoles", "Gestión de Roles"))
         frmRoles.setToolTip(_translate("frmRoles", "Eliminar información de rol"))
         self.btn_buscar.setToolTip(_translate("frmRoles", "Buscar"))
         self.btn_agregar.setToolTip(_translate("frmRoles", "Agregar información de rol"))
@@ -374,7 +375,14 @@ class Ui_frmRoles(object):
         self.btn_eliminar_2.setText(_translate("frmRoles", "Limpiar"))
         self.cbox_opcion.setPlaceholderText(_translate("frmRoles", "Opcion*"))
         self.cbox_rol.setPlaceholderText(_translate("frmRoles", "Rol*"))
-from vistas.imagenes import imagenes
+        item = self.tbl_roles.horizontalHeaderItem(0)
+        item.setText(_translate("frmRoles", "Código"))
+        item = self.tbl_roles.horizontalHeaderItem(1)
+        item.setText(_translate("frmRoles", "Opción"))
+        item = self.tbl_roles.horizontalHeaderItem(2)
+        item.setText(_translate("frmRoles", "Rol"))
+        self.label.setText(_translate("frmRoles", "Datos del Rol"))
+
 
 
 if __name__ == "__main__":

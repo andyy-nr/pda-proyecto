@@ -9,12 +9,17 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmTrabajo(object):
     def setupUi(self, frmTrabajo):
         frmTrabajo.setObjectName("frmTrabajo")
-        frmTrabajo.resize(1180, 814)
+        frmTrabajo.resize(1184, 814)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(frmTrabajo.sizePolicy().hasHeightForWidth())
+        frmTrabajo.setSizePolicy(sizePolicy)
         frmTrabajo.setMaximumSize(QtCore.QSize(16777215, 2000))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(229, 234, 245))
@@ -189,30 +194,6 @@ class Ui_frmTrabajo(object):
         self.gridLayout.addWidget(self.btn_agregar, 7, 2, 1, 1, QtCore.Qt.AlignRight)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem2, 7, 7, 1, 1)
-        self.btn_regresar = QtWidgets.QPushButton(frmTrabajo)
-        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setMaximumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"")
-        self.btn_regresar.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_regresar.setIcon(icon)
-        self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
-        self.btn_regresar.setObjectName("btn_regresar")
-        self.gridLayout.addWidget(self.btn_regresar, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
-        self.tbl_trabajo = QtWidgets.QTableView(frmTrabajo)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tbl_trabajo.sizePolicy().hasHeightForWidth())
-        self.tbl_trabajo.setSizePolicy(sizePolicy)
-        self.tbl_trabajo.setMinimumSize(QtCore.QSize(0, 500))
-        self.tbl_trabajo.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.tbl_trabajo.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.tbl_trabajo.setObjectName("tbl_trabajo")
-        self.gridLayout.addWidget(self.tbl_trabajo, 6, 0, 1, 9)
         spacerItem3 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem3, 4, 2, 1, 1)
         self.txt_sal_minimo = QtWidgets.QLineEdit(frmTrabajo)
@@ -240,19 +221,50 @@ class Ui_frmTrabajo(object):
 "background-color: :#494D5F;\n"
 "")
         self.btn_buscar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_buscar.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_buscar.setIcon(icon)
         self.btn_buscar.setIconSize(QtCore.QSize(70, 70))
         self.btn_buscar.setObjectName("btn_buscar")
         self.gridLayout.addWidget(self.frame_2, 5, 0, 1, 3)
+        self.label = QtWidgets.QLabel(frmTrabajo)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 2, 1, 1)
+        self.tbl_trabajo = QtWidgets.QTableWidget(frmTrabajo)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tbl_trabajo.sizePolicy().hasHeightForWidth())
+        self.tbl_trabajo.setSizePolicy(sizePolicy)
+        self.tbl_trabajo.setMinimumSize(QtCore.QSize(0, 500))
+        self.tbl_trabajo.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.tbl_trabajo.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tbl_trabajo.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.tbl_trabajo.setObjectName("tbl_trabajo")
+        self.tbl_trabajo.setColumnCount(4)
+        self.tbl_trabajo.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_trabajo.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_trabajo.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_trabajo.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_trabajo.setHorizontalHeaderItem(3, item)
+        self.tbl_trabajo.horizontalHeader().setCascadingSectionResizes(False)
+        self.tbl_trabajo.horizontalHeader().setDefaultSectionSize(291)
+        self.tbl_trabajo.horizontalHeader().setStretchLastSection(True)
+        self.gridLayout.addWidget(self.tbl_trabajo, 6, 0, 1, 9)
 
         self.retranslateUi(frmTrabajo)
         QtCore.QMetaObject.connectSlotsByName(frmTrabajo)
 
     def retranslateUi(self, frmTrabajo):
         _translate = QtCore.QCoreApplication.translate
-        frmTrabajo.setWindowTitle(_translate("frmTrabajo", "Información del trabajo"))
+        frmTrabajo.setWindowTitle(_translate("frmTrabajo", "Gestión de Trabajos"))
         self.txt_sal_maximo.setPlaceholderText(_translate("frmTrabajo", "Salario Máximo*"))
         self.lbl_nombre_usuario.setText(_translate("frmTrabajo", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.btn_eliminar.setToolTip(_translate("frmTrabajo", "Eliminar información del trabajo"))
@@ -268,7 +280,16 @@ class Ui_frmTrabajo(object):
         self.txt_nombre_trabajo.setPlaceholderText(_translate("frmTrabajo", "Nombre del trabajo*"))
         self.txt_buscar.setPlaceholderText(_translate("frmTrabajo", "Buscar"))
         self.btn_buscar.setToolTip(_translate("frmTrabajo", "Buscar"))
-from vistas.imagenes import imagenes
+        self.label.setText(_translate("frmTrabajo", "Datos del Trabajo"))
+        item = self.tbl_trabajo.horizontalHeaderItem(0)
+        item.setText(_translate("frmTrabajo", "Código "))
+        item = self.tbl_trabajo.horizontalHeaderItem(1)
+        item.setText(_translate("frmTrabajo", "Trabajo"))
+        item = self.tbl_trabajo.horizontalHeaderItem(2)
+        item.setText(_translate("frmTrabajo", "Salario Mínimo"))
+        item = self.tbl_trabajo.horizontalHeaderItem(3)
+        item.setText(_translate("frmTrabajo", "Salario Máximo"))
+
 
 
 if __name__ == "__main__":

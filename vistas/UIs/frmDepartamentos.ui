@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1276</width>
+    <width>1291</width>
     <height>758</height>
    </rect>
   </property>
@@ -297,9 +297,35 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Información de departamentos</string>
+   <string>Gestión de Departamentos</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="3" colspan="3">
+    <widget class="QComboBox" name="cbox_cod_localidad">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Codigo localidad</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6" colspan="2">
+    <widget class="QLineEdit" name="txt_cod_postal">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Codigo postal *</string>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="0">
     <widget class="QFrame" name="frame_2">
      <property name="minimumSize">
@@ -372,41 +398,6 @@ background-color: :#494D5F;
      </property>
     </spacer>
    </item>
-   <item row="0" column="0" alignment="Qt::AlignLeft">
-    <widget class="QPushButton" name="btn_regresar">
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: :#494D5F;
-
-</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../imagenes/imagenes.qrc">
-       <normaloff>:/iconos/Flecha.png</normaloff>:/iconos/Flecha.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="6">
     <spacer name="horizontalSpacer_3">
      <property name="orientation">
@@ -419,75 +410,6 @@ background-color: :#494D5F;
       <size>
        <width>40</width>
        <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QLineEdit" name="txt_codigo">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="palette">
-      <palette>
-       <active>
-        <colorrole role="PlaceholderText">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>235</red>
-           <green>232</green>
-           <blue>235</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </active>
-       <inactive>
-        <colorrole role="PlaceholderText">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>235</red>
-           <green>232</green>
-           <blue>235</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </inactive>
-       <disabled>
-        <colorrole role="PlaceholderText">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>235</red>
-           <green>232</green>
-           <blue>235</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </disabled>
-      </palette>
-     </property>
-     <property name="placeholderText">
-      <string>Codigo</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="5">
-    <spacer name="verticalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
       </size>
      </property>
     </spacer>
@@ -519,81 +441,35 @@ color: rgb(235, 232, 235);
      </property>
     </widget>
    </item>
-   <item row="5" column="5">
-    <widget class="QPushButton" name="btn_eliminar">
-     <property name="minimumSize">
+   <item row="5" column="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>150</width>
-       <height>50</height>
+       <width>40</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Eliminar información de departamento</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: #8458B3;
-color: rgb(235, 232, 235);
-</string>
-     </property>
-     <property name="text">
-      <string>Eliminar</string>
-     </property>
-    </widget>
+    </spacer>
    </item>
-   <item row="1" column="3" colspan="3">
-    <widget class="QComboBox" name="cbox_cod_localidad">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Codigo localidad</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="8">
-    <widget class="QTableView" name="tbl_departamentos">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="3" column="1" colspan="7">
+    <widget class="QLineEdit" name="txt_buscar">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>500</height>
+       <height>35</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="6" colspan="2">
-    <widget class="QLineEdit" name="txt_cod_postal">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
+     <property name="text">
+      <string/>
      </property>
      <property name="placeholderText">
-      <string>Codigo postal *</string>
+      <string>Buscar</string>
      </property>
     </widget>
    </item>
@@ -621,65 +497,6 @@ color: rgb(235, 232, 235);
      </property>
      <property name="text">
       <string>Editar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::MinimumExpanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="7" alignment="Qt::AlignLeft">
-    <widget class="QPushButton" name="btn_limpiar">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Limpiar información seleccionada</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: #8458B3;
-color: rgb(235, 232, 235);
-</string>
-     </property>
-     <property name="text">
-      <string>Limpiar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1" colspan="7">
-    <widget class="QLineEdit" name="txt_buscar">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>35</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="placeholderText">
-      <string>Buscar</string>
      </property>
     </widget>
    </item>
@@ -755,6 +572,190 @@ color: rgb(235, 232, 235);
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;Nombre de usuario&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QLineEdit" name="txt_codigo">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="PlaceholderText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>235</red>
+           <green>232</green>
+           <blue>235</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="PlaceholderText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>235</red>
+           <green>232</green>
+           <blue>235</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="PlaceholderText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>235</red>
+           <green>232</green>
+           <blue>235</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="placeholderText">
+      <string>Codigo</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="5">
+    <widget class="QPushButton" name="btn_eliminar">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Eliminar información de departamento</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-style: outset;
+background-color: #8458B3;
+color: rgb(235, 232, 235);
+</string>
+     </property>
+     <property name="text">
+      <string>Eliminar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="7" alignment="Qt::AlignLeft">
+    <widget class="QPushButton" name="btn_limpiar">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Limpiar información seleccionada</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-style: outset;
+background-color: #8458B3;
+color: rgb(235, 232, 235);
+</string>
+     </property>
+     <property name="text">
+      <string>Limpiar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Datos del Departamento</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="8">
+    <widget class="QTableWidget" name="tbl_departamentos">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>425</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Código</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Código  de la Localidad</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Código Postal</string>
+      </property>
+     </column>
     </widget>
    </item>
   </layout>

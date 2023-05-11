@@ -19,7 +19,7 @@ from frmOpcionRol import Ui_frmOpcionRol
 from frmPaises import Ui_frmPaises
 from frmRegiones import Ui_frmRegiones
 from frmRoles import Ui_frmRoles
-from frmRolUsuario import Ui_frmRolUsuario
+from frmRolesUsuario import Ui_frmRolesUsuario
 from frmTrabajo import Ui_frmTrabajo
 from frmUsuario import Ui_frmUsuario
 
@@ -506,7 +506,7 @@ class Ui_mw_inicio(object):
         self.lbl_rolUsuario.setScaledContents(True)
         self.lbl_rolUsuario.setObjectName("lbl_rolUsuario")
         self.horizontalLayout_66.addWidget(self.lbl_rolUsuario, 0, QtCore.Qt.AlignVCenter)
-        self.btn_rolUsuario = QtWidgets.QPushButton(self.frame_5, clicked = lambda : self.mostrarFormulario(Ui_frmRolUsuario))
+        self.btn_rolUsuario = QtWidgets.QPushButton(self.frame_5, clicked = lambda : self.mostrarFormulario(Ui_frmRolesUsuario))
         self.btn_rolUsuario.setMinimumSize(QtCore.QSize(150, 50))
         self.btn_rolUsuario.setMaximumSize(QtCore.QSize(500, 240))
         font = QtGui.QFont()

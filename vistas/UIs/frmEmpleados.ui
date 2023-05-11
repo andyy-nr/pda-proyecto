@@ -297,12 +297,254 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Información de empleados</string>
+   <string>Gestión de Empleados</string>
   </property>
   <property name="toolTip">
    <string>Eliminar información de empleado</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="7" column="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="3">
+    <widget class="QPushButton" name="btn_editar">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Editar información de empleado</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-style: outset;
+background-color: #8458B3;
+color: rgb(235, 232, 235);
+
+</string>
+     </property>
+     <property name="text">
+      <string>Editar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3" colspan="3">
+    <widget class="QDateEdit" name="date_fecha_contratacion">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="dateTime">
+      <datetime>
+       <hour>0</hour>
+       <minute>0</minute>
+       <second>0</second>
+       <year>2023</year>
+       <month>1</month>
+       <day>1</day>
+      </datetime>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6" colspan="4">
+    <widget class="QLineEdit" name="txt_correo">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Correo Electronico*´</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="6" colspan="4">
+    <widget class="QComboBox" name="cbox_departamento">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Departamento*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="9">
+    <widget class="QLineEdit" name="txt_buscar">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>Buscar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="5">
+    <widget class="QPushButton" name="btn_eliminar">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-style: outset;
+background-color: #8458B3;
+color: rgb(235, 232, 235);
+</string>
+     </property>
+     <property name="text">
+      <string>Eliminar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="3" colspan="3">
+    <widget class="QLineEdit" name="txt_apellidos">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Apellidos*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QLineEdit" name="txt_nombres">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Nombres*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QLineEdit" name="txt_salario">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Salario*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="3" colspan="3">
+    <widget class="QComboBox" name="cbox_gerente">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Gerente*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="6" colspan="4">
+    <widget class="QComboBox" name="cbox_trabajo">
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="placeholderText">
+      <string>Trabajo*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Datos del Empleado</string>
+     </property>
+    </widget>
+   </item>
    <item row="5" column="0">
     <widget class="QFrame" name="frame_2">
      <property name="minimumSize">
@@ -359,91 +601,8 @@ background-color: :#494D5F;
      </widget>
     </widget>
    </item>
-   <item row="4" column="1">
-    <spacer name="verticalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="6" colspan="4">
-    <widget class="QComboBox" name="cbox_departamento">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Departamento*</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="10">
-    <widget class="QTableView" name="t">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3" colspan="3">
-    <widget class="QLineEdit" name="txt_apellidos">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Apellidos*</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1" colspan="9">
-    <widget class="QLineEdit" name="txt_buscar">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>35</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="placeholderText">
-      <string>Buscar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="3">
-    <widget class="QPushButton" name="btn_editar">
+   <item row="7" column="7">
+    <widget class="QPushButton" name="btn_limpiar">
      <property name="minimumSize">
       <size>
        <width>150</width>
@@ -456,40 +615,16 @@ background-color: :#494D5F;
       </font>
      </property>
      <property name="toolTip">
-      <string>Editar información de empleado</string>
+      <string>Limpiar información seleccionada</string>
      </property>
      <property name="styleSheet">
       <string notr="true">border-style: outset;
 background-color: #8458B3;
 color: rgb(235, 232, 235);
-
 </string>
      </property>
      <property name="text">
-      <string>Editar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="3" colspan="3">
-    <widget class="QDateEdit" name="date_fecha_contratacion">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="dateTime">
-      <datetime>
-       <hour>0</hour>
-       <minute>0</minute>
-       <second>0</second>
-       <year>2023</year>
-       <month>1</month>
-       <day>1</day>
-      </datetime>
-     </property>
-     <property name="calendarPopup">
-      <bool>true</bool>
+      <string>Limpiar</string>
      </property>
     </widget>
    </item>
@@ -567,147 +702,6 @@ color: rgb(235, 232, 235);
      </widget>
     </widget>
    </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QLineEdit" name="txt_nombres">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Nombres*</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="4">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::MinimumExpanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="0" alignment="Qt::AlignLeft">
-    <widget class="QPushButton" name="btn_regresar">
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: :#494D5F;
-
-</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../imagenes/imagenes.qrc">
-       <normaloff>:/iconos/Flecha.png</normaloff>:/iconos/Flecha.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QLineEdit" name="txt_salario">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Salario*</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="5">
-    <widget class="QPushButton" name="btn_eliminar">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: #8458B3;
-color: rgb(235, 232, 235);
-</string>
-     </property>
-     <property name="text">
-      <string>Eliminar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="6" colspan="4">
-    <widget class="QComboBox" name="cbox_trabajo">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Trabajo*</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1" alignment="Qt::AlignRight">
-    <widget class="QPushButton" name="btn_agregar">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Agregar información de empleado</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: #8458B3;
-color: rgb(235, 232, 235);
-</string>
-     </property>
-     <property name="text">
-      <string>Agregar</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0" colspan="3">
     <widget class="QLineEdit" name="txt_telefono">
      <property name="minimumSize">
@@ -737,50 +731,8 @@ color: rgb(235, 232, 235);
      </property>
     </spacer>
    </item>
-   <item row="1" column="6" colspan="4">
-    <widget class="QLineEdit" name="txt_correo">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Correo Electronico*´</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::MinimumExpanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="3" colspan="3">
-    <widget class="QComboBox" name="cbox_gerente">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="placeholderText">
-      <string>Gerente*</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="7">
-    <widget class="QPushButton" name="btn_limpiar">
+   <item row="7" column="1" alignment="Qt::AlignRight">
+    <widget class="QPushButton" name="btn_agregar">
      <property name="minimumSize">
       <size>
        <width>150</width>
@@ -793,7 +745,7 @@ color: rgb(235, 232, 235);
       </font>
      </property>
      <property name="toolTip">
-      <string>Limpiar información seleccionada</string>
+      <string>Agregar información de empleado</string>
      </property>
      <property name="styleSheet">
       <string notr="true">border-style: outset;
@@ -802,8 +754,87 @@ color: rgb(235, 232, 235);
 </string>
      </property>
      <property name="text">
-      <string>Limpiar</string>
+      <string>Agregar</string>
      </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="10">
+    <widget class="QTableWidget" name="t">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>158</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Nombres</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Apellidos</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Correo Electrónico</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Teléfono</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fecha de Nacimiento</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Trabajo</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Salario</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Gerente</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Departamento</string>
+      </property>
+     </column>
     </widget>
    </item>
   </layout>

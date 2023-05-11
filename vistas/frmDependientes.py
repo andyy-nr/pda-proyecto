@@ -9,12 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmDependientes(object):
     def setupUi(self, frmDependientes):
         frmDependientes.setObjectName("frmDependientes")
-        frmDependientes.resize(1276, 841)
+        frmDependientes.resize(1277, 841)
         frmDependientes.setMaximumSize(QtCore.QSize(16777215, 2000))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(229, 234, 245))
@@ -205,19 +205,6 @@ class Ui_frmDependientes(object):
         self.txt_apellidos.setMinimumSize(QtCore.QSize(400, 40))
         self.txt_apellidos.setObjectName("txt_apellidos")
         self.gridLayout.addWidget(self.txt_apellidos, 1, 6, 1, 2)
-        self.btn_regresar = QtWidgets.QPushButton(frmDependientes)
-        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setMaximumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"")
-        self.btn_regresar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_regresar.setIcon(icon1)
-        self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
-        self.btn_regresar.setObjectName("btn_regresar")
-        self.gridLayout.addWidget(self.btn_regresar, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
         self.btn_editar = QtWidgets.QPushButton(frmDependientes)
         self.btn_editar.setMinimumSize(QtCore.QSize(150, 50))
         font = QtGui.QFont()
@@ -237,7 +224,17 @@ class Ui_frmDependientes(object):
         self.txt_codigo.setMinimumSize(QtCore.QSize(400, 40))
         self.txt_codigo.setObjectName("txt_codigo")
         self.gridLayout.addWidget(self.txt_codigo, 1, 0, 1, 3)
-        self.tbl_dependientes = QtWidgets.QTableView(frmDependientes)
+        self.txt_empleados = QtWidgets.QLineEdit(frmDependientes)
+        self.txt_empleados.setMinimumSize(QtCore.QSize(400, 40))
+        self.txt_empleados.setObjectName("txt_empleados")
+        self.gridLayout.addWidget(self.txt_empleados, 2, 3, 1, 3)
+        self.label = QtWidgets.QLabel(frmDependientes)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.tbl_dependientes = QtWidgets.QTableWidget(frmDependientes)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -246,19 +243,30 @@ class Ui_frmDependientes(object):
         self.tbl_dependientes.setMinimumSize(QtCore.QSize(0, 500))
         self.tbl_dependientes.setMaximumSize(QtCore.QSize(16777215, 500))
         self.tbl_dependientes.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tbl_dependientes.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.tbl_dependientes.setObjectName("tbl_dependientes")
+        self.tbl_dependientes.setColumnCount(5)
+        self.tbl_dependientes.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_dependientes.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_dependientes.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_dependientes.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_dependientes.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_dependientes.setHorizontalHeaderItem(4, item)
+        self.tbl_dependientes.horizontalHeader().setDefaultSectionSize(252)
+        self.tbl_dependientes.horizontalHeader().setStretchLastSection(True)
         self.gridLayout.addWidget(self.tbl_dependientes, 5, 0, 1, 8)
-        self.txt_empleados = QtWidgets.QLineEdit(frmDependientes)
-        self.txt_empleados.setMinimumSize(QtCore.QSize(400, 40))
-        self.txt_empleados.setObjectName("txt_empleados")
-        self.gridLayout.addWidget(self.txt_empleados, 2, 3, 1, 3)
 
         self.retranslateUi(frmDependientes)
         QtCore.QMetaObject.connectSlotsByName(frmDependientes)
 
     def retranslateUi(self, frmDependientes):
         _translate = QtCore.QCoreApplication.translate
-        frmDependientes.setWindowTitle(_translate("frmDependientes", "Información de dependientes"))
+        frmDependientes.setWindowTitle(_translate("frmDependientes", "Gestión de Dependientes"))
         self.txt_buscar.setPlaceholderText(_translate("frmDependientes", "Buscar"))
         self.limpiar.setToolTip(_translate("frmDependientes", "Limpiar información seleccionada"))
         self.limpiar.setText(_translate("frmDependientes", "Limpiar"))
@@ -275,7 +283,18 @@ class Ui_frmDependientes(object):
         self.btn_editar.setText(_translate("frmDependientes", "Editar"))
         self.txt_codigo.setPlaceholderText(_translate("frmDependientes", "Codigo*"))
         self.txt_empleados.setPlaceholderText(_translate("frmDependientes", "Empleados*"))
-from vistas.imagenes import imagenes
+        self.label.setText(_translate("frmDependientes", "Datos del Dependiente"))
+        item = self.tbl_dependientes.horizontalHeaderItem(0)
+        item.setText(_translate("frmDependientes", "Código"))
+        item = self.tbl_dependientes.horizontalHeaderItem(1)
+        item.setText(_translate("frmDependientes", "Nombres"))
+        item = self.tbl_dependientes.horizontalHeaderItem(2)
+        item.setText(_translate("frmDependientes", "Apellidos"))
+        item = self.tbl_dependientes.horizontalHeaderItem(3)
+        item.setText(_translate("frmDependientes", "Relación"))
+        item = self.tbl_dependientes.horizontalHeaderItem(4)
+        item.setText(_translate("frmDependientes", "Empleado"))
+
 
 
 if __name__ == "__main__":

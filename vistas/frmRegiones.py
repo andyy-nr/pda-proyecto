@@ -9,12 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmRegiones(object):
     def setupUi(self, frmRegiones):
         frmRegiones.setObjectName("frmRegiones")
-        frmRegiones.resize(1180, 758)
+        frmRegiones.resize(1219, 758)
         frmRegiones.setMaximumSize(QtCore.QSize(16777215, 2000))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(229, 234, 245))
@@ -110,20 +110,6 @@ class Ui_frmRegiones(object):
         frmRegiones.setPalette(palette)
         self.gridLayout = QtWidgets.QGridLayout(frmRegiones)
         self.gridLayout.setObjectName("gridLayout")
-        self.btn_regresar = QtWidgets.QPushButton(frmRegiones)
-        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setMaximumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"\n"
-"")
-        self.btn_regresar.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_regresar.setIcon(icon)
-        self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
-        self.btn_regresar.setObjectName("btn_regresar")
-        self.gridLayout.addWidget(self.btn_regresar, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
         self.txt_nombre_region = QtWidgets.QLineEdit(frmRegiones)
         self.txt_nombre_region.setMinimumSize(QtCore.QSize(400, 40))
         self.txt_nombre_region.setText("")
@@ -193,17 +179,6 @@ class Ui_frmRegiones(object):
 "")
         self.btn_editar.setObjectName("btn_editar")
         self.gridLayout.addWidget(self.btn_editar, 5, 3, 1, 1)
-        self.tbl_regiones = QtWidgets.QTableView(frmRegiones)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tbl_regiones.sizePolicy().hasHeightForWidth())
-        self.tbl_regiones.setSizePolicy(sizePolicy)
-        self.tbl_regiones.setMinimumSize(QtCore.QSize(0, 500))
-        self.tbl_regiones.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.tbl_regiones.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.tbl_regiones.setObjectName("tbl_regiones")
-        self.gridLayout.addWidget(self.tbl_regiones, 4, 0, 1, 8)
         self.btn_agregar = QtWidgets.QPushButton(frmRegiones)
         self.btn_agregar.setMinimumSize(QtCore.QSize(150, 50))
         font = QtGui.QFont()
@@ -234,21 +209,47 @@ class Ui_frmRegiones(object):
 "\n"
 "")
         self.btn_buscar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_buscar.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_buscar.setIcon(icon)
         self.btn_buscar.setIconSize(QtCore.QSize(70, 70))
         self.btn_buscar.setObjectName("btn_buscar")
         self.gridLayout.addWidget(self.frame_2, 3, 0, 1, 1)
         spacerItem3 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem3, 2, 5, 1, 1)
+        self.label = QtWidgets.QLabel(frmRegiones)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.tbl_regiones = QtWidgets.QTableWidget(frmRegiones)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tbl_regiones.sizePolicy().hasHeightForWidth())
+        self.tbl_regiones.setSizePolicy(sizePolicy)
+        self.tbl_regiones.setMinimumSize(QtCore.QSize(0, 500))
+        self.tbl_regiones.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.tbl_regiones.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tbl_regiones.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.tbl_regiones.setObjectName("tbl_regiones")
+        self.tbl_regiones.setColumnCount(2)
+        self.tbl_regiones.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_regiones.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_regiones.setHorizontalHeaderItem(1, item)
+        self.tbl_regiones.horizontalHeader().setDefaultSectionSize(600)
+        self.tbl_regiones.horizontalHeader().setStretchLastSection(True)
+        self.gridLayout.addWidget(self.tbl_regiones, 4, 0, 1, 8)
 
         self.retranslateUi(frmRegiones)
         QtCore.QMetaObject.connectSlotsByName(frmRegiones)
 
     def retranslateUi(self, frmRegiones):
         _translate = QtCore.QCoreApplication.translate
-        frmRegiones.setWindowTitle(_translate("frmRegiones", "Información de regiones"))
+        frmRegiones.setWindowTitle(_translate("frmRegiones", "Gestión de Regiones"))
         self.txt_nombre_region.setPlaceholderText(_translate("frmRegiones", "Nombre de la región*"))
         self.lbl_nombre_usuario.setText(_translate("frmRegiones", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.btn_limpiar.setToolTip(_translate("frmRegiones", "Limpiar información seleccionada"))
@@ -262,7 +263,12 @@ class Ui_frmRegiones(object):
         self.btn_agregar.setText(_translate("frmRegiones", "Agregar"))
         self.txt_buscar.setPlaceholderText(_translate("frmRegiones", "Buscar"))
         self.btn_buscar.setToolTip(_translate("frmRegiones", "Buscar"))
-from vistas.imagenes import imagenes
+        self.label.setText(_translate("frmRegiones", "Datos de la Región"))
+        item = self.tbl_regiones.horizontalHeaderItem(0)
+        item.setText(_translate("frmRegiones", "Código"))
+        item = self.tbl_regiones.horizontalHeaderItem(1)
+        item.setText(_translate("frmRegiones", "Región"))
+
 
 
 if __name__ == "__main__":

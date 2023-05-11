@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1180</width>
+    <width>1192</width>
     <height>758</height>
    </rect>
   </property>
@@ -297,7 +297,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Información de opción</string>
+   <string>Gestión de Opciones</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="5" column="5">
@@ -628,8 +628,36 @@ color: rgb(235, 232, 235);
      </property>
     </widget>
    </item>
+   <item row="5" column="6">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Datos de la Opción</string>
+     </property>
+    </widget>
+   </item>
    <item row="4" column="0" colspan="8">
-    <widget class="QTableView" name="tbl_opcion">
+    <widget class="QTableWidget" name="tbl_opcion">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
        <horstretch>0</horstretch>
@@ -651,57 +679,26 @@ color: rgb(235, 232, 235);
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>590</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Código</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Opción</string>
+      </property>
+     </column>
     </widget>
-   </item>
-   <item row="0" column="0" alignment="Qt::AlignLeft">
-    <widget class="QPushButton" name="btn_regresar">
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: :#494D5F;
-</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../imagenes/imagenes.qrc">
-       <normaloff>:/iconos/Flecha.png</normaloff>:/iconos/Flecha.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="6">
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::MinimumExpanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

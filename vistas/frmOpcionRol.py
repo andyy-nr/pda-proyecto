@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from vistas.imagenes import imagenes
 
 class Ui_frmOpcionRol(object):
     def setupUi(self, frmOpcionRol):
@@ -138,19 +138,6 @@ class Ui_frmOpcionRol(object):
         self.cbox_rol.setMinimumSize(QtCore.QSize(400, 40))
         self.cbox_rol.setObjectName("cbox_rol")
         self.gridLayout.addWidget(self.cbox_rol, 1, 6, 1, 2)
-        self.btn_regresar = QtWidgets.QPushButton(frmOpcionRol)
-        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setMaximumSize(QtCore.QSize(50, 50))
-        self.btn_regresar.setStyleSheet("border-style: outset;\n"
-"background-color: :#494D5F;\n"
-"")
-        self.btn_regresar.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/iconos/Flecha.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_regresar.setIcon(icon)
-        self.btn_regresar.setIconSize(QtCore.QSize(40, 40))
-        self.btn_regresar.setObjectName("btn_regresar")
-        self.gridLayout.addWidget(self.btn_regresar, 0, 0, 1, 1, QtCore.Qt.AlignLeft)
         self.txt_codigo = QtWidgets.QLineEdit(frmOpcionRol)
         self.txt_codigo.setEnabled(False)
         self.txt_codigo.setMinimumSize(QtCore.QSize(400, 40))
@@ -182,17 +169,6 @@ class Ui_frmOpcionRol(object):
         self.gridLayout.addWidget(self.btn_eliminar, 5, 4, 1, 1)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem2, 5, 5, 1, 1)
-        self.tbl_opcionRol = QtWidgets.QTableView(frmOpcionRol)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.tbl_opcionRol.sizePolicy().hasHeightForWidth())
-        self.tbl_opcionRol.setSizePolicy(sizePolicy)
-        self.tbl_opcionRol.setMinimumSize(QtCore.QSize(0, 500))
-        self.tbl_opcionRol.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.tbl_opcionRol.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.tbl_opcionRol.setObjectName("tbl_opcionRol")
-        self.gridLayout.addWidget(self.tbl_opcionRol, 4, 0, 1, 8)
         self.btn_agregar = QtWidgets.QPushButton(frmOpcionRol)
         self.btn_agregar.setMinimumSize(QtCore.QSize(150, 50))
         font = QtGui.QFont()
@@ -226,9 +202,9 @@ class Ui_frmOpcionRol(object):
 "\n"
 "")
         self.btn_buscar.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_buscar.setIcon(icon1)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/iconos/Lupa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_buscar.setIcon(icon)
         self.btn_buscar.setIconSize(QtCore.QSize(70, 70))
         self.btn_buscar.setObjectName("btn_buscar")
         self.gridLayout.addWidget(self.frame_2, 3, 0, 1, 1)
@@ -248,6 +224,34 @@ class Ui_frmOpcionRol(object):
         self.txt_buscar.setText("")
         self.txt_buscar.setObjectName("txt_buscar")
         self.gridLayout.addWidget(self.txt_buscar, 3, 1, 1, 7)
+        self.label = QtWidgets.QLabel(frmOpcionRol)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.tbl_opcionRol = QtWidgets.QTableWidget(frmOpcionRol)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tbl_opcionRol.sizePolicy().hasHeightForWidth())
+        self.tbl_opcionRol.setSizePolicy(sizePolicy)
+        self.tbl_opcionRol.setMinimumSize(QtCore.QSize(0, 500))
+        self.tbl_opcionRol.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.tbl_opcionRol.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.tbl_opcionRol.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.tbl_opcionRol.setObjectName("tbl_opcionRol")
+        self.tbl_opcionRol.setColumnCount(3)
+        self.tbl_opcionRol.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_opcionRol.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_opcionRol.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tbl_opcionRol.setHorizontalHeaderItem(2, item)
+        self.tbl_opcionRol.horizontalHeader().setDefaultSectionSize(456)
+        self.tbl_opcionRol.horizontalHeader().setStretchLastSection(True)
+        self.gridLayout.addWidget(self.tbl_opcionRol, 4, 0, 1, 8)
 
         self.retranslateUi(frmOpcionRol)
         QtCore.QMetaObject.connectSlotsByName(frmOpcionRol)
@@ -267,7 +271,14 @@ class Ui_frmOpcionRol(object):
         self.btn_limpiar.setToolTip(_translate("frmOpcionRol", "Limpiar información seleccionada"))
         self.btn_limpiar.setText(_translate("frmOpcionRol", "Limpiar"))
         self.txt_buscar.setPlaceholderText(_translate("frmOpcionRol", "Buscar"))
-from vistas.imagenes import imagenes
+        self.label.setText(_translate("frmOpcionRol", "Datos de Opción-Rol"))
+        item = self.tbl_opcionRol.horizontalHeaderItem(0)
+        item.setText(_translate("frmOpcionRol", "Código"))
+        item = self.tbl_opcionRol.horizontalHeaderItem(1)
+        item.setText(_translate("frmOpcionRol", "Opción"))
+        item = self.tbl_opcionRol.horizontalHeaderItem(2)
+        item.setText(_translate("frmOpcionRol", "Rol"))
+
 
 
 if __name__ == "__main__":
