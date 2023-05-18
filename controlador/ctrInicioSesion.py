@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QLineEdit
 from vistas.frmInicioSesion import Ui_MainWindow
-from controlador.ctrlFrmInicio import CtrlFrmMainWindow
+from controlador.ctrInicio import CtrlFrmMainWindow
 
 
 class CtrlInicioSesion(QtWidgets.QMainWindow):

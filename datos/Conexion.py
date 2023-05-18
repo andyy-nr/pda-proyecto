@@ -5,7 +5,7 @@ import pymysql.cursors
 class Conexion:
     _DATABASE = 'Seguridad'
     _USERNAME = 'root'
-    _PASSWORD = 'Egonzalez87'
+    _PASSWORD = '112358'
     _HOST = 'localhost'
     _conexion = None
     _cursor = None
@@ -30,6 +30,7 @@ class Conexion:
     @classmethod
     def getCursor(cls):
         if cls._cursor is None:
+
             try:
                 cls._cursor = cls.getConnection().cursor()
                 print(f'Se abrió correctamente el cursor: {cls._cursor}')
@@ -39,6 +40,24 @@ class Conexion:
                 sys.exit()
         else:
             return cls._cursor
+
+    @classmethod
+    def closeConnection(cls):
+        if cls._conexion:
+            cls._conexion.close()
+            cls._conexion = None
+            print("Se cerro la conexion")
+        else:
+            print("No hay conexion que cerrar")
+
+    @classmethod
+    def closeCursor(cls):
+        if cls._cursor:
+            cls._cursor.close()
+            cls._cursor = None
+            print("Se cerro el cursor")
+        else:
+            print("No hay cursor que cerrar")
 
 
 if __name__ == '__main__':

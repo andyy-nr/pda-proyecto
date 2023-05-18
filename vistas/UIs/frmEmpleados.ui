@@ -759,7 +759,7 @@ color: rgb(235, 232, 235);
     </widget>
    </item>
    <item row="6" column="0" colspan="10">
-    <widget class="QTableWidget" name="t">
+    <widget class="QTableWidget" name="tbl_employees">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
        <horstretch>0</horstretch>

@@ -1,7 +1,7 @@
 import copy
 
 
-class Tbl_rolOpcion:
+class Tbl_opcion:
     def __init__(self, _id_opcion=None, rol=None, estado=None):
         self._id_opcion= _id_opcion
         self._opcion = rol
