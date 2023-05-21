@@ -2,10 +2,11 @@ import copy
 
 
 class departments:
-    def __init__(self, department_id=None, department_name=None, location_id=None):
+    def __init__(self, department_id=None, department_name=None, location_id=None, location_name=None):
         self._department_id = department_id
         self._department_name = department_name
         self._location_id = location_id
+        self._location_name = location_name
 
     def __str__(self):
         return f'''

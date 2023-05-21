@@ -1,5 +1,6 @@
 from vistas.frmEmpleados import Ui_frmEmpleados
 from datos.employees import Dt_employees
+import datetime
 from PyQt5 import QtWidgets
 
 
@@ -12,8 +13,9 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
     dtu = Dt_employees()
 
     def initControlGui(self):
-        self.ui.btn_agregar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_agregar.clicked.connect(self.agregarEmpleado)
         self.cargarDatos()
+        self.cargarCombobox()
 
     def limpiarCampos(self):
         self.ui.txt_telefono.setText("")
@@ -34,8 +36,55 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             self.ui.tbl_employees.setItem(tablerow, 2, QtWidgets.QTableWidgetItem(row._email))
             self.ui.tbl_employees.setItem(tablerow, 3, QtWidgets.QTableWidgetItem(row._phone))
             self.ui.tbl_employees.setItem(tablerow, 4, QtWidgets.QTableWidgetItem(str(row._hire_date)))
-            self.ui.tbl_employees.setItem(tablerow, 5, QtWidgets.QTableWidgetItem(str(row._job_id)))
+            self.ui.tbl_employees.setItem(tablerow, 5, QtWidgets.QTableWidgetItem(str(row._job_title)))
             self.ui.tbl_employees.setItem(tablerow, 6, QtWidgets.QTableWidgetItem(str(row._salary)))
-            self.ui.tbl_employees.setItem(tablerow, 7, QtWidgets.QTableWidgetItem(str(row._manager_id)))
-            self.ui.tbl_employees.setItem(tablerow, 8, QtWidgets.QTableWidgetItem(str(row._department_id)))
+            self.ui.tbl_employees.setItem(tablerow, 7, QtWidgets.QTableWidgetItem(str(row._manager)))
+            self.ui.tbl_employees.setItem(tablerow, 8, QtWidgets.QTableWidgetItem(str(row._department_name)))
             tablerow = tablerow + 1
+
+    def cargarCombobox(self):
+        try:
+            listaManagers = self.dtu.listaManagers()
+            for manager in listaManagers:
+                self.ui.cbox_gerente.addItem(str(manager._manager), int(manager._employee_id))
+
+            listaDepartamentos = self.dtu.listaDepartamentos()
+            for departamento in listaDepartamentos:
+                self.ui.cbox_departamento.addItem(str(departamento._department_name), int(departamento._department_id))
+
+            listaTrabajos = self.dtu.listaTrabajos()
+            for trabajo in listaTrabajos:
+                self.ui.cbox_trabajo.addItem(str(trabajo._job_title), int(trabajo._job_id))
+        except Exception as e:
+            print(e)
+
+    def validarVacios(self):
+        if self.ui.txt_nombres.text() == "":
+            return False
+        if self.ui.txt_apellidos.text() == "":
+            return False
+        if self.ui.txt_salario.text() == "":
+            return False
+        if self.ui.txt_correo.text() == "":
+            return False
+        if self.ui.txt_telefono.text() == "":
+            return False
+        return True
+
+    def agregarEmpleado(self):
+        if self.validarVacios():
+            nombre = self.ui.txt_nombres.text()
+            apellido = self.ui.txt_apellidos.text()
+            salario = self.ui.txt_salario.text()
+            correo = self.ui.txt_correo.text()
+            telefono = self.ui.txt_telefono.text()
+            fecha = self.ui.date_fecha_contratacion.date().toPyDate()
+            gerente = self.ui.cbox_gerente.currentData()
+            departamento = self.ui.cbox_departamento.currentData()
+            trabajo = self.ui.cbox_trabajo.currentData()
+            # o(self, first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id)
+            self.dtu.agregarEmpleado(nombre, apellido, correo, telefono, fecha, trabajo, salario, gerente, departamento)
+            self.cargarDatos()
+            self.limpiarCampos()
+        else:
+            print("Campos vacios")

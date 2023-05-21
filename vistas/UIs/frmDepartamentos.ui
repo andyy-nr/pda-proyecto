@@ -309,12 +309,12 @@
       </size>
      </property>
      <property name="placeholderText">
-      <string>Codigo localidad</string>
+      <string> Localidad*</string>
      </property>
     </widget>
    </item>
    <item row="1" column="6" colspan="2">
-    <widget class="QLineEdit" name="txt_cod_postal">
+    <widget class="QLineEdit" name="txt_nombre">
      <property name="minimumSize">
       <size>
        <width>400</width>
@@ -322,7 +322,7 @@
       </size>
      </property>
      <property name="placeholderText">
-      <string>Codigo postal *</string>
+      <string>Nombre Departamento*</string>
      </property>
     </widget>
    </item>
@@ -748,12 +748,12 @@ color: rgb(235, 232, 235);
      </column>
      <column>
       <property name="text">
-       <string>Código  de la Localidad</string>
+       <string>Localidad</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Código Postal</string>
+       <string>Nombre del Departamento</string>
       </property>
      </column>
     </widget>

@@ -1,10 +1,11 @@
 import copy
 
 class countries:
-    def __init__(self, country_id=None, country_name=None, region_id=None):
+    def __init__(self, country_id=None, country_name=None, region_id=None, region_name=None):
         self._country_id = country_id
         self._country_name = country_name
         self._region_id = region_id
+        self._region_name = region_name
 
     def __str__(self):
         return f'''

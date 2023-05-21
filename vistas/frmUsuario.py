@@ -232,10 +232,10 @@ class Ui_frmUsuario(object):
 "")
         self.btn_eliminar.setObjectName("btn_eliminar")
         self.gridLayout.addWidget(self.btn_eliminar, 7, 5, 1, 1)
-        self.lineEdit = QtWidgets.QLineEdit(frmUsuario)
-        self.lineEdit.setMinimumSize(QtCore.QSize(380, 40))
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 2, 2, 1, 2)
+        self.le_confirmar_correo = QtWidgets.QLineEdit(frmUsuario)
+        self.le_confirmar_correo.setMinimumSize(QtCore.QSize(380, 40))
+        self.le_confirmar_correo.setObjectName("le_confirmar_correo")
+        self.gridLayout.addWidget(self.le_confirmar_correo, 2, 2, 1, 2)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem3, 7, 6, 1, 1)
         self.btn_editar = QtWidgets.QPushButton(frmUsuario)
@@ -310,7 +310,7 @@ class Ui_frmUsuario(object):
         self.le_apellidos.setPlaceholderText(_translate("frmUsuario", "Apellidos*"))
         self.btn_eliminar.setToolTip(_translate("frmUsuario", "Eliminar información de usuario´"))
         self.btn_eliminar.setText(_translate("frmUsuario", "Eliminar"))
-        self.lineEdit.setPlaceholderText(_translate("frmUsuario", "Confirmar correo*"))
+        self.le_confirmar_correo.setPlaceholderText(_translate("frmUsuario", "Confirmar correo*"))
         self.btn_editar.setToolTip(_translate("frmUsuario", "Editar información de usuario"))
         self.btn_editar.setText(_translate("frmUsuario", "Editar"))
         self.le_nombre_usuario.setPlaceholderText(_translate("frmUsuario", "Nombre de usuario*"))
@@ -318,7 +318,6 @@ class Ui_frmUsuario(object):
         self.btn_agregar.setToolTip(_translate("frmUsuario", "Agregar información de usuario"))
         self.btn_agregar.setText(_translate("frmUsuario", "Agregar"))
         self.btn_buscar.setToolTip(_translate("frmUsuario", "Buscar elemento"))
-
 
 
 if __name__ == "__main__":

@@ -46,9 +46,10 @@ class jobs:
         return self._min_salary
 
     @min_salary.setter
-    def _min_salary(self, min_salary):
+    def min_salary(self, min_salary):
         self._min_salary = min_salary
 
+    @property
     def max_salary(self):
         return self._max_salary
 

@@ -1,12 +1,14 @@
 import copy
 
 class locations:
-    def __init__(self, location_id=None, street_address=None, postal_code=None, state_province=None, country_id=None):
+    def __init__(self, location_id=None, street_address=None, postal_code=None, city=None, state_province=None, country_id=None, country_name=None):
         self._location_id = location_id
         self._street_address = street_address
         self._postal_code = postal_code
+        self._city = city
         self._state_province = state_province
         self._country_id = country_id
+        self._country_name = country_name
 
     def __str__(self):
         return f'''

@@ -2,9 +2,9 @@ import copy
 
 
 class Tbl_opcion:
-    def __init__(self, _id_opcion=None, rol=None, estado=None):
+    def __init__(self, _id_opcion=None, opcion=None, estado=None):
         self._id_opcion= _id_opcion
-        self._opcion = rol
+        self._opcion = opcion
         self._estado = estado
 
     def __str__(self):

@@ -2,8 +2,8 @@ import copy
 
 
 class employee:
-    def __init__(self, employee_id=None, first_name=None, last_name=None, email=None, phone=None, hire_date=None,
-                 job_id=None, salary=None, manager_id=None, department_id=None):
+    def __init__(self, employee_id=None, first_name=None, last_name=None, email=None, phone=None, hire_date=None, job_id=None,
+                 job_title=None, salary=None, manager_id=None, department_id=None, department_name=None, manager=None):
         self._employee_id = employee_id
         self._first_name = first_name
         self._last_name = last_name
@@ -11,9 +11,12 @@ class employee:
         self._phone = phone
         self._hire_date = hire_date
         self._job_id = job_id
+        self._job_title = job_title
         self._salary = salary
         self._manager_id = manager_id
         self._department_id = department_id
+        self._department_name = department_name
+        self._manager = manager
 
     def __str__(self):
         return f'''
@@ -23,10 +26,10 @@ class employee:
         email = {self._email}
         phone = {self._phone}
         hire_date = {self._hire_date}
-        job_id = {self._job_id}
+        job_id = {self._job_title}
         salary = {self._salary}
         manager_id = {self._manager_id}
-        department_id = {self._department_id}
+        department_id = {self._department_name}
         '''
 
     def __getitem__(self, item):
@@ -37,10 +40,10 @@ class employee:
         u.email = u._email
         u.phone = u._phone
         u.hire_date = u._hire_date
-        u.job_id = u._job_id
+        u.job_id = u._job_title
         u.salary = u._salary
         u.manager_id = u._manager_id
-        u.department_id = u._department_id
+        u.department_id = u._department_name
         return u
 
     # GET & SET
@@ -94,11 +97,11 @@ class employee:
 
     @property
     def job_id(self):
-        return self._job_id
+        return self._job_title
 
     @job_id.setter
     def job_id(self, job_id):
-        self._job_id = job_id
+        self._job_title = job_id
 
     @property
     def salary(self):
@@ -118,8 +121,8 @@ class employee:
 
     @property
     def department_id(self):
-        return self._department_id
+        return self._department_name
 
     @department_id.setter
     def department_id(self, department_id):
-        self._department_id = department_id
+        self._department_name = department_id

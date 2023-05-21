@@ -114,10 +114,10 @@ class Ui_frmDepartamentos(object):
         self.cbox_cod_localidad.setMinimumSize(QtCore.QSize(400, 40))
         self.cbox_cod_localidad.setObjectName("cbox_cod_localidad")
         self.gridLayout.addWidget(self.cbox_cod_localidad, 1, 3, 1, 3)
-        self.txt_cod_postal = QtWidgets.QLineEdit(frmDepartamentos)
-        self.txt_cod_postal.setMinimumSize(QtCore.QSize(400, 40))
-        self.txt_cod_postal.setObjectName("txt_cod_postal")
-        self.gridLayout.addWidget(self.txt_cod_postal, 1, 6, 1, 2)
+        self.txt_nombre = QtWidgets.QLineEdit(frmDepartamentos)
+        self.txt_nombre.setMinimumSize(QtCore.QSize(400, 40))
+        self.txt_nombre.setObjectName("txt_nombre")
+        self.gridLayout.addWidget(self.txt_nombre, 1, 6, 1, 2)
         self.frame_2 = QtWidgets.QFrame(frmDepartamentos)
         self.frame_2.setMinimumSize(QtCore.QSize(150, 60))
         self.frame_2.setMaximumSize(QtCore.QSize(16777215, 60))
@@ -266,8 +266,8 @@ class Ui_frmDepartamentos(object):
     def retranslateUi(self, frmDepartamentos):
         _translate = QtCore.QCoreApplication.translate
         frmDepartamentos.setWindowTitle(_translate("frmDepartamentos", "Gestión de Departamentos"))
-        self.cbox_cod_localidad.setPlaceholderText(_translate("frmDepartamentos", "Codigo localidad"))
-        self.txt_cod_postal.setPlaceholderText(_translate("frmDepartamentos", "Codigo postal *"))
+        self.cbox_cod_localidad.setPlaceholderText(_translate("frmDepartamentos", " Localidad*"))
+        self.txt_nombre.setPlaceholderText(_translate("frmDepartamentos", "Nombre Departamento*"))
         self.btn_buscar.setToolTip(_translate("frmDepartamentos", "Buscar"))
         self.btn_agregar.setToolTip(_translate("frmDepartamentos", "Agregar información de departamento"))
         self.btn_agregar.setText(_translate("frmDepartamentos", "Agregar"))
@@ -284,10 +284,9 @@ class Ui_frmDepartamentos(object):
         item = self.tbl_departamentos.horizontalHeaderItem(0)
         item.setText(_translate("frmDepartamentos", "Código"))
         item = self.tbl_departamentos.horizontalHeaderItem(1)
-        item.setText(_translate("frmDepartamentos", "Código  de la Localidad"))
+        item.setText(_translate("frmDepartamentos", "Localidad"))
         item = self.tbl_departamentos.horizontalHeaderItem(2)
-        item.setText(_translate("frmDepartamentos", "Código Postal"))
-
+        item.setText(_translate("frmDepartamentos", "Nombre del Departamento"))
 
 
 if __name__ == "__main__":

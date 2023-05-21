@@ -11,20 +11,21 @@ class Dt_tbl_opcion:
     _cursor = _con.cursor()
     _sql = ""
 
+    def renovarConexion(self):
+        self._con = Conexion.getConnection()
+        self._cursor = Conexion.getCursor()
+
     def listaOpciones(self):
-        self._sql = "SELECT * FROM Seguridad.tbl_user;"
+        self.renovarConexion()
+        self._sql = "SELECT * from Seguridad.tbl_opcion;"
         try:
-            # ejecutamos la consulta
             self._cursor.execute(self._sql)
-            # Obtenemos todos los registros de la consulta
             registros = self._cursor.fetchall()
-            print("Numero total de registros: ", self._cursor.rowcount)
             listaOpciones = []
 
             for tp in registros:
-                tps = Tbl_opcion(tp['id_user'], tp['user'])
+                tps = Tbl_opcion(tp['id_opcion'], tp['opcion'], tp['estado'])
                 listaOpciones.append(tps)
-            print('listaOpciones[]', listaOpciones)
             return listaOpciones
 
         except Exception as e:
@@ -32,4 +33,20 @@ class Dt_tbl_opcion:
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
+
+    def agregarOpcion(self, nombre_opcion, estado):
+        self.renovarConexion()
+        opcion = [ nombre_opcion, estado]
+        self._sql = "INSERT INTO Seguridad.tbl_opcion (opcion, estado) " \
+                    "values (%s, %s);"
+        try:
+            self._cursor.execute(self._sql, opcion)
+            self._con.commit()
+            print(f"Opcion ingresado correctamente")
+        except Exception as e:
+            print(f"Error al insertar opcion {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
 

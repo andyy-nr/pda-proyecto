@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1382</width>
-    <height>1040</height>
+    <width>1378</width>
+    <height>1042</height>
    </rect>
   </property>
   <property name="palette">
@@ -337,13 +337,13 @@
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Cantidad de departamentos:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Cantidad de usuarios:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="lbl_cant_departamentos_3">
+      <widget class="QLabel" name="lbl_cant_usuarios">
        <property name="geometry">
         <rect>
          <x>60</x>
@@ -414,7 +414,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="lbl_cant_dependientes">
+      <widget class="QLabel" name="lbl_dependientes_2">
        <property name="geometry">
         <rect>
          <x>30</x>
@@ -437,7 +437,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_31">
+      <widget class="QLabel" name="lbl_cant_dependientes">
        <property name="geometry">
         <rect>
          <x>60</x>
@@ -620,7 +620,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="lbl_cant_empleados">
+      <widget class="QLabel" name="lbl_empleados_2">
        <property name="geometry">
         <rect>
          <x>40</x>
@@ -643,7 +643,7 @@
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_30">
+      <widget class="QLabel" name="lbl_cant_empleados">
        <property name="geometry">
         <rect>
          <x>60</x>

@@ -680,7 +680,7 @@ color: rgb(235, 232, 235);
     </widget>
    </item>
    <item row="2" column="2" colspan="2">
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="le_confirmar_correo">
      <property name="minimumSize">
       <size>
        <width>380</width>
