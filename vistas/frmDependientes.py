@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmDependientes(object):
     def setupUi(self, frmDependientes):
@@ -294,7 +294,7 @@ class Ui_frmDependientes(object):
         item.setText(_translate("frmDependientes", "Relación"))
         item = self.tbl_dependientes.horizontalHeaderItem(4)
         item.setText(_translate("frmDependientes", "Empleado"))
-
+import imagenes_rc
 
 
 if __name__ == "__main__":
