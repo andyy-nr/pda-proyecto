@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmRoles(object):
     def setupUi(self, frmRoles):
@@ -121,12 +121,6 @@ class Ui_frmRoles(object):
 "")
         self.btn_eliminar_2.setObjectName("btn_eliminar_2")
         self.gridLayout.addWidget(self.btn_eliminar_2, 5, 7, 1, 1, QtCore.Qt.AlignLeft)
-        self.label = QtWidgets.QLabel(frmRoles)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.txt_buscar = QtWidgets.QLineEdit(frmRoles)
         self.txt_buscar.setMinimumSize(QtCore.QSize(0, 35))
         self.txt_buscar.setText("")
@@ -253,6 +247,25 @@ class Ui_frmRoles(object):
         self.txt_rol.setMinimumSize(QtCore.QSize(400, 40))
         self.txt_rol.setObjectName("txt_rol")
         self.gridLayout.addWidget(self.txt_rol, 1, 5, 1, 3)
+        self.frame_3 = QtWidgets.QFrame(frmRoles)
+        self.frame_3.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_3.setObjectName("frame_3")
+        self.btn_regresar = QtWidgets.QPushButton(self.frame_3)
+        self.btn_regresar.setGeometry(QtCore.QRect(0, 0, 51, 51))
+        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
+        self.btn_regresar.setStyleSheet("image: url(:/iconos/Flecha.png);\n"
+"border-style: outset;\n"
+"background-color: #8458B3;")
+        self.btn_regresar.setText("")
+        self.btn_regresar.setObjectName("btn_regresar")
+        self.label = QtWidgets.QLabel(self.frame_3)
+        self.label.setGeometry(QtCore.QRect(60, 0, 181, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.frame_3, 0, 0, 1, 2)
 
         self.retranslateUi(frmRoles)
         QtCore.QMetaObject.connectSlotsByName(frmRoles)
@@ -263,7 +276,6 @@ class Ui_frmRoles(object):
         frmRoles.setToolTip(_translate("frmRoles", "Eliminar información de rol"))
         self.btn_eliminar_2.setToolTip(_translate("frmRoles", "Limpiar contenido seleccionado"))
         self.btn_eliminar_2.setText(_translate("frmRoles", "Limpiar"))
-        self.label.setText(_translate("frmRoles", "Datos del Rol"))
         self.txt_buscar.setPlaceholderText(_translate("frmRoles", "Buscar"))
         self.btn_eliminar.setToolTip(_translate("frmRoles", "Eliminar "))
         self.btn_eliminar.setText(_translate("frmRoles", "Eliminar"))
@@ -279,6 +291,8 @@ class Ui_frmRoles(object):
         self.btn_agregar.setText(_translate("frmRoles", "Agregar"))
         self.lbl_nombre_usuario.setText(_translate("frmRoles", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.txt_rol.setPlaceholderText(_translate("frmRoles", "Rol*"))
+        self.label.setText(_translate("frmRoles", "Datos de roles"))
+from vistas.imagenes import imagenes
 
 
 if __name__ == "__main__":

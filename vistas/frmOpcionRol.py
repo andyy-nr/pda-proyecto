@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmOpcionRol(object):
     def setupUi(self, frmOpcionRol):
@@ -278,7 +278,7 @@ class Ui_frmOpcionRol(object):
         item.setText(_translate("frmOpcionRol", "Opción"))
         item = self.tbl_opcionRol.horizontalHeaderItem(2)
         item.setText(_translate("frmOpcionRol", "Rol"))
-
+from vistas.imagenes import imagenes
 
 
 if __name__ == "__main__":

@@ -300,77 +300,6 @@
    <string>Gestión de Rol-Usuario</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="5">
-    <spacer name="verticalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>10</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="4">
-    <widget class="QPushButton" name="btn_eliminar">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Eliminar información de Rol-Usuario</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: #8458B3;
-color: rgb(235, 232, 235);
-</string>
-     </property>
-     <property name="text">
-      <string>Eliminar</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
-    <widget class="QPushButton" name="btn_agregar">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>Agregar información de Rol-Usuario</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: #8458B3;
-color: rgb(235, 232, 235);
-
-</string>
-     </property>
-     <property name="text">
-      <string>Agregar</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="3" colspan="3">
     <widget class="QComboBox" name="cbox_opcion">
      <property name="minimumSize">
@@ -471,6 +400,82 @@ color: rgb(235, 232, 235);
      </widget>
     </widget>
    </item>
+   <item row="5" column="4">
+    <widget class="QPushButton" name="btn_eliminar">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Eliminar información de Rol-Usuario</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-style: outset;
+background-color: #8458B3;
+color: rgb(235, 232, 235);
+</string>
+     </property>
+     <property name="text">
+      <string>Eliminar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="8">
+    <widget class="QTableWidget" name="tbl_opcionRol">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>500</height>
+      </size>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>456</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Código </string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Usuario</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Rol</string>
+      </property>
+     </column>
+    </widget>
+   </item>
    <item row="1" column="0" colspan="3">
     <widget class="QLineEdit" name="txt_codigo">
      <property name="enabled">
@@ -521,6 +526,110 @@ color: rgb(235, 232, 235);
      </property>
      <property name="placeholderText">
       <string>Código*</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QFrame" name="frame_2">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-style: outset;
+background-color: :#494D5F;
+
+</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="btn_buscar">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>0</y>
+        <width>60</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Buscar</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-style: outset;
+background-color: :#494D5F;
+
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="../imagenes/imagenes.qrc">
+        <normaloff>:/iconos/Lupa.png</normaloff>:/iconos/Lupa.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>70</width>
+        <height>70</height>
+       </size>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="2">
+    <widget class="QPushButton" name="btn_agregar">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Agregar información de Rol-Usuario</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-style: outset;
+background-color: #8458B3;
+color: rgb(235, 232, 235);
+
+</string>
+     </property>
+     <property name="text">
+      <string>Agregar</string>
      </property>
     </widget>
    </item>
@@ -596,125 +705,56 @@ color: rgb(235, 232, 235);
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QFrame" name="frame_2">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-style: outset;
-background-color: :#494D5F;
-
-</string>
-     </property>
+   <item row="0" column="0" colspan="3">
+    <widget class="QFrame" name="frame_3">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QPushButton" name="btn_buscar">
+     <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>60</x>
         <y>0</y>
-        <width>60</width>
-        <height>60</height>
+        <width>181</width>
+        <height>50</height>
        </rect>
       </property>
-      <property name="toolTip">
-       <string>Buscar</string>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Datos de Rol-Usuario</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_regresar">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-style: outset;
-background-color: :#494D5F;
-
-</string>
+       <string notr="true">image: url(:/iconos/Flecha.png);
+border-style: outset;
+background-color: #8458B3;</string>
       </property>
       <property name="text">
        <string/>
       </property>
-      <property name="icon">
-       <iconset resource="../imagenes/imagenes.qrc">
-        <normaloff>:/iconos/Lupa.png</normaloff>:/iconos/Lupa.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>70</width>
-        <height>70</height>
-       </size>
-      </property>
      </widget>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="8">
-    <widget class="QTableWidget" name="tbl_opcionRol">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>500</height>
-      </size>
-     </property>
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
-     </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>456</number>
-     </attribute>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Código </string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Usuario</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Rol</string>
-      </property>
-     </column>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Datos de Rol-Usuario</string>
-     </property>
     </widget>
    </item>
   </layout>

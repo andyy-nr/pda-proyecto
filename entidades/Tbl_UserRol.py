@@ -1,11 +1,13 @@
 import copy
 
 
-class Tbl_rol:
-    def __init__(self, id_UserRol=None, id_user=None, id_rol=None):
+class Tbl_UserRol:
+    def __init__(self, id_UserRol=None, id_user=None, user=None, id_rol=None, rol=None):
         self._id_UserRol = id_UserRol
         self._id_user = id_user
+        self._user = user
         self._id_rol = id_rol
+        self._rol = rol
 
     def __str__(self):
         return f'''

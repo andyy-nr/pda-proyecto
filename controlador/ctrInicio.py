@@ -1,10 +1,11 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from vistas.frmInicio import Ui_mw_inicio
 from PyQt5 import QtWidgets
 
 from datos.employees import Dt_employees
 from datos.Dt_Tbl_user import Dt_tbl_user
 from datos.departments import Dt_departments
+
 
 from controlador.ctrGestionOpciones import CtrlFrmGestionOpcion
 from controlador.ctrGestionUsuarios import CtrlFrmGestionUser
@@ -16,8 +17,12 @@ from controlador.ctrGestionPaises import CtrlGestionPaises
 from controlador.ctrGestionRoles import CtrlFrmGestionRoles
 from controlador.ctrGestionLocalidades import CtrlGestionLocalidades
 from controlador.ctrGestionDepartamentos import CtrlGestionDepartaments
+from controlador.ctrGestionRolOpcion import CtrlGestionRolOpcion
+from controlador.ctrGestionRolUsuario import CtrlGestionRolUsuario
 
 class CtrlFrmMainWindow(QtWidgets.QMainWindow):
+    #cerrar_senal = pyqtSignal()
+    #abrir_senal = pyqtSignal()
     def __init__(self):
         super().__init__()
         self.ui = Ui_mw_inicio()
@@ -45,6 +50,7 @@ class CtrlFrmMainWindow(QtWidgets.QMainWindow):
 
         ctrlOpcion = CtrlFrmGestionOpcion()
         self.ui.btn_opcion.clicked.connect(lambda : ctrlOpcion.show())
+        #self.ui.btn_opcion.clicked.connect(lambda : self.close())
 
         ctrlEmpleados = CtrlGestionEmpleados()
         self.ui.btn_empleados.clicked.connect(lambda : ctrlEmpleados.show())
@@ -69,3 +75,9 @@ class CtrlFrmMainWindow(QtWidgets.QMainWindow):
 
         ctrlDepartamentos = CtrlGestionDepartaments()
         self.ui.btn_departamentos.clicked.connect(lambda : ctrlDepartamentos.show())
+
+        ctrlRolOpcion = CtrlGestionRolOpcion()
+        self.ui.btn_opcionRol.clicked.connect(lambda : ctrlRolOpcion.show())
+
+        ctrlRolUsuario = CtrlGestionRolUsuario()
+        self.ui.btn_rolUsuario.clicked.connect(lambda : ctrlRolUsuario.show())

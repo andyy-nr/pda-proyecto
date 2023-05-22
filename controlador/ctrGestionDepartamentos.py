@@ -47,7 +47,6 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         if self.validarVacios():
             nombre = self.ui.txt_nombre.text()
             localidad = self.ui.cbox_cod_localidad.currentData()
-            print(localidad)
             self.dtd.agregarDepartamento(nombre, localidad)
             self.limpiarCampos()
             self.cargarDatos()

@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmOpcion(object):
     def setupUi(self, frmOpcion):
@@ -215,12 +215,6 @@ class Ui_frmOpcion(object):
         self.gridLayout.addWidget(self.btn_editar, 5, 3, 1, 1)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem3, 5, 6, 1, 1)
-        self.label = QtWidgets.QLabel(frmOpcion)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.tbl_opcion = QtWidgets.QTableWidget(frmOpcion)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
@@ -241,6 +235,25 @@ class Ui_frmOpcion(object):
         self.tbl_opcion.horizontalHeader().setDefaultSectionSize(590)
         self.tbl_opcion.horizontalHeader().setStretchLastSection(True)
         self.gridLayout.addWidget(self.tbl_opcion, 4, 0, 1, 8)
+        self.frame_3 = QtWidgets.QFrame(frmOpcion)
+        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_3.setObjectName("frame_3")
+        self.label = QtWidgets.QLabel(self.frame_3)
+        self.label.setGeometry(QtCore.QRect(60, 0, 211, 50))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.btn_regresar = QtWidgets.QPushButton(self.frame_3)
+        self.btn_regresar.setGeometry(QtCore.QRect(0, 0, 51, 51))
+        self.btn_regresar.setMinimumSize(QtCore.QSize(50, 50))
+        self.btn_regresar.setStyleSheet("image: url(:/iconos/Flecha.png);\n"
+"border-style: outset;\n"
+"background-color: #8458B3;")
+        self.btn_regresar.setText("")
+        self.btn_regresar.setObjectName("btn_regresar")
+        self.gridLayout.addWidget(self.frame_3, 0, 0, 1, 2)
 
         self.retranslateUi(frmOpcion)
         QtCore.QMetaObject.connectSlotsByName(frmOpcion)
@@ -261,13 +274,12 @@ class Ui_frmOpcion(object):
         self.btn_agregar.setText(_translate("frmOpcion", "Agregar"))
         self.btn_editar.setToolTip(_translate("frmOpcion", "Editar información de opción"))
         self.btn_editar.setText(_translate("frmOpcion", "Editar"))
-        self.label.setText(_translate("frmOpcion", "Datos de la Opción"))
         item = self.tbl_opcion.horizontalHeaderItem(0)
         item.setText(_translate("frmOpcion", "Código"))
         item = self.tbl_opcion.horizontalHeaderItem(1)
         item.setText(_translate("frmOpcion", "Opción"))
-
-
+        self.label.setText(_translate("frmOpcion", "Datos de las opciones"))
+from vistas.imagenes import imagenes
 
 if __name__ == "__main__":
     import sys

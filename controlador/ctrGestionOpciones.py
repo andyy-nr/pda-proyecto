@@ -13,6 +13,7 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarOpcion)
+        self.ui.btn_regresar.clicked.connect(self.close)
         self.cargarDatos()
 
     def limpiarCampos(self):

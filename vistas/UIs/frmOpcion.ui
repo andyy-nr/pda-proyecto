@@ -644,18 +644,6 @@ color: rgb(235, 232, 235);
      </property>
     </spacer>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Datos de la Opción</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="0" colspan="8">
     <widget class="QTableWidget" name="tbl_opcion">
      <property name="sizePolicy">
@@ -698,6 +686,58 @@ color: rgb(235, 232, 235);
        <string>Opción</string>
       </property>
      </column>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QFrame" name="frame_3">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>0</y>
+        <width>211</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Datos de las opciones</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_regresar">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">image: url(:/iconos/Flecha.png);
+border-style: outset;
+background-color: #8458B3;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>
