@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QMessageBox, QLineEdit
 from vistas.frmInicioSesion import Ui_MainWindow
 from controlador.ctrInicio import CtrlFrmMainWindow
 from datos.Dt_Tbl_user import Dt_tbl_user
-from controlador.ctrGestionUsuarios import CtrlFrmGestionUser
 
 
 class CtrlInicioSesion(QtWidgets.QMainWindow):
@@ -12,7 +11,6 @@ class CtrlInicioSesion(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.CtrlMW = CtrlFrmMainWindow()
-        #self.validarVacios()
         self.initControlGui()
 
     du = Dt_tbl_user()
@@ -21,23 +19,17 @@ class CtrlInicioSesion(QtWidgets.QMainWindow):
         self.ui.btn_iniciar_sesion.clicked.connect(self.validarCredenciales)
         self.ui.check_mostrar_contrasena.stateChanged.connect(self.mostrarContrasenia)
 
-    '''def validarVacios(self):
-        usuarios = self.du.listUsuarios()
-        if not usuarios:
-            crearUsuario = CtrlFrmGestionUser()
-            crearUsuario.show()
-    '''
-    def validarCredenciales(self):
-        if not self.validarVacios():
-            user = self.ui.txt_usuario.text()
-            pwd = self.ui.txt_contrasena.text()
 
-            usuarios = self.du.listUsuarios()
-            for usuario in usuarios:
-                if usuario._user == user and usuario._pwd == pwd:
-                    self.openMainWindow()
-                    return
-            QMessageBox.information(self, 'Alerta', "Usuario y/o clave incorrectos", QMessageBox.Ok)
+    def validarCredenciales(self):
+        user = self.ui.txt_usuario.text()
+        pwd = self.ui.txt_contrasena.text()
+
+        usuarios = self.du.listUsuarios()
+        for usuario in usuarios:
+            if usuario._user == user and usuario._pwd == pwd:
+                self.openMainWindow()
+                return
+        QMessageBox.information(self, 'Alerta', "Usuario y/o clave incorrectos", QMessageBox.Ok)
 
 
     def mostrarContrasenia(self):

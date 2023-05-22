@@ -51,7 +51,7 @@ class Dt_tbl_user:
         try:
             self._cursor.execute(self._sql, usuario)
             self._con.commit()
-            print(f"Usuario ingresado correctamente")
+            return True
         except Exception as e:
             print(f"Error al insertar usuario {e}")
         finally:
