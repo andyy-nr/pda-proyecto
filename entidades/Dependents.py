@@ -2,12 +2,14 @@ import copy
 
 
 class dependents:
-    def __init__(self, dependent_id=None, first_name=None, last_name=None, relationship=None, employee_id=None):
+    def __init__(self, dependent_id=None, first_name=None, last_name=None, relationship=None, employee_id=None,
+                 employee=None):
         self._dependent_id = dependent_id
         self._first_name = first_name
         self._last_name = last_name
         self._relationship = relationship
         self._employee_id = employee_id
+        self._employee = employee
 
     def __str__(self):
         return f'''

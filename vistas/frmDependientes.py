@@ -294,7 +294,7 @@ class Ui_frmDependientes(object):
         item.setText(_translate("frmDependientes", "Relación"))
         item = self.tbl_dependientes.horizontalHeaderItem(4)
         item.setText(_translate("frmDependientes", "Empleado"))
-import imagenes_rc
+from vistas.imagenes import imagenes
 
 
 if __name__ == "__main__":
