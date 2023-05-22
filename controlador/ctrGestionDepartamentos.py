@@ -12,6 +12,7 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDepartamento)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
         self.cargarCombobox()
 

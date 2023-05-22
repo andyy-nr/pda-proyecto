@@ -14,6 +14,7 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarOpcion)
         self.ui.btn_regresar.clicked.connect(self.close)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
 
     def limpiarCampos(self):
@@ -35,8 +36,18 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
             return False
         return True
 
+    def validarNoRepetido(self):
+        listaOpciones = self.dto.listaOpciones()
+        for row in listaOpciones:
+            if self.ui.txt_opcion.text() == row._opcion:
+                return False
+        return True
+
     def agregarOpcion(self):
         if self.validarVacios():
+            if not self.validarNoRepetido():
+                print("Opcion repetida")
+                return
             opcion = self.ui.txt_opcion.text()
             estado = 1
             try:

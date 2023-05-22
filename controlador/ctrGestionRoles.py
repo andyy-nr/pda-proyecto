@@ -12,6 +12,7 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRol)
+        self.ui.btn_eliminar_2.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
 
     def limpiarCampos(self):
@@ -33,8 +34,18 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
             return False
         return True
 
+    def validarNoRepetido(self):
+        listaRoles = self.dto.listaRoles()
+        for row in listaRoles:
+            if row._rol == self.ui.txt_rol.text():
+                return False
+        return True
+
     def agregarRol(self):
         if self.validarVacios():
+            if not self.validarNoRepetido():
+                print("Rol ya existe")
+                return
             rol = self.ui.txt_rol.text()
             estado = 1
             try:

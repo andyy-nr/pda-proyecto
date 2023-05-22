@@ -29,3 +29,15 @@ class Dt_Regions:
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
+
+    def agregarRegion(self, nombre_region):
+        self.renovarConexion()
+        self._sql = "INSERT INTO Seguridad.regions(region_name) VALUES (%s);"
+        try:
+            self._cursor.execute(self._sql, nombre_region)
+            self._con.commit()
+        except Exception as e:
+            print("Datos: Error agregarRegion()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()

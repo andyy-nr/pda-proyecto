@@ -14,6 +14,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarEmpleado)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
         self.cargarCombobox()
 
@@ -23,6 +24,9 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.ui.txt_salario.setText("")
         self.ui.txt_nombres.setText("")
         self.ui.txt_apellidos.setText("")
+        self.ui.cbox_trabajo.setCurrentIndex(0)
+        self.ui.cbox_departamento.setCurrentIndex(0)
+        self.ui.cbox_gerente.setCurrentIndex(0)
 
 
     def cargarDatos(self):
@@ -45,14 +49,17 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
     def cargarCombobox(self):
         try:
             listaManagers = self.dtu.listaManagers()
+            self.ui.cbox_gerente.addItem("Gerente*")
             for manager in listaManagers:
                 self.ui.cbox_gerente.addItem(str(manager._manager), int(manager._employee_id))
 
             listaDepartamentos = self.dtu.listaDepartamentos()
+            self.ui.cbox_departamento.addItem("Departamento*")
             for departamento in listaDepartamentos:
                 self.ui.cbox_departamento.addItem(str(departamento._department_name), int(departamento._department_id))
 
             listaTrabajos = self.dtu.listaTrabajos()
+            self.ui.cbox_trabajo.addItem("Trabajo*")
             for trabajo in listaTrabajos:
                 self.ui.cbox_trabajo.addItem(str(trabajo._job_title), int(trabajo._job_id))
         except Exception as e:
@@ -69,6 +76,12 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             return False
         if self.ui.txt_telefono.text() == "":
             return False
+        if self.ui.cbox_gerente.currentData() is None:
+            return False
+        if self.ui.cbox_departamento.currentData() is None:
+            return False
+        if self.ui.cbox_trabajo.currentData() is None:
+            return False
         return True
 
     def agregarEmpleado(self):
@@ -82,7 +95,6 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             gerente = self.ui.cbox_gerente.currentData()
             departamento = self.ui.cbox_departamento.currentData()
             trabajo = self.ui.cbox_trabajo.currentData()
-            # o(self, first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id)
             self.dtu.agregarEmpleado(nombre, apellido, correo, telefono, fecha, trabajo, salario, gerente, departamento)
             self.cargarDatos()
             self.limpiarCampos()

@@ -12,7 +12,7 @@ class Dt_dependents:
         self._con = Conexion.getConnection()
         self._cursor = Conexion.getCursor()
 
-    def totalDependents(self):
+    def totalDependientes(self):
         self.renovarConexion()
         self._sql = "SELECT * FROM Seguridad.dependents;"
         try:

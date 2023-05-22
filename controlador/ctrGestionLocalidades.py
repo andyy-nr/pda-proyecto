@@ -11,6 +11,7 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarLocalidad)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
         self.cargarCombobox()
 
@@ -20,6 +21,7 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         self.ui.txt_ciudad.setText("")
         self.ui.txt_provincia.setText("")
         self.ui.txt_cod_postal.setText("")
+        self.ui.cbox_pais.setCurrentIndex(0)
 
     def cargarDatos(self):
         listaLocalidades = self.dtl.listaLocalidades()
@@ -38,6 +40,7 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
     def cargarCombobox(self):
         try:
             listaCiudades = self.dtl.listaCiudades()
+            self.ui.cbox_pais.addItem("Pais*")
             for ciudad in listaCiudades:
                 self.ui.cbox_pais.addItem(ciudad._country_name, ciudad._country_id)
         except Exception as e:
@@ -49,6 +52,10 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         if self.ui.txt_cod_postal.text() == "":
             return False
         if self.ui.txt_provincia.text() == "":
+            return False
+        if self.ui.txt_ciudad.text() == "":
+            return False
+        if self.ui.cbox_pais.currentData() is None:
             return False
         return True
 

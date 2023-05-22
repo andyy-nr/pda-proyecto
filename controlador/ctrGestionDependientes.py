@@ -7,21 +7,21 @@ class CtrlGestionDependientes( QtWidgets.QWidget):
         super().__init__()
         self.ui = Ui_frmDependientes()
         self.ui.setupUi(self)
-        self.initControlGUi()
-
-
+        self.initControlGui()
     dd = Dt_dependents()
 
     def initControlGui(self):
-        self.ui.btn_agregar.clicked.connect(self.agregarOpcion)
+        self.ui.btn_agregar.clicked.connect(self.agregarDependiente)
+        self.ui.limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
+        self.cargarCombobox()
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
         self.ui.txt_nombres.setText("")
         self.ui.txt_apellidos.setText("")
         self.ui.txt_relacion.setText("")
-        self.ui.txt_empleados.setText("")
+        self.ui.cbox_empleado.setCurrentIndex(0)
 
     def cargarDatos(self):
         listaDependientes = self.dd.listaDependents()
@@ -43,18 +43,26 @@ class CtrlGestionDependientes( QtWidgets.QWidget):
         if self.ui.txt_relacion.text() == "":
             return False
         if self.ui.txt_apellidos.text() == "":
-            return False 
-        if self.ui.txt_empleados.text() == "":
             return False
-
+        if self.ui.cbox_empleado.currentData() is None:
+            return False
         return True
+
+    def cargarCombobox(self):
+        try:
+            listaDependientes = self.dd.listaDependents()
+            self.ui.cbox_empleado.addItem("Empleado*")
+            for dependiente in listaDependientes:
+                self.ui.cbox_empleado.addItem(dependiente._employee, dependiente._employee_id)
+        except Exception as e:
+            print(e)
 
     def agregarDependiente(self):
         if self.validarVacio():
             nombres = self.ui.txt_nombres.text()
             apellidos = self.ui.txt_apellidos.text()
             relacion = self.ui.txt_relacion.text()
-            empleado = self.ui.txt_empleados.text()
+            empleado = self.ui.cbox_empleado.currentData()
 
             try:
                 self.dd.agregarDependientes(nombres, apellidos, relacion, empleado)

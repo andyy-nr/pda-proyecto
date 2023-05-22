@@ -13,6 +13,7 @@ class CtrlGestionPaises(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarPais)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarCombobox()
         self.cargarDatos()
         self.limpiarCampos()
@@ -20,6 +21,7 @@ class CtrlGestionPaises(QtWidgets.QWidget):
     def limpiarCampos(self):
         self.ui.txt_nombre.clear()
         self.ui.txt_codigo.clear()
+        self.ui.cbox_cod_region.setCurrentIndex(0)
 
     def cargarDatos(self):
         listaPaises = self.dtu.listaPaises()
@@ -35,6 +37,7 @@ class CtrlGestionPaises(QtWidgets.QWidget):
     def cargarCombobox(self):
         try:
             listaRegiones = self.dtu.listaRegiones()
+            self.ui.cbox_cod_region.addItem("Region*")
             for region in listaRegiones:
                 self.ui.cbox_cod_region.addItem(str(region._region_name), str(region._region_id))
         except Exception as e:
@@ -45,7 +48,10 @@ class CtrlGestionPaises(QtWidgets.QWidget):
             return False
         if self.ui.txt_codigo.text() == "":
             return False
+        if self.ui.cbox_cod_region.currentData() is None:
+            return False
         return True
+
 
     def agregarPais(self):
         if self.validarVacios():

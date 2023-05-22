@@ -10,11 +10,11 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
         self.ui = Ui_frmTrabajo()
         self.ui.setupUi(self)
         self.initControlGui()
-
     dttr = Dt_jobs()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarTrabajo)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
 
     def limpiarCampos(self):

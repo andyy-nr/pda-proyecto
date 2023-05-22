@@ -15,6 +15,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarUsuario)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
 
 
@@ -26,6 +27,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         self.ui.le_email.setText("")
         self.ui.le_contrasena.setText("")
         self.ui.le_confirmacion.setText("")
+        self.ui.le_confirmar_correo.setText("")
 
     def cargarDatos(self):
         listUsuario = self.dtu.listUsuarios()
@@ -56,21 +58,32 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             return False
         return True
 
+    def validarUsuarioRepetido(self):
+        usuarios = self.dtu.listUsuarios()
+        for usuario in usuarios:
+            if usuario._user == self.ui.le_nombre_usuario.text():
+                return False
+        return True
+
     def agregarUsuario(self):
         if self.validarVacios():
-            user = self.ui.le_nombre_usuario.text()
-            pwd = self.ui.le_contrasena.text()
-            nombres = self.ui.le_nombres.text()
-            apellidos = self.ui.le_apellidos.text()
-            email = self.ui.le_email.text()
-            pwd_temp = self.ui.le_confirmacion.text()
-            estado = 1
-            try:
-                self.dtu.agregarUsuario(user, pwd, nombres, apellidos, email, pwd_temp, estado)
-                self.cargarDatos()
-                self.limpiarCampos()
-            except Exception as e:
-                print(f"Error al agregar el registro: {e}")
+            if self.validarUsuarioRepetido():
+                user = self.ui.le_nombre_usuario.text()
+                pwd = self.ui.le_contrasena.text()
+                nombres = self.ui.le_nombres.text()
+                apellidos = self.ui.le_apellidos.text()
+                email = self.ui.le_email.text()
+                pwd_temp = self.ui.le_confirmacion.text()
+                estado = 1
+                try:
+                    self.dtu.agregarUsuario(user, pwd, nombres, apellidos, email, pwd_temp, estado)
+                    self.cargarDatos()
+                    self.limpiarCampos()
+                except Exception as e:
+                    print(f"Error al agregar el registro: {e}")
+                else:
+                    print("El usuario ya se encuentra en la BD")
+                    self.limpiarCampos()
         else:
             print("Campos vacios")
 

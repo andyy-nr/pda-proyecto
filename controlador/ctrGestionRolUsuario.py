@@ -16,6 +16,7 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRolUsuario)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.cargarDatos()
         self.cargarCombobox()
 
@@ -33,19 +34,45 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
     def cargarCombobox(self):
         try:
             listaRol = self.dr.listaRoles()
+            self.ui.cbox_rol.addItem("Rol*")
             for rol in listaRol:
                 self.ui.cbox_rol.addItem(str(rol._rol), int(rol._id_rol))
         except Exception as e:
             print(e)
         try:
             listaUser = self.du.listUsuarios()
+            self.ui.cbox_opcion.addItem("Usuario*")
             for user in listaUser:
                 self.ui.cbox_opcion.addItem(str(user._user), int(user._id_user))
         except Exception as e:
             print(e)
 
+    def validarVacios(self):
+        if self.ui.cbox_rol.currentData() is None:
+            return False
+        if self.ui.cbox_opcion.currentData() is None:
+            return False
+        return True
+
+    def validarNoRepetido(self):
+        rolUsuario = self.dur.listaUserRol()
+        for row in rolUsuario:
+            if row._id_user == self.ui.cbox_opcion.currentData() and row._id_rol == self.ui.cbox_rol.currentData():
+                return False
+        return True
+
+    def limpiarCampos(self):
+        self.ui.cbox_rol.setCurrentIndex(0)
+        self.ui.cbox_opcion.setCurrentIndex(0)
+
     def agregarRolUsuario(self):
-        rol = self.ui.cbox_rol.currentData()
-        user = self.ui.cbox_opcion.currentData()
-        self.dur.agregarUserRol(user, rol)
-        self.cargarDatos()
+        if self.validarVacios():
+            if not self.validarNoRepetido():
+                print("Rol repetido")
+                return
+            rol = self.ui.cbox_rol.currentData()
+            user = self.ui.cbox_opcion.currentData()
+            self.dur.agregarUserRol(user, rol)
+            self.cargarDatos()
+        else:
+            print("Campos vacios")
