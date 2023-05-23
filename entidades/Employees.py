@@ -14,9 +14,10 @@ class employee:
         self._job_title = job_title
         self._salary = salary
         self._manager_id = manager_id
+        self._manager = manager
         self._department_id = department_id
         self._department_name = department_name
-        self._manager = manager
+
 
     def __str__(self):
         return f'''

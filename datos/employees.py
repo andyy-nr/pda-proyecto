@@ -26,11 +26,12 @@ class Dt_employees:
 
     def listaEmpleados(self):
         self.renovarConexion()
-        self._sql = "SELECT emp.employee_id, emp.first_name, emp.last_name, emp.email, emp.phone_number, emp.hire_date, " \
-                    "jobs.job_title, emp.manager_id, emp.salary, departments.department_name, " \
-                    "CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM Seguridad.employees emp " \
+        self._sql = "SELECT emp.employee_id, emp.first_name, emp.last_name, emp.email, emp.phone_number, " \
+                    "emp.hire_date, jobs.job_id, jobs.job_title, emp.manager_id, emp.salary, emp.manager_id, " \
+                    "CONCAT(manager.first_name, ' ', manager.last_name) AS manager, departments.department_id, " \
+                    "departments.department_name FROM Seguridad.employees emp " \
                     "INNER JOIN Seguridad.jobs ON emp.job_id = jobs.job_id " \
-                    "INNER JOIN Seguridad.departments ON emp.department_id = departments.department_id " \
+                    "INNER JOIN Seguridad.departments ON emp.department_id = departments.department_id  " \
                     "INNER JOIN Seguridad.employees manager ON manager.employee_id = emp.manager_id;"
         try:
             self._cursor.execute(self._sql)
@@ -39,9 +40,9 @@ class Dt_employees:
 
             for te in registros:
                 tes = employee(employee_id=te['employee_id'], first_name=te['first_name'], last_name=te['last_name'],
-                               email=te['email'], phone=te['phone_number'], hire_date=te['hire_date'],
+                               email=te['email'], phone=te['phone_number'], hire_date=te['hire_date'], job_id=te['job_id'],
                                job_title=te['job_title'], salary=te['salary'], manager_id=te['manager_id'],
-                               department_name=te['department_name'], manager=te['manager'])
+                               manager=te['manager'], department_id=te['department_id'], department_name=te['department_name'])
                 listaEmpleados.append(tes)
             return listaEmpleados
         except Exception as e:
@@ -57,6 +58,35 @@ class Dt_employees:
                      manager_id, department_id]
         self._sql = "INSERT INTO Seguridad.employees (first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id) " \
                     "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        try:
+            self._cursor.execute(self._sql, empleado)
+            self._con.commit()
+        except Exception as e:
+            print(e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarEmpleado(self, emp_id):
+        self.renovarConexion()
+        self._sql = "DELETE FROM Seguridad.employees WHERE employee_id = %s;"
+        try:
+            self._cursor.execute(self._sql, emp_id)
+            self._con.commit()
+        except Exception as e:
+            print(e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def editarEmpleado(self, emp_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id):
+        self.renovarConexion()
+        empleado = [first_name, last_name, email, phone_number,
+                     hire_date, job_id, salary,
+                     manager_id, department_id, emp_id]
+        print(empleado)
+        self._sql = "UPDATE Seguridad.employees SET first_name = %s, last_name = %s, email = %s, phone_number = %s, " \
+                    "hire_date = %s, job_id = %s, salary = %s, manager_id = %s, department_id = %s WHERE employee_id = %s;"
         try:
             self._cursor.execute(self._sql, empleado)
             self._con.commit()

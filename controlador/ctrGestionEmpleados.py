@@ -1,7 +1,10 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMessageBox, QTableView
+
 from vistas.frmEmpleados import Ui_frmEmpleados
 from datos.employees import Dt_employees
 import datetime
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 
 
 class CtrlGestionEmpleados(QtWidgets.QWidget):
@@ -10,11 +13,15 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.ui = Ui_frmEmpleados()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_employees.setSelectionBehavior(QTableView.SelectRows)
     dtu = Dt_employees()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarEmpleado)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.tbl_employees.clicked.connect(self.seleccionarElemento)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarEmpleado)
+        self.ui.btn_editar.clicked.connect(self.editarEmpleado)
         self.cargarDatos()
         self.cargarCombobox()
 
@@ -27,6 +34,8 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.ui.cbox_trabajo.setCurrentIndex(0)
         self.ui.cbox_departamento.setCurrentIndex(0)
         self.ui.cbox_gerente.setCurrentIndex(0)
+        self.ui.date_fecha_contratacion.setDate(datetime.datetime.now())
+        self.ui.tbl_employees.clearSelection()
 
 
     def cargarDatos(self):
@@ -100,3 +109,49 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             self.limpiarCampos()
         else:
             print("Campos vacios")
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_employees.selectedIndexes()[0].row()
+            empleados = self.dtu.listaEmpleados()
+            emp_seleccionado = empleados[fila]
+            self.ui.txt_nombres.setText(emp_seleccionado._first_name)
+            self.ui.txt_apellidos.setText(emp_seleccionado._last_name)
+            self.ui.txt_correo.setText(emp_seleccionado._email)
+            self.ui.txt_telefono.setText(emp_seleccionado._phone)
+            self.ui.txt_salario.setText(str(emp_seleccionado._salary))
+            self.ui.date_fecha_contratacion.setDate(emp_seleccionado._hire_date)
+            self.ui.cbox_trabajo.setCurrentText(emp_seleccionado._job_title)
+            self.ui.cbox_departamento.setCurrentText(emp_seleccionado._department_name)
+            self.ui.cbox_gerente.setCurrentText(emp_seleccionado._manager)
+            return emp_seleccionado
+        except IndexError as e:
+            print("Seleccione un empleado")
+            return None
+
+    def eliminarEmpleado(self):
+        empleado = self.seleccionarElemento()
+        if empleado is not None:
+            self.dtu.eliminarEmpleado(empleado._employee_id)
+            self.cargarDatos()
+            self.limpiarCampos()
+
+    def editarEmpleado(self):
+       try:
+            fila = self.ui.tbl_employees.selectedIndexes()[0].row()
+            empleados = self.dtu.listaEmpleados()
+            emp_seleccionado_id = empleados[fila]._employee_id
+            nombre = self.ui.txt_nombres.text()
+            apellido = self.ui.txt_apellidos.text()
+            salario = self.ui.txt_salario.text()
+            correo = self.ui.txt_correo.text()
+            telefono = self.ui.txt_telefono.text()
+            fecha = self.ui.date_fecha_contratacion.date().toPyDate()
+            gerente = self.ui.cbox_gerente.currentData()
+            departamento = self.ui.cbox_departamento.currentData()
+            trabajo = self.ui.cbox_trabajo.currentData()
+            self.dtu.editarEmpleado(emp_seleccionado_id, nombre, apellido, correo, telefono, fecha, trabajo, salario, gerente, departamento)
+            self.cargarDatos()
+            self.limpiarCampos()
+       except Exception as e:
+           print(f"Error al editar empleado: {e}")
