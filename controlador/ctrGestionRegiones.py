@@ -12,12 +12,14 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
         self.ui = Ui_frmRegiones()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_regiones.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dtu = Dt_Regions()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRegion)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_regiones.clicked.connect(self.seleccionarElemento)
         self.cargarDatos(0)
 
     def limpiarCampos(self):
@@ -57,6 +59,19 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
             if nombre_region == row._region_name:
                 return False
         return True
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_regiones.selectedIndexes()[0].row()
+            regiones  = self.dtu.listaRegiones()
+            region = regiones[fila]
+            self.ui.txt_codigo.setText(str(region._region_id))
+            self.ui.txt_nombre_region.setText(region._region_name)
+
+        except Exception as e:
+            print(e)
+        except IndexError as e:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
     def agregarRegion(self):
         if self.validarVacios():

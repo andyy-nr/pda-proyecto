@@ -140,7 +140,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             self.ui.cbox_gerente.setCurrentText(emp_seleccionado._manager)
             return emp_seleccionado
         except IndexError as e:
-            print("Seleccione un empleado")
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
             return None
 
     # def eliminarEmpleado(self):
@@ -166,7 +166,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             trabajo = self.ui.cbox_trabajo.currentData()
             emp_nuevo = employee(nombre, apellido, correo, telefono, fecha, job_id=trabajo, salary=salario, manager_id=gerente, department_id=departamento)
             self.dtu.editarEmpleado(emp_seleccionado, emp_nuevo)
-            self.cargarDatos()
+            self.cargarDatos(0)
             self.limpiarCampos()
        except Exception as e:
            print(f"Error al editar empleado: {e}")

@@ -9,12 +9,14 @@ class CtrlGestionPaises(QtWidgets.QWidget):
         self.ui.setupUi(self)
         self.initControlGui()
         self.cargarDatos(0)
+        self.ui.tbl_paises.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dtu = Dt_countries()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarPais)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_paises.clicked.connect(self.seleccionarElementos)
         self.cargarCombobox()
         self.cargarDatos(0)
         self.limpiarCampos()
@@ -63,6 +65,19 @@ class CtrlGestionPaises(QtWidgets.QWidget):
             return False
         return True
 
+    def seleccionarElementos(self):
+        try:
+            fila = self.ui.tbl_paises.selectedIndexes()[0].row()
+            pais = self.dtu.listaPaises()
+            pais_seleccionado = pais[fila]
+            self.ui.txt_codigo.setText(pais_seleccionado._country_id)
+            self.ui.cbox_cod_region.setCurrentText(pais_seleccionado._region_name)
+            self.ui.txt_nombre.setText(pais_seleccionado._country_name)
+
+        except IndexError as e:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
+        except Exception as e:
+            print(e)
 
     def agregarPais(self):
         if self.validarVacios():

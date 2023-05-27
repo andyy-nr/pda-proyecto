@@ -1,3 +1,5 @@
+from PyQt5.QtWidgets import QTableView, QMessageBox
+
 from vistas.frmLocalidades import Ui_frmLocalidades
 from datos.locations import Dt_locations
 from PyQt5 import QtWidgets
@@ -7,12 +9,14 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         self.ui = Ui_frmLocalidades()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_localidades.setSelectionBehavior(QTableView.SelectRows)
     dtl = Dt_locations()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarLocalidad)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_localidades.clicked.connect(self.seleccionarElemento)
         self.cargarDatos(0)
         self.cargarCombobox()
 
@@ -69,6 +73,22 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         if self.ui.cbox_pais.currentData() is None:
             return False
         return True
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_localidades.selectedIndexes()[0].row()
+            localidades = self.dtl.listaLocalidades()
+            localidad = localidades[fila]
+            self.ui.txt_codigo.setText(str(localidad._location_id))
+            self.ui.txt_direccion.setText(localidad._street_address)
+            self.ui.txt_cod_postal.setText(localidad._postal_code)
+            self.ui.txt_provincia.setText(localidad._state_province)
+            self.ui.txt_ciudad.setText(localidad._city)
+            self.ui.cbox_pais.setCurrentText(str(localidad._country_name))
+        except IndexError as e:
+            QMessageBox.Warning(self, "Advertencia", "Seleccione un elemento de la tabla")
+        except Exception as e:
+            print(e)
 
     def agregarLocalidad(self):
         if self.validarVacios():

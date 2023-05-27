@@ -12,12 +12,14 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         self.ui = Ui_frmUsuario()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_Usuario.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dtu = Dt_tbl_user()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarUsuario)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_Usuario.clicked.connect(self.seleccionarElemento)
         self.cargarDatos(0)
 
 
@@ -76,6 +78,24 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             if usuario._user == self.ui.le_nombre_usuario.text():
                 return False
         return True
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
+            usuarios = self.dtu.listUsuarios()
+            usuario = usuarios[fila]
+            self.ui.le_codigo.setText(str(usuario._id_user))
+            self.ui.le_nombres.setText(usuario._nombres)
+            self.ui.le_nombre_usuario.setText(usuario._user)
+            self.ui.le_apellidos.setText(usuario._apellidos)
+            self.ui.le_email.setText(usuario._email)
+            self.ui.le_confirmar_correo.setText(usuario._email)
+            self.ui.le_contrasena.setText(usuario._pwd)
+            self.ui.le_confirmacion.setText(usuario._pwd_temp)
+        except Exception as e:
+            print(e)
+        except IndexError as e:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
     def agregarUsuario(self):
         if self.validarVacios():

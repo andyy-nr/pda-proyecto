@@ -11,12 +11,14 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
         self.ui = Ui_frmTrabajo()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_trabajo.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dttr = Dt_jobs()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarTrabajo)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_trabajo.clicked.connect(self.seleccionarElemento)
         self.cargarDatos(0)
 
     def limpiarCampos(self):
@@ -57,6 +59,20 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
         if self.ui.txt_sal_minimo.text() == "":
             return False
         return True
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_trabajo.selectedIndexes()[0].row()
+            trabajos = self.dttr.listaTrabajos()
+            trabajo = trabajos[fila]
+            self.ui.txt_codigo.setText(str(trabajo._job_id))
+            self.ui.txt_nombre_trabajo.setText(trabajo._job_title)
+            self.ui.txt_sal_maximo.setText(str(trabajo._max_salary))
+            self.ui.txt_sal_minimo.setText(str(trabajo._min_salary))
+        except Exception as e:
+            print(e)
+        except IndexError as e:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
     def agregarTrabajo(self):
         if self.validarVacios():

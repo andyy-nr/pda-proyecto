@@ -11,12 +11,14 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
         self.ui = Ui_frmRoles()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_roles.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dto = Dt_tbl_rol()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRol)
         self.ui.btn_eliminar_2.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_roles.clicked.connect(self.seleccionarElemento)
         self.cargarDatos(0)
 
     def limpiarCampos(self):
@@ -55,6 +57,19 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
                 return False
         return True
 
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_roles.selectedIndexes()[0].row()
+            roles = self.dto.listaRoles()
+            rol = roles[fila]
+            self.ui.txt_codigo.setText(str(rol._id_rol))
+            self.ui.txt_rol.setText(rol._rol)
+        except Exception as e:
+            print(f"Error al seleccionar elemento: {e}")
+        except IndexError as e:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
+
+
     def agregarRol(self):
         if self.validarVacios():
             if not self.validarNoRepetido():
@@ -64,8 +79,8 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
             estado = 1
             rol = Tbl_rol(rol=rol_texto, estado=estado)
             try:
-                self.dto.agregarRol()
-                self.cargarDatos()
+                #self.dto.agregarRol()
+                self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar rol: {e}")

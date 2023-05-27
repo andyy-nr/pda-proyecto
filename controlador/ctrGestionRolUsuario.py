@@ -12,6 +12,7 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
         self.ui = Ui_frmRolesUsuario()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_opcionRol.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)
     dr = Dt_tbl_rol()
     du = Dt_tbl_user()
     dur = Dt_tbl_UserRol()
@@ -20,6 +21,7 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
         self.ui.btn_agregar.clicked.connect(self.agregarRolUsuario)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_opcionRol.clicked.connect(self.seleccionarElementos)
         self.cargarDatos(0)
         self.cargarCombobox()
 
@@ -78,6 +80,18 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
         self.ui.cbox_opcion.setCurrentIndex(0)
         self.ui.txt_buscar.setText("")
         self.cargarDatos(0)
+
+    def seleccionarElementos(self):
+        try:
+            fila = self.ui.tbl_opcionRol.selectedIndexes()[0].row()
+            rolUsuarios = self.dur.listaUserRol()
+            rolUsuario = rolUsuarios[fila]
+            self.ui.cbox_rol.setCurrentText(rolUsuario._rol)
+            self.ui.cbox_opcion.setCurrentText(rolUsuario._user)
+        except Exception as e:
+            print(e)
+        except IndexError as e:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
     def agregarRolUsuario(self):
         if self.validarVacios():

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QTableView
 
 from vistas.frmDepartamentos import Ui_frmDepartamentos
 from datos.departments import Dt_departments
@@ -10,12 +10,14 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         self.ui = Ui_frmDepartamentos()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_departamentos.setSelectionBehavior(QTableView.SelectRows)
     dtd = Dt_departments()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDepartamento)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda : self.cargarDatos(1))
+        self.ui.tbl_departamentos.clicked.connect(self.seleccionarElemento)
         self.cargarDatos(0)
         self.cargarCombobox()
 
@@ -59,6 +61,20 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         if self.ui.cbox_cod_localidad.currentData() == None:
             return False
         return True
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_departamentos.selectedIndexes()[0].row()
+            departamento = self.dtd.listaDepartamentos()
+            dep_seleccionado = departamento[fila]
+            self.ui.txt_codigo.setText(str(dep_seleccionado._department_id))
+            self.ui.txt_nombre.setText(dep_seleccionado._department_name)
+            self.ui.cbox_cod_localidad.setCurrentText(dep_seleccionado._location_name)
+        except Exception as e:
+            print(e)
+        except IndexError as e:
+            QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
+
 
     def agregarDepartamento(self):
         if self.validarVacios():

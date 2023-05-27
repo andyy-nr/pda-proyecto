@@ -1,7 +1,7 @@
 from vistas.frmOpcion import Ui_frmOpcion
 from PyQt5 import QtWidgets
 from datos.Dt_Tbl_opcion import Dt_tbl_opcion
-
+from PyQt5.QtWidgets import QMessageBox, QTableView
 
 class CtrlFrmGestionOpcion(QtWidgets.QWidget):
     def __init__(self):
@@ -9,12 +9,14 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
         self.ui = Ui_frmOpcion()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_opcion.setSelectionBehavior(QTableView.SelectRows)
     dto = Dt_tbl_opcion() # Instancia de la clase Dt_tbl_opcion
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarOpcion)
         self.ui.btn_regresar.clicked.connect(self.close)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.tbl_opcion.clicked.connect(self.seleccionarElemento)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.cargarDatos(0)
 
@@ -53,6 +55,16 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
             if self.ui.txt_opcion.text() == row._opcion:
                 return False
         return True
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_opcion.selectedIndexes()[0].row()
+            opciones = self.dto.listaOpciones()
+            opc_seleccionada = opciones[fila]
+            self.ui.txt_codigo.setText(str(opc_seleccionada._id_opcion))
+            self.ui.txt_opcion.setText(opc_seleccionada._opcion)
+        except IndexError as e:
+            QMessageBox.Warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
     def agregarOpcion(self):
         if self.validarVacios():

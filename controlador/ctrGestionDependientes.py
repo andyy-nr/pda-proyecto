@@ -1,20 +1,24 @@
+from PyQt5.QtWidgets import QTableView, QMessageBox
+
 from vistas.frmDependientes import Ui_frmDependientes
 from datos.dependents import Dt_dependents
 from entidades.Dependents import dependents
 from PyQt5 import QtWidgets
 
-class CtrlGestionDependientes( QtWidgets.QWidget):
+class CtrlGestionDependientes(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.ui = Ui_frmDependientes()
         self.ui.setupUi(self)
         self.initControlGui()
+        self.ui.tbl_dependientes.setSelectionBehavior(QTableView.SelectRows)
     dd = Dt_dependents()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDependiente)
         self.ui.limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.tbl_dependientes.clicked.connect(self.seleccionarElemento)
         self.cargarDatos(0)
         self.cargarCombobox()
 
@@ -66,6 +70,21 @@ class CtrlGestionDependientes( QtWidgets.QWidget):
             self.ui.cbox_empleado.addItem("Empleado*")
             for dependiente in listaDependientes:
                 self.ui.cbox_empleado.addItem(dependiente._employee, dependiente._employee_id)
+        except Exception as e:
+            print(e)
+
+    def seleccionarElemento(self):
+        try:
+            fila = self.ui.tbl_dependientes.selectedIndexes()[0].row()
+            dependientes = self.dd.listaDependents()
+            dep_seleccionado = dependientes[fila]
+            self.ui.txt_nombres.setText(dep_seleccionado.first_name)
+            self.ui.txt_apellidos.setText(dep_seleccionado._last_name)
+            self.ui.txt_codigo.setText(str(dep_seleccionado.dependent_id))
+            self.ui.txt_relacion.setText(dep_seleccionado.relationship)
+            self.ui.cbox_empleado.setCurrentText(dep_seleccionado._employee)
+        except IndexError as e:
+            QMessageBox.Warning(self, "Error", "Seleccione un elemento")
         except Exception as e:
             print(e)
 
