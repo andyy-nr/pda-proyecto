@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 from vistas.frmTrabajo import Ui_frmTrabajo
 from datos.jobs import Dt_jobs
+from entidades.Jobs import jobs
 from PyQt5 import QtWidgets
 
 class CtrlGestionTrabajos(QtWidgets.QWidget):
@@ -15,16 +16,27 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarTrabajo)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
         self.ui.txt_nombre_trabajo.setText("")
         self.ui.txt_sal_maximo.setText("")
         self.ui.txt_sal_minimo.setText("")
+        self.ui.txt_buscar.setText("")
+        self.cargarDatos(0)
 
-    def cargarDatos(self):
-        listaTrabajo = self.dttr.listaTrabajos()
+    def cargarDatos(self, modo):
+        if modo == 1:
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaTrabajo = self.dttr.buscarTrabajo(texto)
+            else:
+                QMessageBox.about(self, "Error", "No se puede buscar con el campo vacio")
+                return
+        else:
+            listaTrabajo = self.dttr.listaTrabajos()
         i = len(listaTrabajo)
         self.ui.tbl_trabajo.setRowCount(i)
         tablerow = 0
@@ -52,9 +64,10 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
             nombre_trabajo = self.ui.txt_nombre_trabajo.text()
             salario_maximo = float(self.ui.txt_sal_maximo.text())
             salario_minimo = float(self.ui.txt_sal_minimo.text())
+            trabajo = jobs(id_trabajo, nombre_trabajo, salario_minimo, salario_maximo)
             try:
-                self.dttr.agregarTrabajo(id_trabajo, nombre_trabajo, salario_maximo, salario_minimo)
-                self.cargarDatos()
+                self.dttr.agregarTrabajo(trabajo)
+                self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar el registro: {e}")

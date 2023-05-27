@@ -17,7 +17,7 @@ class Dt_tbl_user:
 
     def totalUsuarios(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.tbl_user;"
+        self._sql = "SELECT * FROM Seguridad.tbl_user where estado <> 3;" # hacer query count
         try:
             self._cursor.execute(self._sql)
             return(str(self._cursor.rowcount))
@@ -26,7 +26,27 @@ class Dt_tbl_user:
 
     def listUsuarios(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.tbl_user;"
+        self._sql = "SELECT * FROM Seguridad.tbl_user where estado <> 3;"
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaUsuario = []
+
+            for tu in registros:
+                tus = Tbl_user(tu['id_user'], tu['user'], tu['pwd'], tu['nombres'],
+                            tu['apellidos'], tu['email'], tu['pwd_temp'], tu['estado'])
+                listaUsuario.append(tus)
+
+            return listaUsuario
+        except Exception as e:
+            print("Datos: Error listUsuarios()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def buscarUsuario(self, texto):
+        self.renovarConexion()
+        self._sql = "SELECT * FROM Seguridad.tbl_user WHERE user LIKE '%{}%' and estado <> 3;".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -38,18 +58,20 @@ class Dt_tbl_user:
                 listaUsuario.append(tus)
             return listaUsuario
         except Exception as e:
-            print("Datos: Error listUsuarios()", e)
+            print("Datos: Error buscarUsuario()", e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarUsuario(self, usuario, pwd, nombres, apellidos, email, pwd_temp, estado):
+    def agregarUsuario(self, usuario):
         self.renovarConexion()
-        usuario = [usuario, pwd, nombres, apellidos, email, pwd_temp, estado]
+
         self._sql = "INSERT INTO Seguridad.tbl_user (user, pwd, nombres, apellidos, email, pwd_temp, estado) " \
-                    "values (%s, %s, %s, %s, %s, %s, %s);"
+                    "values ({}, {}, {}. {}, {}, {}, {});".format(usuario._user, usuario._pwd, usuario._nombres,
+                                                                   usuario._apellidos, usuario._email, usuario._pwd_temp,
+                                                                   usuario._estado)
         try:
-            self._cursor.execute(self._sql, usuario)
+            self._cursor.execute(self._sql)
             self._con.commit()
             return True
         except Exception as e:

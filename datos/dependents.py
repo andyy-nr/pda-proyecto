@@ -42,14 +42,36 @@ class Dt_dependents:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarDependientes(self, nombre, apellido, relacion, empleado):
+    def buscarDependiente(self, texto):
         self.renovarConexion()
-        dependientes = [nombre, apellido, relacion, empleado]
+        self._sql = "select dep.dependent_id, dep.first_name, dep.last_name, dep.relationship, emp.employee_id, " \
+                    "CONCAT(emp.first_name, ' ', emp.last_name) as employee " \
+                    "from Seguridad.dependents dep inner join Seguridad.employees emp on dep.employee_id = emp.employee_id " \
+                    "where dep.first_name like '%{}%' or dep.last_name like '%{}%';".format(texto, texto)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaDependientes = []
+            for td in registros:
+                tds = dependents(td['dependent_id'], td['first_name'], td['last_name'], td['relationship'],
+                                 td['employee_id'],
+                                 td['employee'])
+                listaDependientes.append(tds)
+            return listaDependientes
+        except Exception as e:
+            print(f"Ocurrio un error en  buscar dependendientes {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def agregarDependientes(self, dependiente):
+        self.renovarConexion()
         self._sql = "INSERT INTO Seguridad.dependents " \
                     "(first_name, last_name, relationship, employee_id) " \
-                    "VALUES (%s, %s, %s, %s);"
+                    "VALUES ({}, {}, {}, {});".format(dependiente.first_name, dependiente.last_name,
+                                                      dependiente.relationship, dependiente.employee_id)
         try:
-            self._cursor.execute(self._sql, dependientes)
+            self._cursor.execute(self._sql)
             self._con.commit()
         except Exception as e:
             print(f"Ocurrio un error en agregar dependendientes {e}")

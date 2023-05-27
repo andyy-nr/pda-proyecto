@@ -146,11 +146,11 @@ class Ui_frmOpcion(object):
         self.lbl_nombre_usuario.setFont(font)
         self.lbl_nombre_usuario.setObjectName("lbl_nombre_usuario")
         self.gridLayout.addWidget(self.frame, 0, 7, 1, 1, QtCore.Qt.AlignRight)
-        self.lineEdit = QtWidgets.QLineEdit(frmOpcion)
-        self.lineEdit.setMinimumSize(QtCore.QSize(0, 35))
-        self.lineEdit.setText("")
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 3, 1, 1, 7)
+        self.txt_buscar = QtWidgets.QLineEdit(frmOpcion)
+        self.txt_buscar.setMinimumSize(QtCore.QSize(0, 35))
+        self.txt_buscar.setText("")
+        self.txt_buscar.setObjectName("txt_buscar")
+        self.gridLayout.addWidget(self.txt_buscar, 3, 1, 1, 7)
         self.btn_limpiar = QtWidgets.QPushButton(frmOpcion)
         self.btn_limpiar.setMinimumSize(QtCore.QSize(150, 50))
         font = QtGui.QFont()
@@ -265,7 +265,7 @@ class Ui_frmOpcion(object):
         self.btn_eliminar.setText(_translate("frmOpcion", "Eliminar"))
         self.txt_codigo.setPlaceholderText(_translate("frmOpcion", "Código*"))
         self.lbl_nombre_usuario.setText(_translate("frmOpcion", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
-        self.lineEdit.setPlaceholderText(_translate("frmOpcion", "Buscar"))
+        self.txt_buscar.setPlaceholderText(_translate("frmOpcion", "Buscar"))
         self.btn_limpiar.setToolTip(_translate("frmOpcion", "Limpiar información seleccionada"))
         self.btn_limpiar.setText(_translate("frmOpcion", "Limpiar"))
         self.btn_buscar.setToolTip(_translate("frmOpcion", "Buscar"))
@@ -280,6 +280,7 @@ class Ui_frmOpcion(object):
         item.setText(_translate("frmOpcion", "Opción"))
         self.label.setText(_translate("frmOpcion", "Datos de las opciones"))
 from vistas.imagenes import imagenes
+
 
 if __name__ == "__main__":
     import sys

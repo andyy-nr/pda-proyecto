@@ -8,23 +8,34 @@ class CtrlGestionPaises(QtWidgets.QWidget):
         self.ui = Ui_frmPaises()
         self.ui.setupUi(self)
         self.initControlGui()
-        self.cargarDatos()
+        self.cargarDatos(0)
     dtu = Dt_countries()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarPais)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.cargarCombobox()
-        self.cargarDatos()
+        self.cargarDatos(0)
         self.limpiarCampos()
 
     def limpiarCampos(self):
-        self.ui.txt_nombre.clear()
-        self.ui.txt_codigo.clear()
+        self.ui.txt_nombre.setText("")
+        self.ui.txt_codigo.setText("")
         self.ui.cbox_cod_region.setCurrentIndex(0)
+        self.ui.txt_buscar.setText("")
+        self.cargarDatos(0)
 
-    def cargarDatos(self):
-        listaPaises = self.dtu.listaPaises()
+    def cargarDatos(self, modo):
+        if modo == 1: # Buscar
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaPaises = self.dtu.buscarPais(texto)
+            else:
+                QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
+                return
+        else: # Cargar todos los datos
+            listaPaises = self.dtu.listaPaises()
         i = len(listaPaises)
         self.ui.tbl_paises.setRowCount(i)
         tablerow = 0

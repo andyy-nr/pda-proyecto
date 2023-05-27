@@ -29,11 +29,27 @@ class Dt_tbl_rol:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarRol(self, rol, estado):
+    def buscarRol(self, texto):
         self.renovarConexion()
-        rol = [rol, estado]
+        self._sql = "Select * from Seguridad.tbl_rol where rol like '%{}%';".format(texto)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaRoles = []
+            for tr in registros:
+                trs = Tbl_rol(tr['id_rol'], tr['rol'], tr['estado'])
+                listaRoles.append(trs)
+            return listaRoles
+        except Exception as e:
+            print("Datos: Error buscarRol()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def agregarRol(self, rol):
+        self.renovarConexion()
         self._sql = "INSERT INTO Seguridad.tbl_rol (rol, estado) " \
-                    "values (%s, %s);"
+                    "values ({}, {});".format(rol._rol, rol._estado)
         try:
             self._cursor.execute(self._sql, rol)
             self._con.commit()

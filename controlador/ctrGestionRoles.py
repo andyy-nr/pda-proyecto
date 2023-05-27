@@ -1,5 +1,8 @@
+from PyQt5.QtWidgets import QMessageBox
+
 from vistas.frmRoles  import Ui_frmRoles
 from datos.Dt_Tbl_rol import Dt_tbl_rol
+from entidades.Tbl_rol import Tbl_rol
 from PyQt5 import QtWidgets
 
 class CtrlFrmGestionRoles(QtWidgets.QWidget):
@@ -13,14 +16,25 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRol)
         self.ui.btn_eliminar_2.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
         self.ui.txt_rol.setText("")
+        self.cargarDatos(0)
+        self.ui.txt_buscar.setText("")
 
-    def cargarDatos(self):
-        listaRoles = self.dto.listaRoles()
+    def cargarDatos(self, modo):
+        if modo == 1:
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaRoles = self.dto.buscarRol(texto)
+            else:
+                QMessageBox.warning(self, "Error", "No se ha ingresado un rol a buscar")
+                return
+        else:
+            listaRoles = self.dto.listaRoles()
         i = len(listaRoles)
         self.ui.tbl_roles.setRowCount(i)
         tablerow = 0
@@ -46,10 +60,11 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
             if not self.validarNoRepetido():
                 print("Rol ya existe")
                 return
-            rol = self.ui.txt_rol.text()
+            rol_texto = self.ui.txt_rol.text()
             estado = 1
+            rol = Tbl_rol(rol=rol_texto, estado=estado)
             try:
-                self.dto.agregarRol(rol, estado)
+                self.dto.agregarRol()
                 self.cargarDatos()
                 self.limpiarCampos()
             except Exception as e:

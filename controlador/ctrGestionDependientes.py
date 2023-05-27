@@ -1,5 +1,6 @@
 from vistas.frmDependientes import Ui_frmDependientes
 from datos.dependents import Dt_dependents
+from entidades.Dependents import dependents
 from PyQt5 import QtWidgets
 
 class CtrlGestionDependientes( QtWidgets.QWidget):
@@ -13,7 +14,8 @@ class CtrlGestionDependientes( QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDependiente)
         self.ui.limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
         self.cargarCombobox()
 
     def limpiarCampos(self):
@@ -22,9 +24,19 @@ class CtrlGestionDependientes( QtWidgets.QWidget):
         self.ui.txt_apellidos.setText("")
         self.ui.txt_relacion.setText("")
         self.ui.cbox_empleado.setCurrentIndex(0)
+        self.ui.txt_buscar.setText("")
+        self.cargarDatos(0)
 
-    def cargarDatos(self):
-        listaDependientes = self.dd.listaDependents()
+    def cargarDatos(self, modo):
+        if modo == 1:
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaDependientes =self.dd.buscarDependiente(texto)
+            else:
+                QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
+                return
+        else:
+            listaDependientes = self.dd.listaDependents()
         i = len(listaDependientes)
         self.ui.tbl_dependientes.setRowCount(i)
         tablerow = 0
@@ -63,10 +75,11 @@ class CtrlGestionDependientes( QtWidgets.QWidget):
             apellidos = self.ui.txt_apellidos.text()
             relacion = self.ui.txt_relacion.text()
             empleado = self.ui.cbox_empleado.currentData()
+            dependiente = dependents(nombres, apellidos, relacion, empleado)
 
             try:
-                self.dd.agregarDependientes(nombres, apellidos, relacion, empleado)
-                self.cargarDatos()
+                self.dd.agregarDependientes(dependiente)
+                self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar dependiente: {e}")

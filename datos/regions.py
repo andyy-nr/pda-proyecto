@@ -30,11 +30,30 @@ class Dt_Regions:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarRegion(self, nombre_region):
+    def buscarRegion(self, texto):
         self.renovarConexion()
-        self._sql = "INSERT INTO Seguridad.regions(region_name) VALUES (%s);"
+        self._sql = "SELECT * FROM Seguridad.regions WHERE region_name LIKE '%{}%';".format(texto)
         try:
-            self._cursor.execute(self._sql, nombre_region)
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaRegiones = []
+
+            for tu in registros:
+                tus = regions(tu['region_id'], tu['region_name'])
+                listaRegiones.append(tus)
+            return listaRegiones
+        except Exception as e:
+            print("Datos: Error buscarRegion()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+
+    def agregarRegion(self, region):
+        self.renovarConexion()
+        self._sql = "INSERT INTO Seguridad.regions(region_name) VALUES ({});".format(region._region_name)
+        try:
+            self._cursor.execute(self._sql)
             self._con.commit()
         except Exception as e:
             print("Datos: Error agregarRegion()", e)

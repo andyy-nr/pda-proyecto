@@ -1,3 +1,5 @@
+from PyQt5.QtWidgets import QMessageBox
+
 from vistas.frmRolesUsuario import Ui_frmRolesUsuario
 from datos.Dt_Tbl_rol import Dt_tbl_rol
 from datos.Dt_Tbl_user import Dt_tbl_user
@@ -17,11 +19,21 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRolUsuario)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
         self.cargarCombobox()
 
-    def cargarDatos(self):
-        listaRolUsuario = self.dur.listaUserRol()
+    def cargarDatos(self, modo):
+        #revisar
+        if modo == 1:
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaRolUsuario = self.dur.buscarUserRol(texto)
+            else:
+                QMessageBox.about(self, "Error", "No se puede buscar con el campo vacio")
+                return
+        else:
+            listaRolUsuario = self.dur.listaUserRol()
         i = len(listaRolUsuario)
         self.ui.tbl_opcionRol.setRowCount(i)
         tablerow = 0
@@ -64,6 +76,8 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
     def limpiarCampos(self):
         self.ui.cbox_rol.setCurrentIndex(0)
         self.ui.cbox_opcion.setCurrentIndex(0)
+        self.ui.txt_buscar.setText("")
+        self.cargarDatos(0)
 
     def agregarRolUsuario(self):
         if self.validarVacios():
@@ -73,6 +87,7 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
             rol = self.ui.cbox_rol.currentData()
             user = self.ui.cbox_opcion.currentData()
             self.dur.agregarUserRol(user, rol)
-            self.cargarDatos()
+            self.cargarDatos(0)
+            self.limpiarCampos()
         else:
             print("Campos vacios")

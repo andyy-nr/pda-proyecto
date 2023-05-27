@@ -31,13 +31,34 @@ class Dt_locations:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarLocalidad(self, street_address, postal_code, state_province, country_id, ciudad):
+    def buscarLocalidad(self, texto):
         self.renovarConexion()
-        localidad = [street_address, postal_code, ciudad, state_province, country_id]
-        self._sql = "INSERT INTO Seguridad.locations (street_address, postal_code, city, state_province, country_id) " \
-                    "VALUES (%s, %s, %s, %s, %s);"
+        self._sql = "select * from Seguridad.locations where street_address like '%{}%';".format(texto)
         try:
-            self._cursor.execute(self._sql, localidad)
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaLocalidades = []
+
+            for tl in registros:
+                tls = locations(location_id=tl['location_id'], street_address=tl['street_address'],
+                                postal_code=tl['postal_code'], state_province=tl['state_province'],
+                                country_id=tl['country_id'], city=tl['city'])
+                listaLocalidades.append(tls)
+            return listaLocalidades
+        except Exception as e:
+            print("Datos: error buscarLocalidad()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+
+    def agregarLocalidad(self, localidad):
+        self.renovarConexion()
+        self._sql = "INSERT INTO Seguridad.locations (street_address, postal_code, city, state_province, country_id) " \
+                    "VALUES ({}, {}, {}, {}, {});".format(localidad._street_address, localidad._postal_code,
+                                                          localidad._city, localidad._state_province, localidad._country_id)
+        try:
+            self._cursor.execute(self._sql)
             self._con.commit()
             print("Registro agregado correctamente")
         except Exception as e:

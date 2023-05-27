@@ -40,6 +40,27 @@ class Dt_departments:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def buscarDepartamento(self, texto):
+        self.renovarConexion()
+        self._sql = "SELECT department_id, department_name, street_address, Seguridad.departments.location_id " \
+                    "FROM (Seguridad.departments inner join Seguridad.locations " \
+                    "on Seguridad.departments.location_id = Seguridad.locations.location_id) " \
+                    "WHERE department_name LIKE '%{}%';".format(texto)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaDepartamentos = []
+
+            for td in registros:
+                tds = departments(department_id=td['department_id'], department_name=td['department_name'], location_id=td['location_id'], location_name=td['street_address'])
+                listaDepartamentos.append(tds)
+            return listaDepartamentos
+        except Exception as e:
+            print("Datos: error buscarDepartamento()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
     def agregarDepartamento(self, department_name, location_id):
         self.renovarConexion()
         departamento = [department_name, location_id]

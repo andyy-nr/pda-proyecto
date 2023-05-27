@@ -31,18 +31,35 @@ class Dt_jobs:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarTrabajo(self, id_trabajo, nombre_trabajo, salario_maximo, salario_minimo):
+    def buscarTrabajo(self, trabajo):
         self.renovarConexion()
-        trabajo = [id_trabajo, nombre_trabajo, salario_maximo, salario_minimo]
+        self._sql = "SELECT * FROM Seguridad.jobs WHERE job_title like '%{}%';".format(trabajo)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaTrabajos = []
+
+            for tj in registros:
+                tjs = jobs(tj['job_id'], tj['job_title'], tj['min_salary'], tj['max_salary'])
+                listaTrabajos.append(tjs)
+            return listaTrabajos
+        except Exception as e:
+            print("Datos: Error buscarTrabajo()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def agregarTrabajo(self, trabajo):
+        self.renovarConexion()
         self._sql = f"INSERT INTO Seguridad.jobs (job_id, job_title, min_salary, max_salary) " \
-                    "VALUES (%s, %s, %s, %s);"
+                    "VALUES ({}, {}, {}, {});"
         try:
             self._cursor.execute(self._sql, trabajo)
             self._con.commit()
-            QMessageBox.information(None, "Agregar Trabajo", "Trabajo agregado correctamente")
+            QMessageBox.information("Agregar Trabajo", "Trabajo agregado correctamente")
         except Exception as e:
             print("Datos: Error agregarTrabajo()", e)
-            QMessageBox.warning(None, "Agregar Trabajo", f"Error al agregar Trabajo, {e}")
+            QMessageBox.warning("Agregar Trabajo", f"Error al agregar Trabajo, {e}")
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

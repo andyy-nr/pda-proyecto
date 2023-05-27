@@ -9,20 +9,31 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
         self.ui = Ui_frmOpcion()
         self.ui.setupUi(self)
         self.initControlGui()
-    dto = Dt_tbl_opcion()
+    dto = Dt_tbl_opcion() # Instancia de la clase Dt_tbl_opcion
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarOpcion)
         self.ui.btn_regresar.clicked.connect(self.close)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
         self.ui.txt_opcion.setText("")
+        self.ui.btn_buscar.setText("")
+        self.cargarDatos(0)
 
-    def cargarDatos(self):
-        listaOpciones = self.dto.listaOpciones()
+    def cargarDatos(self, modo):
+        if modo == 1: # Buscar
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaOpciones = self.dto.buscarOpcion(texto)
+            else:
+                QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
+                return
+        else: # Cargar todos los datos
+            listaOpciones = self.dto.listaOpciones()
         i = len(listaOpciones)
         self.ui.tbl_opcion.setRowCount(i)
         tablerow = 0
@@ -52,7 +63,7 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
             estado = 1
             try:
                 self.dto.agregarOpcion(opcion, estado)
-                self.cargarDatos()
+                self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar opcion: {e}")

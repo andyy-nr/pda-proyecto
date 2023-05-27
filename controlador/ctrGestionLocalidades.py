@@ -12,7 +12,8 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarLocalidad)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
         self.cargarCombobox()
 
     def limpiarCampos(self):
@@ -21,10 +22,20 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         self.ui.txt_ciudad.setText("")
         self.ui.txt_provincia.setText("")
         self.ui.txt_cod_postal.setText("")
+        self.ui.txt_buscar.setText("")
         self.ui.cbox_pais.setCurrentIndex(0)
+        self.cargarDatos(0)
 
-    def cargarDatos(self):
-        listaLocalidades = self.dtl.listaLocalidades()
+    def cargarDatos(self, modo):
+        if modo == 1:
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaLocalidades = self.dtl.buscarLocalidad(texto)
+            else:
+                QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
+                return
+        else:
+            listaLocalidades = self.dtl.listaLocalidades()
         i = len(listaLocalidades)
         self.ui.tbl_localidades.setRowCount(i)
         tablerow = 0

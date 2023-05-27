@@ -32,12 +32,33 @@ class Dt_tbl_rolOpcion:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarRolOpcion(self, id_rol, id_opcion):
+    def buscarRolUsuario(self):
         self.renovarConexion()
-        rolOpcion = [id_rol, id_opcion]
-        self._sql = "INSERT INTO Seguridad.tbl_rolOpcion (id_rol, id_opcion) values (%s, %s);"
+        self._sql = "SELECT rol.id_rol, rol.rol, opcion.id_opcion, opcion.opcion " \
+                    "FROM Seguridad.tbl_rolOpcion rp " \
+                    "INNER JOIN Seguridad.tbl_opcion opcion ON rp.id_opcion = opcion.id_opcion " \
+                    "INNER JOIN Seguridad.tbl_rol rol ON rp.id_rol = rol.id_rol" \
+                    "WHERE rol.rol like '%{}%';"
         try:
-            self._cursor.execute(self._sql, rolOpcion)
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaRolOpcion = []
+            for tro in registros:
+                tros = Tbl_rolOpcion(tro['id_rol'], tro['rol'], tro['id_opcion'], tro['opcion'])
+                listaRolOpcion.append(tros)
+            return listaRolOpcion
+        except Exception as e:
+            print("Datos: Error buscarRolUsuario()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+
+    def agregarRolOpcion(self, rolOpcion):
+        self.renovarConexion()
+        self._sql = "INSERT INTO Seguridad.tbl_rolOpcion (id_rol, id_opcion) values ({},{});".format(rolOpcion._id_rol, rolOpcion._id_opcion)
+        try:
+            self._cursor.execute(self._sql)
             self._con.commit()
             print(f"RolOpcion ingresado correctamente")
         except Exception as e:

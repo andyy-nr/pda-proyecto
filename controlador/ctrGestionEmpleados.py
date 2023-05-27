@@ -5,6 +5,7 @@ from vistas.frmEmpleados import Ui_frmEmpleados
 from datos.employees import Dt_employees
 import datetime
 from PyQt5 import QtWidgets, QtCore
+from entidades.Employees import employee
 
 
 class CtrlGestionEmpleados(QtWidgets.QWidget):
@@ -20,9 +21,10 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.ui.btn_agregar.clicked.connect(self.agregarEmpleado)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.tbl_employees.clicked.connect(self.seleccionarElemento)
-        self.ui.btn_eliminar.clicked.connect(self.eliminarEmpleado)
+        # self.ui.btn_eliminar.clicked.connect(self.eliminarEmpleado)
         self.ui.btn_editar.clicked.connect(self.editarEmpleado)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
         self.cargarCombobox()
 
     def limpiarCampos(self):
@@ -36,10 +38,20 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.ui.cbox_gerente.setCurrentIndex(0)
         self.ui.date_fecha_contratacion.setDate(datetime.datetime.now())
         self.ui.tbl_employees.clearSelection()
+        self.ui.txt_buscar.setText("")
+        self.cargarDatos(0)
 
 
-    def cargarDatos(self):
-        listaEmpleados = self.dtu.listaEmpleados()
+    def cargarDatos(self, modo):
+        if modo == 1:
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaEmpleados = self.dtu.buscarEmpleado(texto)
+            else:
+                QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
+                return
+        else:
+            listaEmpleados = self.dtu.listaEmpleados()
         i = len(listaEmpleados)
         self.ui.tbl_employees.setRowCount(i)
         tablerow = 0
@@ -104,7 +116,9 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             gerente = self.ui.cbox_gerente.currentData()
             departamento = self.ui.cbox_departamento.currentData()
             trabajo = self.ui.cbox_trabajo.currentData()
-            self.dtu.agregarEmpleado(nombre, apellido, correo, telefono, fecha, trabajo, salario, gerente, departamento)
+            empleado = employee(nombre, apellido, correo, telefono, fecha, job_id=trabajo, salary=salario,
+                                manager_id=gerente, department_id=departamento)
+            self.dtu.agregarEmpleado(empleado)
             self.cargarDatos()
             self.limpiarCampos()
         else:
@@ -129,18 +143,18 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             print("Seleccione un empleado")
             return None
 
-    def eliminarEmpleado(self):
-        empleado = self.seleccionarElemento()
-        if empleado is not None:
-            self.dtu.eliminarEmpleado(empleado._employee_id)
-            self.cargarDatos()
-            self.limpiarCampos()
+    # def eliminarEmpleado(self):
+    #     empleado = self.seleccionarElemento()
+    #     if empleado is not None:
+    #         self.dtu.eliminarEmpleado(empleado)
+    #         self.cargarDatos()
+    #         self.limpiarCampos()
 
     def editarEmpleado(self):
        try:
             fila = self.ui.tbl_employees.selectedIndexes()[0].row()
             empleados = self.dtu.listaEmpleados()
-            emp_seleccionado_id = empleados[fila]._employee_id
+            emp_seleccionado= empleados[fila]
             nombre = self.ui.txt_nombres.text()
             apellido = self.ui.txt_apellidos.text()
             salario = self.ui.txt_salario.text()
@@ -150,7 +164,8 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             gerente = self.ui.cbox_gerente.currentData()
             departamento = self.ui.cbox_departamento.currentData()
             trabajo = self.ui.cbox_trabajo.currentData()
-            self.dtu.editarEmpleado(emp_seleccionado_id, nombre, apellido, correo, telefono, fecha, trabajo, salario, gerente, departamento)
+            emp_nuevo = employee(nombre, apellido, correo, telefono, fecha, job_id=trabajo, salary=salario, manager_id=gerente, department_id=departamento)
+            self.dtu.editarEmpleado(emp_seleccionado, emp_nuevo)
             self.cargarDatos()
             self.limpiarCampos()
        except Exception as e:

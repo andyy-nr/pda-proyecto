@@ -51,15 +51,41 @@ class Dt_employees:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarEmpleado(self, first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id):
+    def buscarEmpleado(self, texto):
         self.renovarConexion()
-        empleado = [first_name, last_name, email, phone_number,
-                     hire_date, job_id, salary,
-                     manager_id, department_id]
+        self._sql =  "SELECT emp.employee_id, emp.first_name, emp.last_name, emp.email, emp.phone_number, " \
+                    "emp.hire_date, jobs.job_id, jobs.job_title, emp.manager_id, emp.salary, emp.manager_id, " \
+                    "CONCAT(manager.first_name, ' ', manager.last_name) AS manager, departments.department_id, " \
+                    "departments.department_name FROM Seguridad.employees emp " \
+                    "INNER JOIN Seguridad.jobs ON emp.job_id = jobs.job_id " \
+                    "INNER JOIN Seguridad.departments ON emp.department_id = departments.department_id  " \
+                    "INNER JOIN Seguridad.employees manager ON manager.employee_id = emp.manager_id " \
+                    "WHERE emp.first_name LIKE '%{}%' OR emp.last_name LIKE '%{}%';".format(texto, texto)
+
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaEmpleados = []
+            for te in registros:
+                tes = employee(employee_id=te['employee_id'], first_name=te['first_name'], last_name=te['last_name'],
+                                email=te['email'], phone=te['phone_number'], hire_date=te['hire_date'], job_id=te['job_id'],
+                                job_title=te['job_title'], salary=te['salary'], manager_id=te['manager_id'],
+                                manager=te['manager'], department_id=te['department_id'], department_name=te['department_name'])
+                listaEmpleados.append(tes)
+            return listaEmpleados
+        except Exception as e:
+            print("Datos: Error buscarEmpleado()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def agregarEmpleado(self, empleado):
+        self.renovarConexion()
         self._sql = "INSERT INTO Seguridad.employees (first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id) " \
-                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                    "VALUES ({}, {}, {}, {}, {}, {} {}, {}, {});". format(empleado.first_name, empleado.last_name, empleado.email, empleado.phone_number,
+                                                                          empleado.hire_date, empleado.job_id, empleado.salary, empleado.manager_id, empleado.department_id)
         try:
-            self._cursor.execute(self._sql, empleado)
+            self._cursor.execute(self._sql)
             self._con.commit()
         except Exception as e:
             print(e)
@@ -67,28 +93,29 @@ class Dt_employees:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def eliminarEmpleado(self, emp_id):
-        self.renovarConexion()
-        self._sql = "DELETE FROM Seguridad.employees WHERE employee_id = %s;"
-        try:
-            self._cursor.execute(self._sql, emp_id)
-            self._con.commit()
-        except Exception as e:
-            print(e)
-        finally:
-            Conexion.closeCursor()
-            Conexion.closeConnection()
+    # def eliminarEmpleado(self, empleado):
+    #     self.renovarConexion()
+    #     self._sql = "DELETE FROM Seguridad.employees WHERE employee_id = {};".format(empleado.employee_id)
+    #     try:
+    #         self._cursor.execute(self._sql)
+    #         self._con.commit()
+    #     except Exception as e:
+    #         if e.errno == 1451:
+    #             QMessageBox.alert(self, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Abort)
+    #         print(e)
+    #     finally:
+    #         Conexion.closeCursor()
+    #         Conexion.closeConnection()
 
-    def editarEmpleado(self, emp_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id):
+    def editarEmpleado(self, empleado_anterior, empleado_editado):
         self.renovarConexion()
-        empleado = [first_name, last_name, email, phone_number,
-                     hire_date, job_id, salary,
-                     manager_id, department_id, emp_id]
-        print(empleado)
-        self._sql = "UPDATE Seguridad.employees SET first_name = %s, last_name = %s, email = %s, phone_number = %s, " \
-                    "hire_date = %s, job_id = %s, salary = %s, manager_id = %s, department_id = %s WHERE employee_id = %s;"
+        self._sql = "UPDATE Seguridad.employees SET first_name = {}, last_name = {}, email = {}, phone_number = {}, " \
+                    "hire_date = {}, job_id = {}, salary = {}, manager_id = {}, department_id = {}" \
+                    " WHERE employee_id = {};".format(empleado_editado.first_name, empleado_editado.last_name, empleado_editado.email,
+                                                      empleado_editado.phone_number, empleado_editado.hire_date, empleado_editado.job_id,
+                                                      empleado_editado.salary, empleado_editado.manager_id, empleado_editado.department_id, empleado_anterior.employee_id)
         try:
-            self._cursor.execute(self._sql, empleado)
+            self._cursor.execute(self._sql)
             self._con.commit()
         except Exception as e:
             print(e)
@@ -113,6 +140,9 @@ class Dt_employees:
             return listaManagers
         except Exception as e:
             print("Datos: Error listaManagers()", e)
+        except self._cursor.Error as e:
+            if e.errno == 1451:
+                QMessageBox.alert(self, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Abort)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

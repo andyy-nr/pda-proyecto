@@ -1,3 +1,5 @@
+from PyQt5.QtWidgets import QMessageBox
+
 from vistas.frmOpcionRol import Ui_frmOpcionRol
 from datos.Dt_Tbl_rol import Dt_tbl_rol
 from datos.Dt_Tbl_opcion import Dt_tbl_opcion
@@ -17,11 +19,20 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRolOpcion)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
         self.cargarCombobox()
 
-    def cargarDatos(self):
-        listaRolOpcion = self.dro.listaRolOpcion()
+    def cargarDatos(self, modo):
+        if modo == 0:
+            texto = self.ui.txt_buscar.text()
+            if texto == "":
+                listaRolOpcion = self.dro.listaRolOpcion()
+            else:
+                QMessageBox.about(self, "Error", "Ingrese un texto para buscar")
+                return
+        else:
+            listaRolOpcion = self.dro.listaRolOpcion()
         i = len(listaRolOpcion)
         self.ui.tbl_opcionRol.setRowCount(i)
         tablerow = 0
@@ -57,6 +68,8 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
     def limpiarCampos(self):
         self.ui.cbox_rol.setCurrentIndex(0)
         self.ui.cbox_opcion.setCurrentIndex(0)
+        self.ui.txt_buscar.setText("")
+        self.cargarDatos(0)
 
     def validarNoRepetido(self):
         rolOpcion = self.dro.listaRolOpcion()
@@ -73,7 +86,8 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
             rol = self.ui.cbox_rol.currentData()
             opcion = self.ui.cbox_opcion.currentData()
             self.dro.agregarRolOpcion(rol, opcion)
-            self.cargarDatos()
+            self.cargarDatos(0)
+            self.limpiarCampos()
         else:
             print("Hay campos vacios")
 

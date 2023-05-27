@@ -34,6 +34,24 @@ class Dt_tbl_opcion:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def buscarOpcion(self, texto):
+        self.renovarConexion()
+        self._sql = "select * from Seguridad.tbl_opcion where opcion like '%{}%' and estado <> 3;".format(texto)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaOpciones = []
+            for to in registros:
+                tos = Tbl_opcion(to['id_opcion'], to['opcion'], to['estado'])
+                listaOpciones.append(tos)
+            return listaOpciones
+        except Exception as e:
+            print("Datos: Error buscarOpcion()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+
     def agregarOpcion(self, nombre_opcion, estado):
         self.renovarConexion()
         opcion = [ nombre_opcion, estado]

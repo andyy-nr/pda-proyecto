@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMessageBox
 from vistas.frmUsuario import Ui_frmUsuario
 from datos.Dt_Tbl_user import Dt_tbl_user
 from PyQt5 import QtWidgets
+from entidades.Tbl_user import Tbl_user
 
 
 class CtrlFrmGestionUser(QtWidgets.QWidget):
@@ -16,7 +17,8 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarUsuario)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
 
 
     def limpiarCampos(self):
@@ -28,9 +30,19 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         self.ui.le_contrasena.setText("")
         self.ui.le_confirmacion.setText("")
         self.ui.le_confirmar_correo.setText("")
+        self.ui.le_buscar.setText("")
+        self.cargarDatos(0)
 
-    def cargarDatos(self):
-        listUsuario = self.dtu.listUsuarios()
+    def cargarDatos(self, modo):
+        if modo == 1: # Buscar
+            texto = self.ui.le_buscar.text()
+            if texto != "":
+                listUsuario = self.dtu.buscarUsuario(texto)
+            else:
+                QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
+                return
+        else: # Cargar todos los datos
+            listUsuario = self.dtu.listUsuarios()
         i = len(listUsuario)
         self.ui.tbl_Usuario.setRowCount(i)
         tablerow = 0
@@ -75,9 +87,10 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
                 email = self.ui.le_email.text()
                 pwd_temp = self.ui.le_confirmacion.text()
                 estado = 1
+                usuario = Tbl_user(user, pwd, nombres, apellidos, email, pwd_temp, estado)
                 try:
-                    self.dtu.agregarUsuario(user, pwd, nombres, apellidos, email, pwd_temp, estado)
-                    self.cargarDatos()
+                    self.dtu.agregarUsuario(usuario)
+                    self.cargarDatos(0)
                     self.limpiarCampos()
                 except Exception as e:
                     print(f"Error al agregar el registro: {e}")
@@ -86,4 +99,12 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
                     self.limpiarCampos()
         else:
             print("Campos vacios")
+
+    def eliminarUsuario(self):
+        pass
+
+    def editarUsuario(self):
+        pass
+
+
 

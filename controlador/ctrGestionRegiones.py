@@ -1,5 +1,8 @@
+from PyQt5.QtWidgets import QMessageBox
+
 from vistas.frmRegiones import Ui_frmRegiones
 from datos.regions import Dt_Regions
+from entidades.Regions import regions
 from PyQt5 import QtWidgets
 
 
@@ -14,15 +17,26 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRegion)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
-        self.cargarDatos()
+        self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
         self.ui.txt_nombre_region.setText("")
+        self.cargarDatos(0)
+        self.ui.txt_buscar.setText("")
 
 
-    def cargarDatos(self):
-        listaRegiones = self.dtu.listaRegiones()
+    def cargarDatos(self, modo):
+        if modo == 1:
+            texto = self.ui.txt_buscar.text()
+            if texto != "":
+                listaRegiones = self.dtu.buscarRegion(texto)
+            else:
+                QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
+                return
+        else:
+            listaRegiones = self.dtu.listaRegiones()
         i = len(listaRegiones)
         self.ui.tbl_regiones.setRowCount(i)
         tablerow = 0
@@ -50,9 +64,10 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
                 print("Region ya existe")
                 return
             nombre_region = self.ui.txt_nombre_region.text()
+            region = regions(region_name=nombre_region)
             try:
                 self.dtu.agregarRegion(nombre_region)
-                self.cargarDatos()
+                self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar region: {e}")
