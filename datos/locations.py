@@ -13,7 +13,11 @@ class Dt_locations:
 
     def listaLocalidades(self):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.locations;"
+        self._sql = "Select Seguridad.locations.location_id, Seguridad.locations.street_address, " \
+                    "Seguridad.locations.postal_code, Seguridad.locations.city, Seguridad.locations.state_province, " \
+                    "Seguridad.countries.country_name, Seguridad.countries.country_id" \
+                    " from Seguridad.locations  " \
+                    "INNER JOIN Seguridad.countries  ON Seguridad.locations.country_id = Seguridad.countries.country_id"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -22,7 +26,7 @@ class Dt_locations:
             for tl in registros:
                 tls = locations(location_id=tl['location_id'], street_address=tl['street_address'],
                                 postal_code=tl['postal_code'], state_province=tl['state_province'],
-                                country_id=tl['country_id'], city=tl['city'])
+                                country_id=tl['country_id'], city=tl['city'], country_name=tl['country_name'])
                 listaLocalidades.append(tls)
             return listaLocalidades
         except Exception as e:
