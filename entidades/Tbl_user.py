@@ -4,7 +4,7 @@ import copy
 class Tbl_user:
     def __init__(self, id_user=None, user=None, pwd=None,
                  nombres=None, apellidos=None, email=None,
-                 pwd_temp=None, estado=None):
+                 pwd_temp=None, estado=None, id_rol=None, rol=None):
         self._id_user = id_user
         self._user = user
         self._pwd = pwd
@@ -13,6 +13,8 @@ class Tbl_user:
         self._email = email
         self._pwd_temp = pwd_temp
         self._estado = estado
+        self._id_rol = rol
+        self._rol = rol
 
     def __str__(self):
         return f'''

@@ -6,7 +6,7 @@ from datos.employees import Dt_employees
 from datos.Dt_Tbl_user import Dt_tbl_user
 from datos.departments import Dt_departments
 from datos.dependents import Dt_dependents
-
+from datos.Dt_tbl_UserRol import Dt_tbl_UserRol
 
 from controlador.ctrGestionOpciones import CtrlFrmGestionOpcion
 from controlador.ctrGestionUsuarios import CtrlFrmGestionUser
@@ -23,14 +23,28 @@ from controlador.ctrGestionRolUsuario import CtrlGestionRolUsuario
 from controlador.ctrGestionDependientes import CtrlGestionDependientes
 
 class CtrlFrmMainWindow(QtWidgets.QMainWindow):
-    def __init__(self):
+    def __init__(self, usuario):
         super().__init__()
         self.ui = Ui_mw_inicio()
         self.ui.setupUi(self)
         self.initControlGui()
+        self._usuario = usuario
+        self.mostrarInfoUsuario()
         self.mostrarDatos()
 
+    def mostrarInfoUsuario(self):
+        # Informacion de usuario
+        dru = Dt_tbl_UserRol()
+        rolUsuario = dru.obtenerRolXUser(self._usuario._user)
+        self.ui.lbl_nombre_usuario.setText(self._usuario._user)
+        self.ui.lbl_nombre_usuario.setAlignment(Qt.AlignCenter)
+        self.ui.lbl_rol_usuario.setText(rolUsuario)
+        self.ui.lbl_rol_usuario.setAlignment(Qt.AlignCenter)
+        self.ui.lbl_correo.setText(self._usuario._email)
+        self.ui.lbl_correo.setAlignment(Qt.AlignCenter)
+
     def mostrarDatos(self):
+
         dt_Empleados = Dt_employees()
         self.ui.lbl_cant_empleados.setText(dt_Empleados.totalEmpleados())
         self.ui.lbl_cant_empleados.setAlignment(Qt.AlignCenter)

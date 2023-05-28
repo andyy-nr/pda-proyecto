@@ -85,7 +85,7 @@ class CtrlGestionPaises(QtWidgets.QWidget):
             nombre = self.ui.txt_nombre.text()
             region = self.ui.cbox_cod_region.currentData()
             self.dtu.agregarPais(codigo_pais, nombre, region)
-            self.cargarDatos()
+            self.cargarDatos(0)
             self.limpiarCampos()
         else:
             print("Campos vacios")

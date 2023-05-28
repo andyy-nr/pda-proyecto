@@ -10,7 +10,6 @@ class CtrlInicioSesion(QtWidgets.QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.CtrlMW = CtrlFrmMainWindow()
         self.initControlGui()
 
     du = Dt_tbl_user()
@@ -27,7 +26,7 @@ class CtrlInicioSesion(QtWidgets.QMainWindow):
         usuarios = self.du.listUsuarios()
         for usuario in usuarios:
             if usuario._user == user and usuario._pwd == pwd:
-                self.openMainWindow()
+                self.openMainWindow(usuario)
                 return
         QMessageBox.information(self, 'Alerta', "Usuario y/o clave incorrectos", QMessageBox.Ok)
 
@@ -38,6 +37,7 @@ class CtrlInicioSesion(QtWidgets.QMainWindow):
         else:
             self.ui.txt_contrasena.setEchoMode(QLineEdit.Password)
 
-    def openMainWindow(self):
+    def openMainWindow(self, usuario):
+        self.CtrlMW = CtrlFrmMainWindow(usuario)
         self.CtrlMW.show()
         self.close()

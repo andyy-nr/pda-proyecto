@@ -14,10 +14,7 @@ class Dt_tbl_UserRol:
 
     def listaUserRol(self):
         self.renovarConexion()
-        self._sql = "SELECT ur.id_UserRol, u.id_user, u.user, r.id_rol, r.rol " \
-                    "FROM Seguridad.tbl_UserRol ur " \
-                    "INNER JOIN Seguridad.tbl_user u ON ur.id_user = u.id_user " \
-                    "INNER JOIN Seguridad.tbl_rol r ON ur.id_rol = r.id_rol;"
+        self._sql = "Select * from Seguridad.vwUserRol;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -32,13 +29,10 @@ class Dt_tbl_UserRol:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def buscarUserRol(self,texto):
+
+    def buscarUserRol(self, texto):
         self.renovarConexion()
-        self._sql = "SELECT ur.id_UserRol, u.id_user, u.user, r.id_rol, r.rol " \
-                    "FROM Seguridad.tbl_UserRol ur " \
-                    "INNER JOIN Seguridad.tbl_user u ON ur.id_user = u.id_user " \
-                    "INNER JOIN Seguridad.tbl_rol r ON ur.id_rol = r.id_rol " \
-                    "WHERE u.user LIKE '%{}%' OR r.rol LIKE '%{}%';".format(texto, texto)
+        self._sql = "SELECT * from Seguridad.vwUserRol WHERE user LIKE '%{}%' OR rol LIKE '%{}%';".format(texto, texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -49,6 +43,19 @@ class Dt_tbl_UserRol:
             return listaUserRol
         except Exception as e:
             print("Datos: Error buscarUserRol()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def obtenerRolXUser(self, user):
+        self.renovarConexion()
+        self._sql = "SELECT * from Seguridad.vwUserRol WHERE user = '{}';".format(user)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchone()
+            return str(registros['rol'])
+        except Exception as e:
+            print("Datos: Error obtenerRolXUser()", e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

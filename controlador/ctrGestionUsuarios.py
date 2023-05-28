@@ -112,6 +112,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
                     self.dtu.agregarUsuario(usuario)
                     self.cargarDatos(0)
                     self.limpiarCampos()
+                    # ctrInicio.cargarDatos()
                 except Exception as e:
                     print(f"Error al agregar el registro: {e}")
                 else:

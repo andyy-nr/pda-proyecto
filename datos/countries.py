@@ -15,8 +15,7 @@ class Dt_countries:
 
     def listaPaises(self):
         self.renovarConexion()
-        self._sql = "Select country_id, country_name, region_name from Seguridad.countries " \
-                    "inner join Seguridad.regions on Seguridad.countries.region_id = Seguridad.regions.region_id;"
+        self._sql = "Select * from Seguridad.vwCountries;"
 
         try:
             self._cursor.execute(self._sql)
@@ -35,9 +34,7 @@ class Dt_countries:
 
     def buscarPais(self, texto):
         self.renovarConexion()
-        self._sql = "Select country_id, country_name, region_name from Seguridad.countries " \
-                    "inner join Seguridad.regions on Seguridad.countries.region_id = Seguridad.regions.region_id " \
-                    "where country_name like '%{}%';".format(texto)
+        self._sql = "Select * from Seguridad.vwCountries where country_name like '%{}%';".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
