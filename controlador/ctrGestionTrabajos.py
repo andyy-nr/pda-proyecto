@@ -50,8 +50,6 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
             tablerow = tablerow + 1
 
     def validarVacios(self):
-        if self.ui.txt_codigo.text() == "":
-            return False
         if self.ui.txt_nombre_trabajo.text() == "":
             return False
         if self.ui.txt_sal_maximo.text() == "":
@@ -76,11 +74,10 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
 
     def agregarTrabajo(self):
         if self.validarVacios():
-            id_trabajo = int(self.ui.txt_codigo.text())
             nombre_trabajo = self.ui.txt_nombre_trabajo.text()
             salario_maximo = float(self.ui.txt_sal_maximo.text())
             salario_minimo = float(self.ui.txt_sal_minimo.text())
-            trabajo = jobs(id_trabajo, nombre_trabajo, salario_minimo, salario_maximo)
+            trabajo = jobs(job_title=nombre_trabajo, min_salary=salario_minimo, max_salary=salario_maximo)
             try:
                 self.dttr.agregarTrabajo(trabajo)
                 self.cargarDatos(0)

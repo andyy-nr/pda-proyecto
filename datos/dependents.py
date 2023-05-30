@@ -14,18 +14,17 @@ class Dt_dependents:
 
     def totalDependientes(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.dependents;"
+        self._sql = "select count(*) from Seguridad.vwDependents;"
         try:
             self._cursor.execute(self._sql)
-            return(str(self._cursor.rowcount))
+            resultado = self._cursor.fetchone()
+            return str(resultado['count(*)'])
         except Exception as e:
             print("Datos: Error totalDependents()", e)
 
     def listaDependents(self):
         self.renovarConexion()
-        self._sql = "select dep.dependent_id, dep.first_name, dep.last_name, dep.relationship, emp.employee_id, " \
-                    "CONCAT(emp.first_name, ' ', emp.last_name) as employee " \
-                    "from Seguridad.dependents dep inner join Seguridad.employees emp on dep.employee_id = emp.employee_id;"
+        self._sql = "Select * from Seguridad.vwDependents;"
 
         try:
             self._cursor.execute(self._sql)
@@ -44,10 +43,7 @@ class Dt_dependents:
 
     def buscarDependiente(self, texto):
         self.renovarConexion()
-        self._sql = "select dep.dependent_id, dep.first_name, dep.last_name, dep.relationship, emp.employee_id, " \
-                    "CONCAT(emp.first_name, ' ', emp.last_name) as employee " \
-                    "from Seguridad.dependents dep inner join Seguridad.employees emp on dep.employee_id = emp.employee_id " \
-                    "where dep.first_name like '%{}%' or dep.last_name like '%{}%';".format(texto, texto)
+        self._sql = "Select * from Seguridad.vwDependents where first_name like '%{}%' or last_name like '%{}%';".format(texto, texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -68,7 +64,7 @@ class Dt_dependents:
         self.renovarConexion()
         self._sql = "INSERT INTO Seguridad.dependents " \
                     "(first_name, last_name, relationship, employee_id) " \
-                    "VALUES ({}, {}, {}, {});".format(dependiente.first_name, dependiente.last_name,
+                    "VALUES ('{}', '{}', '{}', '{}');".format(dependiente.first_name, dependiente.last_name,
                                                       dependiente.relationship, dependiente.employee_id)
         try:
             self._cursor.execute(self._sql)

@@ -14,10 +14,7 @@ class Dt_tbl_rolOpcion:
 
     def listaRolOpcion(self):
         self.renovarConexion()
-        self._sql = "SELECT rp.id_rolOpcion, rol.id_rol, rol.rol, opcion.id_opcion, opcion.opcion " \
-                    "FROM Seguridad.tbl_rolOpcion rp " \
-                    "INNER JOIN Seguridad.tbl_opcion opcion ON rp.id_opcion = opcion.id_opcion " \
-                    "INNER JOIN Seguridad.tbl_rol rol ON rp.id_rol = rol.id_rol;"
+        self._sql = "SELECT * FROM Seguridad.vwRolOpcion;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -32,19 +29,15 @@ class Dt_tbl_rolOpcion:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def buscarRolUsuario(self):
+    def buscarRolOpcion(self, texto):
         self.renovarConexion()
-        self._sql = "SELECT rol.id_rol, rol.rol, opcion.id_opcion, opcion.opcion " \
-                    "FROM Seguridad.tbl_rolOpcion rp " \
-                    "INNER JOIN Seguridad.tbl_opcion opcion ON rp.id_opcion = opcion.id_opcion " \
-                    "INNER JOIN Seguridad.tbl_rol rol ON rp.id_rol = rol.id_rol" \
-                    "WHERE rol.rol like '%{}%';"
+        self._sql = "SELECT * FROM Seguridad.vwRolOpcion WHERE rol like '%{}%' or opcion like '%{}%';".format(texto, texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
             listaRolOpcion = []
             for tro in registros:
-                tros = Tbl_rolOpcion(tro['id_rol'], tro['rol'], tro['id_opcion'], tro['opcion'])
+                tros = Tbl_rolOpcion(id_rol=tro['id_rol'], rol=tro['rol'], id_opcion=tro['id_opcion'], opcion=tro['opcion'])
                 listaRolOpcion.append(tros)
             return listaRolOpcion
         except Exception as e:
@@ -56,7 +49,7 @@ class Dt_tbl_rolOpcion:
 
     def agregarRolOpcion(self, rolOpcion):
         self.renovarConexion()
-        self._sql = "INSERT INTO Seguridad.tbl_rolOpcion (id_rol, id_opcion) values ({},{});".format(rolOpcion._id_rol, rolOpcion._id_opcion)
+        self._sql = "INSERT INTO Seguridad.tbl_rolOpcion (id_rol, id_opcion) values ('{}','{}');".format(rolOpcion._id_rol, rolOpcion._id_opcion)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

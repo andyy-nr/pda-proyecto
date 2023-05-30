@@ -51,15 +51,15 @@ class Dt_jobs:
 
     def agregarTrabajo(self, trabajo):
         self.renovarConexion()
-        self._sql = f"INSERT INTO Seguridad.jobs (job_id, job_title, min_salary, max_salary) " \
-                    "VALUES ({}, {}, {}, {});"
+        self._sql = f"INSERT INTO Seguridad.jobs (job_title, min_salary, max_salary) " \
+                    "VALUES ('{}', '{}', '{}');".format(trabajo.job_title, trabajo.min_salary, trabajo.max_salary)
         try:
-            self._cursor.execute(self._sql, trabajo)
+            self._cursor.execute(self._sql)
             self._con.commit()
-            QMessageBox.information("Agregar Trabajo", "Trabajo agregado correctamente")
+            #QMessageBox.information(self, "Agregar Trabajo", "Trabajo agregado correctamente", QMessageBox.Abort)
         except Exception as e:
             print("Datos: Error agregarTrabajo()", e)
-            QMessageBox.warning("Agregar Trabajo", f"Error al agregar Trabajo, {e}")
+            QMessageBox.warning(self, "Agregar Trabajo", f"Error al agregar Trabajo, {e}", QMessageBox.Abort)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

@@ -60,12 +60,11 @@ class Dt_tbl_UserRol:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarUserRol(self, id_user, id_rol):
+    def agregarUserRol(self, rolUsuario):
         self.renovarConexion()
-        userRol = [id_user, id_rol]
-        self._sql = "INSERT INTO Seguridad.tbl_UserRol (id_user, id_rol) values (%s, %s);"
+        self._sql = "INSERT INTO Seguridad.tbl_UserRol (id_user, id_rol) values ('{}', '{}');".format(rolUsuario._id_user, rolUsuario._id_rol)
         try:
-            self._cursor.execute(self._sql, userRol)
+            self._cursor.execute(self._sql)
             self._con.commit()
             print(f"UserRol ingresado correctamente")
         except Exception as e:

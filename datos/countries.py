@@ -50,12 +50,11 @@ class Dt_countries:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarPais(self, cod_pais, country_name, region_id):
+    def agregarPais(self, pais):
         self.renovarConexion()
-        pais = [cod_pais, country_name, region_id]
-        self._sql = "INSERT INTO Seguridad.countries (country_id, country_name, region_id) VALUES (%s, %s, %s);"
+        self._sql = "INSERT INTO Seguridad.countries (country_id, country_name, region_id) VALUES ('{}', '{}', '{}');".format(pais.country_id, pais.country_name, pais.region_id)
         try:
-            self._cursor.execute(self._sql, pais)
+            self._cursor.execute(self._sql)
             self._con.commit()
             QMessageBox.information(self, "Registro agregado", "Registro agregado correctamente")
         except Exception as e:

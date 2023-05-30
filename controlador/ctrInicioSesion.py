@@ -23,7 +23,7 @@ class CtrlInicioSesion(QtWidgets.QMainWindow):
         user = self.ui.txt_usuario.text()
         pwd = self.ui.txt_contrasena.text()
 
-        usuarios = self.du.listUsuarios()
+        usuarios = self.du.listUsuariosNoEliminados()
         for usuario in usuarios:
             if usuario._user == user and usuario._pwd == pwd:
                 self.openMainWindow(usuario)

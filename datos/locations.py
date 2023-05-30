@@ -13,11 +13,7 @@ class Dt_locations:
 
     def listaLocalidades(self):
         self.renovarConexion()
-        self._sql = "Select Seguridad.locations.location_id, Seguridad.locations.street_address, " \
-                    "Seguridad.locations.postal_code, Seguridad.locations.city, Seguridad.locations.state_province, " \
-                    "Seguridad.countries.country_name, Seguridad.countries.country_id" \
-                    " from Seguridad.locations  " \
-                    "INNER JOIN Seguridad.countries  ON Seguridad.locations.country_id = Seguridad.countries.country_id"
+        self._sql = "Select * from Seguridad.vwLocations;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -37,7 +33,7 @@ class Dt_locations:
 
     def buscarLocalidad(self, texto):
         self.renovarConexion()
-        self._sql = "select * from Seguridad.locations where street_address like '%{}%';".format(texto)
+        self._sql = "select * from Seguridad.vwLocations where street_address like '%{}%';".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -59,7 +55,7 @@ class Dt_locations:
     def agregarLocalidad(self, localidad):
         self.renovarConexion()
         self._sql = "INSERT INTO Seguridad.locations (street_address, postal_code, city, state_province, country_id) " \
-                    "VALUES ({}, {}, {}, {}, {});".format(localidad._street_address, localidad._postal_code,
+                    "VALUES ('{}', '{}', '{}', '{}', '{}');".format(localidad._street_address, localidad._postal_code,
                                                           localidad._city, localidad._state_province, localidad._country_id)
         try:
             self._cursor.execute(self._sql)
@@ -73,9 +69,7 @@ class Dt_locations:
 
     def listaCiudades(self):
         self.renovarConexion()
-        self._sql = "Select distinct Seguridad.locations.country_id, country_name " \
-                    "from Seguridad.locations " \
-                    "inner join Seguridad.countries on Seguridad.locations.country_id = Seguridad.countries.country_id;"
+        self._sql = "Select distinct country_name, country_id from Seguridad.countries;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()

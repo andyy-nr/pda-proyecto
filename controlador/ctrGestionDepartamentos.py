@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMessageBox, QTableView
 
 from vistas.frmDepartamentos import Ui_frmDepartamentos
 from datos.departments import Dt_departments
+from entidades.Departments import departments
 from PyQt5 import QtWidgets
 
 class CtrlGestionDepartaments(QtWidgets.QWidget):
@@ -25,6 +26,7 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         self.ui.txt_nombre.setText("")
         self.ui.cbox_cod_localidad.setCurrentIndex(0)
         self.ui.txt_buscar.setText("")
+
         self.cargarDatos(0)
 
     def cargarDatos(self, modo):
@@ -80,7 +82,8 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         if self.validarVacios():
             nombre = self.ui.txt_nombre.text()
             localidad = self.ui.cbox_cod_localidad.currentData()
-            self.dtd.agregarDepartamento(nombre, localidad)
+            departamento = departments(department_name=nombre, location_id=localidad)
+            self.dtd.agregarDepartamento(departamento)
             self.limpiarCampos()
             self.cargarDatos(0)
         else:

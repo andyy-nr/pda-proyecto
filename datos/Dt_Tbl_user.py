@@ -17,16 +17,37 @@ class Dt_tbl_user:
 
     def totalUsuarios(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.tbl_user where estado <> 3;" # hacer query count
+        self._sql = "select count(*) from Seguridad.vwUsuarios;"
         try:
             self._cursor.execute(self._sql)
-            return(str(self._cursor.rowcount))
+            resultado = self._cursor.fetchone()
+            return str(resultado['count(*)'])
         except Exception as e:
             print("Datos: Error totalUsuarios()", e)
 
-    def listUsuarios(self):
+    def listUsuariosNoEliminados(self):
         self.renovarConexion()
         self._sql = "SELECT * FROM Seguridad.tbl_user where estado <> 3;"
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaUsuario = []
+
+            for tu in registros:
+                tus = Tbl_user(tu['id_user'], tu['user'], tu['pwd'], tu['nombres'],
+                            tu['apellidos'], tu['email'], tu['pwd_temp'], tu['estado'])
+                listaUsuario.append(tus)
+
+            return listaUsuario
+        except Exception as e:
+            print("Datos: Error listUsuarios()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def listTodosUsuarios(self):
+        self.renovarConexion()
+        self._sql = "SELECT * FROM Seguridad.tbl_user;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -67,7 +88,7 @@ class Dt_tbl_user:
         self.renovarConexion()
 
         self._sql = "INSERT INTO Seguridad.tbl_user (user, pwd, nombres, apellidos, email, pwd_temp, estado) " \
-                    "values ({}, {}, {}. {}, {}, {}, {});".format(usuario._user, usuario._pwd, usuario._nombres,
+                    "values ('{}', '{}', '{}', '{}', '{}', '{}', {});".format(usuario._user, usuario._pwd, usuario._nombres,
                                                                    usuario._apellidos, usuario._email, usuario._pwd_temp,
                                                                    usuario._estado)
         try:

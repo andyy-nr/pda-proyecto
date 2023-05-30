@@ -1,5 +1,5 @@
 import pymysql
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QWidget
 
 from datos.Conexion import Conexion
 from entidades.Employees import employee
@@ -17,22 +17,20 @@ class Dt_employees:
 
     def totalEmpleados(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.employees;"
+        self._sql = "select count(*) from Seguridad.vwDependents;"
         try:
             self._cursor.execute(self._sql)
-            return(str(self._cursor.rowcount))
+            resultado = self._cursor.fetchone()
+            return str(resultado['count(*)'])
         except Exception as e:
             print("Datos: Error totalEmpleados()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
 
     def listaEmpleados(self):
         self.renovarConexion()
-        self._sql = "SELECT emp.employee_id, emp.first_name, emp.last_name, emp.email, emp.phone_number, " \
-                    "emp.hire_date, jobs.job_id, jobs.job_title, emp.manager_id, emp.salary, emp.manager_id, " \
-                    "CONCAT(manager.first_name, ' ', manager.last_name) AS manager, departments.department_id, " \
-                    "departments.department_name FROM Seguridad.employees emp " \
-                    "INNER JOIN Seguridad.jobs ON emp.job_id = jobs.job_id " \
-                    "INNER JOIN Seguridad.departments ON emp.department_id = departments.department_id  " \
-                    "INNER JOIN Seguridad.employees manager ON manager.employee_id = emp.manager_id;"
+        self._sql = "Select * from Seguridad.vwEmployees;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -53,14 +51,7 @@ class Dt_employees:
 
     def buscarEmpleado(self, texto):
         self.renovarConexion()
-        self._sql =  "SELECT emp.employee_id, emp.first_name, emp.last_name, emp.email, emp.phone_number, " \
-                    "emp.hire_date, jobs.job_id, jobs.job_title, emp.manager_id, emp.salary, emp.manager_id, " \
-                    "CONCAT(manager.first_name, ' ', manager.last_name) AS manager, departments.department_id, " \
-                    "departments.department_name FROM Seguridad.employees emp " \
-                    "INNER JOIN Seguridad.jobs ON emp.job_id = jobs.job_id " \
-                    "INNER JOIN Seguridad.departments ON emp.department_id = departments.department_id  " \
-                    "INNER JOIN Seguridad.employees manager ON manager.employee_id = emp.manager_id " \
-                    "WHERE emp.first_name LIKE '%{}%' OR emp.last_name LIKE '%{}%';".format(texto, texto)
+        self._sql = "Select * from Seguridad.vwEmployees WHERE first_name LIKE '%{}%' OR last_name LIKE '%{}%';".format(texto, texto)
 
         try:
             self._cursor.execute(self._sql)
@@ -81,38 +72,39 @@ class Dt_employees:
 
     def agregarEmpleado(self, empleado):
         self.renovarConexion()
-        self._sql = "INSERT INTO Seguridad.employees (first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id) " \
-                    "VALUES ({}, {}, {}, {}, {}, {} {}, {}, {});". format(empleado.first_name, empleado.last_name, empleado.email, empleado.phone_number,
+        self._sql = "INSERT INTO Seguridad.employees (first_name, last_name, email, " \
+                    "phone_number, hire_date, job_id, salary, manager_id, department_id) " \
+                    "VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');". format(empleado.first_name, empleado.last_name, empleado.email, empleado.phone,
                                                                           empleado.hire_date, empleado.job_id, empleado.salary, empleado.manager_id, empleado.department_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
         except Exception as e:
+            print(f"error AgregarEmpleado: {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarEmpleado(self, empleado):
+        self.renovarConexion()
+        self._sql = "DELETE FROM Seguridad.employees WHERE employee_id = '{}';".format(empleado.employee_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            if e.args[0] == 1451:
+                QMessageBox.warning(None, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Ok)
             print(e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    # def eliminarEmpleado(self, empleado):
-    #     self.renovarConexion()
-    #     self._sql = "DELETE FROM Seguridad.employees WHERE employee_id = {};".format(empleado.employee_id)
-    #     try:
-    #         self._cursor.execute(self._sql)
-    #         self._con.commit()
-    #     except Exception as e:
-    #         if e.errno == 1451:
-    #             QMessageBox.alert(self, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Abort)
-    #         print(e)
-    #     finally:
-    #         Conexion.closeCursor()
-    #         Conexion.closeConnection()
-
     def editarEmpleado(self, empleado_anterior, empleado_editado):
         self.renovarConexion()
-        self._sql = "UPDATE Seguridad.employees SET first_name = {}, last_name = {}, email = {}, phone_number = {}, " \
-                    "hire_date = {}, job_id = {}, salary = {}, manager_id = {}, department_id = {}" \
+        self._sql = "UPDATE Seguridad.employees SET first_name = '{}', last_name = '{}', email = '{}', phone_number = '{}', " \
+                    "hire_date = '{}', job_id = '{}', salary = '{}', manager_id = '{}', department_id = '{}'" \
                     " WHERE employee_id = {};".format(empleado_editado.first_name, empleado_editado.last_name, empleado_editado.email,
-                                                      empleado_editado.phone_number, empleado_editado.hire_date, empleado_editado.job_id,
+                                                      empleado_editado.phone, empleado_editado.hire_date, empleado_editado.job_id,
                                                       empleado_editado.salary, empleado_editado.manager_id, empleado_editado.department_id, empleado_anterior.employee_id)
         try:
             self._cursor.execute(self._sql)
@@ -125,9 +117,7 @@ class Dt_employees:
 
     def listaManagers(self):
         self.renovarConexion()
-        self._sql = "SELECT DISTINCT concat(manager.first_name, ' ', manager.last_name) AS manager, manager.employee_id " \
-                    "FROM Seguridad.employees emp " \
-                    "INNER JOIN Seguridad.employees manager on manager.employee_id = emp.manager_id;"
+        self._sql = "Select distinct manager_id, manager from Seguridad.vwEmployees;"
 
         try:
             self._cursor.execute(self._sql)
@@ -135,7 +125,7 @@ class Dt_employees:
             listaManagers = []
 
             for tm in registros:
-                tms = employee(employee_id=tm['employee_id'], manager=tm['manager'])
+                tms = employee(manager_id=tm['manager_id'], manager=tm['manager'])
                 listaManagers.append(tms)
             return listaManagers
         except Exception as e:
@@ -149,9 +139,7 @@ class Dt_employees:
 
     def listaDepartamentos(self):
         self.renovarConexion()
-        self._sql = "select distinct department_name, Seguridad.employees.department_id from Seguridad.employees " \
-                    "inner join Seguridad.departments " \
-                    "on Seguridad.employees.department_id = Seguridad.departments.department_id;"
+        self._sql = "select distinct department_name, department_id from Seguridad.vwDepartments;"
 
         try:
             self._cursor.execute(self._sql)
@@ -170,8 +158,7 @@ class Dt_employees:
 
     def listaTrabajos(self):
         self.renovarConexion()
-        self._sql = "Select distinct job_title, Seguridad.employees.job_id from Seguridad.employees " \
-                    "inner join Seguridad.jobs on Seguridad.employees.job_id = Seguridad.jobs.job_id;"
+        self._sql = "Select distinct job_title,job_id from Seguridad.jobs;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -185,3 +172,4 @@ class Dt_employees:
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
+

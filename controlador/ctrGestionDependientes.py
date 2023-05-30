@@ -78,10 +78,10 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
             fila = self.ui.tbl_dependientes.selectedIndexes()[0].row()
             dependientes = self.dd.listaDependents()
             dep_seleccionado = dependientes[fila]
-            self.ui.txt_nombres.setText(dep_seleccionado.first_name)
+            self.ui.txt_nombres.setText(dep_seleccionado._first_name)
             self.ui.txt_apellidos.setText(dep_seleccionado._last_name)
-            self.ui.txt_codigo.setText(str(dep_seleccionado.dependent_id))
-            self.ui.txt_relacion.setText(dep_seleccionado.relationship)
+            self.ui.txt_codigo.setText(str(dep_seleccionado._dependent_id))
+            self.ui.txt_relacion.setText(dep_seleccionado._relationship)
             self.ui.cbox_empleado.setCurrentText(dep_seleccionado._employee)
         except IndexError as e:
             QMessageBox.Warning(self, "Error", "Seleccione un elemento")
@@ -94,7 +94,7 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
             apellidos = self.ui.txt_apellidos.text()
             relacion = self.ui.txt_relacion.text()
             empleado = self.ui.cbox_empleado.currentData()
-            dependiente = dependents(nombres, apellidos, relacion, empleado)
+            dependiente = dependents(first_name=nombres, last_name=apellidos, relationship=relacion, employee_id=empleado)
 
             try:
                 self.dd.agregarDependientes(dependiente)

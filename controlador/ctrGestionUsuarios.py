@@ -44,7 +44,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
                 QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
                 return
         else: # Cargar todos los datos
-            listUsuario = self.dtu.listUsuarios()
+            listUsuario = self.dtu.listUsuariosNoEliminados()
         i = len(listUsuario)
         self.ui.tbl_Usuario.setRowCount(i)
         tablerow = 0
@@ -73,7 +73,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         return True
 
     def validarUsuarioRepetido(self):
-        usuarios = self.dtu.listUsuarios()
+        usuarios = self.dtu.listTodosUsuarios()
         for usuario in usuarios:
             if usuario._user == self.ui.le_nombre_usuario.text():
                 return False
@@ -82,7 +82,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
-            usuarios = self.dtu.listUsuarios()
+            usuarios = self.dtu.listUsuariosNoEliminados()
             usuario = usuarios[fila]
             self.ui.le_codigo.setText(str(usuario._id_user))
             self.ui.le_nombres.setText(usuario._nombres)
@@ -107,17 +107,18 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
                 email = self.ui.le_email.text()
                 pwd_temp = self.ui.le_confirmacion.text()
                 estado = 1
-                usuario = Tbl_user(user, pwd, nombres, apellidos, email, pwd_temp, estado)
+                usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
+                                   pwd_temp=pwd_temp, estado=estado)
                 try:
                     self.dtu.agregarUsuario(usuario)
                     self.cargarDatos(0)
                     self.limpiarCampos()
-                    # ctrInicio.cargarDatos()
+                    #ctrInicio.cargarDatos()
                 except Exception as e:
                     print(f"Error al agregar el registro: {e}")
-                else:
-                    print("El usuario ya se encuentra en la BD")
-                    self.limpiarCampos()
+            else:
+                print("El usuario ya se encuentra en la BD")
+                self.limpiarCampos()
         else:
             print("Campos vacios")
 

@@ -4,6 +4,7 @@ from vistas.frmRolesUsuario import Ui_frmRolesUsuario
 from datos.Dt_Tbl_rol import Dt_tbl_rol
 from datos.Dt_Tbl_user import Dt_tbl_user
 from datos.Dt_tbl_UserRol import Dt_tbl_UserRol
+from entidades.Tbl_UserRol import Tbl_UserRol
 from PyQt5 import QtWidgets
 
 class CtrlGestionRolUsuario(QtWidgets.QWidget):
@@ -26,7 +27,6 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
         self.cargarCombobox()
 
     def cargarDatos(self, modo):
-        #revisar
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
@@ -54,7 +54,7 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
         except Exception as e:
             print(e)
         try:
-            listaUser = self.du.listUsuarios()
+            listaUser = self.du.listUsuariosNoEliminados()
             self.ui.cbox_opcion.addItem("Usuario*")
             for user in listaUser:
                 self.ui.cbox_opcion.addItem(str(user._user), int(user._id_user))
@@ -100,7 +100,8 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
                 return
             rol = self.ui.cbox_rol.currentData()
             user = self.ui.cbox_opcion.currentData()
-            self.dur.agregarUserRol(user, rol)
+            rolUsuario = Tbl_UserRol(id_user=user, id_rol=rol)
+            self.dur.agregarUserRol(rolUsuario)
             self.cargarDatos(0)
             self.limpiarCampos()
         else:

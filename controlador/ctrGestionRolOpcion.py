@@ -4,6 +4,7 @@ from vistas.frmOpcionRol import Ui_frmOpcionRol
 from datos.Dt_Tbl_rol import Dt_tbl_rol
 from datos.Dt_Tbl_opcion import Dt_tbl_opcion
 from datos.Dt_tbl_rolOpcion import Dt_tbl_rolOpcion
+from entidades.Tbl_rolOpcion import Tbl_rolOpcion
 from PyQt5 import QtWidgets
 
 class CtrlGestionRolOpcion(QtWidgets.QWidget):
@@ -22,14 +23,20 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_opcionRol.clicked.connect(self.seleccionarElemento)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
         self.cargarCombobox()
 
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
+
     def cargarDatos(self, modo):
-        if modo == 0:
+        if modo == 1:
             texto = self.ui.txt_buscar.text()
-            if texto == "":
-                listaRolOpcion = self.dro.listaRolOpcion()
+            if not texto == "":
+                self.ui.tbl_opcionRol.clearContents()
+                listaRolOpcion = self.dro.buscarRolOpcion(texto)
             else:
                 QMessageBox.about(self, "Error", "Ingrese un texto para buscar")
                 return
@@ -99,7 +106,8 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
                 return
             rol = self.ui.cbox_rol.currentData()
             opcion = self.ui.cbox_opcion.currentData()
-            self.dro.agregarRolOpcion(rol, opcion)
+            rolOpcion = Tbl_rolOpcion(id_opcion=opcion, id_rol=rol)
+            self.dro.agregarRolOpcion(opcion)
             self.cargarDatos(0)
             self.limpiarCampos()
         else:

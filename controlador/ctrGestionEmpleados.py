@@ -21,7 +21,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.ui.btn_agregar.clicked.connect(self.agregarEmpleado)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.tbl_employees.clicked.connect(self.seleccionarElemento)
-        # self.ui.btn_eliminar.clicked.connect(self.eliminarEmpleado)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarEmpleado)
         self.ui.btn_editar.clicked.connect(self.editarEmpleado)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.cargarDatos(0)
@@ -72,7 +72,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             listaManagers = self.dtu.listaManagers()
             self.ui.cbox_gerente.addItem("Gerente*")
             for manager in listaManagers:
-                self.ui.cbox_gerente.addItem(str(manager._manager), int(manager._employee_id))
+                self.ui.cbox_gerente.addItem(str(manager._manager), int(manager.manager_id))
 
             listaDepartamentos = self.dtu.listaDepartamentos()
             self.ui.cbox_departamento.addItem("Departamento*")
@@ -112,14 +112,14 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             salario = self.ui.txt_salario.text()
             correo = self.ui.txt_correo.text()
             telefono = self.ui.txt_telefono.text()
-            fecha = self.ui.date_fecha_contratacion.date().toPyDate()
+            fecha = self.ui.date_fecha_contratacion.date()
             gerente = self.ui.cbox_gerente.currentData()
             departamento = self.ui.cbox_departamento.currentData()
             trabajo = self.ui.cbox_trabajo.currentData()
             empleado = employee(nombre, apellido, correo, telefono, fecha, job_id=trabajo, salary=salario,
                                 manager_id=gerente, department_id=departamento)
             self.dtu.agregarEmpleado(empleado)
-            self.cargarDatos()
+            self.cargarDatos(0)
             self.limpiarCampos()
         else:
             print("Campos vacios")
@@ -143,12 +143,12 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
             return None
 
-    # def eliminarEmpleado(self):
-    #     empleado = self.seleccionarElemento()
-    #     if empleado is not None:
-    #         self.dtu.eliminarEmpleado(empleado)
-    #         self.cargarDatos()
-    #         self.limpiarCampos()
+    def eliminarEmpleado(self):
+        empleado = self.seleccionarElemento()
+        if empleado is not None:
+            self.dtu.eliminarEmpleado(empleado)
+            self.cargarDatos(0)
+            self.limpiarCampos()
 
     def editarEmpleado(self):
        try:

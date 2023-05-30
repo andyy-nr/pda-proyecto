@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QTableView, QMessageBox
 from vistas.frmLocalidades import Ui_frmLocalidades
 from datos.locations import Dt_locations
 from PyQt5 import QtWidgets
+from entidades.Locations import locations
+
 class CtrlGestionLocalidades(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
@@ -45,7 +47,7 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         tablerow = 0
         for row in listaLocalidades:
             self.ui.tbl_localidades.setItem(tablerow, 0, QtWidgets.QTableWidgetItem(str(row._location_id)))
-            self.ui.tbl_localidades.setItem(tablerow, 1, QtWidgets.QTableWidgetItem(row._country_id))
+            self.ui.tbl_localidades.setItem(tablerow, 1, QtWidgets.QTableWidgetItem(row._country_name))
             self.ui.tbl_localidades.setItem(tablerow, 2, QtWidgets.QTableWidgetItem(row._postal_code))
             self.ui.tbl_localidades.setItem(tablerow, 3, QtWidgets.QTableWidgetItem(row._city))
             self.ui.tbl_localidades.setItem(tablerow, 4, QtWidgets.QTableWidgetItem(row._state_province))
@@ -63,10 +65,6 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
 
     def validarVacios(self):
         if self.ui.txt_direccion.text() == "":
-            return False
-        if self.ui.txt_cod_postal.text() == "":
-            return False
-        if self.ui.txt_provincia.text() == "":
             return False
         if self.ui.txt_ciudad.text() == "":
             return False
@@ -97,8 +95,10 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
             provincia = self.ui.txt_provincia.text()
             ciudad = self.ui.txt_ciudad.text()
             pais = self.ui.cbox_pais.currentData()
-            self.dtl.agregarLocalidad(direccion, cod_postal, provincia, pais, ciudad)
-            self.cargarDatos()
+            localidad = locations(street_address=direccion, postal_code=cod_postal, state_province=provincia,
+                                  city=ciudad, country_id=pais)
+            self.dtl.agregarLocalidad(localidad)
+            self.cargarDatos(0)
             self.limpiarCampos()
         else:
             print("Hay campos vacios")

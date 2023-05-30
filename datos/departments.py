@@ -13,17 +13,17 @@ class Dt_departments:
 
     def totalDepartamentos(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.departments;"
+        self._sql = "select count(*) from Seguridad.vwDepartments;"
         try:
             self._cursor.execute(self._sql)
-            return(str(self._cursor.rowcount))
+            resultado = self._cursor.fetchone()
+            return str(resultado['count(*)'])
         except Exception as e:
             print("Datos: Error totalDepartamentos()", e)
 
     def listaDepartamentos(self):
         self.renovarConexion()
-        self._sql = "SELECT department_id, department_name, street_address, Seguridad.departments.location_id " \
-                    "FROM (Seguridad.departments inner join Seguridad.locations on Seguridad.departments.location_id = Seguridad.locations.location_id);"
+        self._sql = "SELECT * FROM Seguridad.vwDepartments;"
 
         try:
             self._cursor.execute(self._sql)
@@ -42,10 +42,7 @@ class Dt_departments:
 
     def buscarDepartamento(self, texto):
         self.renovarConexion()
-        self._sql = "SELECT department_id, department_name, street_address, Seguridad.departments.location_id " \
-                    "FROM (Seguridad.departments inner join Seguridad.locations " \
-                    "on Seguridad.departments.location_id = Seguridad.locations.location_id) " \
-                    "WHERE department_name LIKE '%{}%';".format(texto)
+        self._sql = "SELECT * FROM Seguridad.vwDepartments WHERE department_name LIKE '%{}%';".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -61,13 +58,12 @@ class Dt_departments:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def agregarDepartamento(self, department_name, location_id):
+    def agregarDepartamento(self, departamento):
         self.renovarConexion()
-        departamento = [department_name, location_id]
         self._sql = "INSERT INTO Seguridad.departments (department_name, location_id) " \
-                    "VALUES (%s, %s);"
+                    "VALUES ('{}', '{}');".format(departamento._department_name, departamento._location_id)
         try:
-            self._cursor.execute(self._sql, departamento)
+            self._cursor.execute(self._sql)
             self._con.commit()
             print("Registro agregado correctamente")
         except Exception as e:
@@ -78,9 +74,7 @@ class Dt_departments:
 
     def listaLocalidades(self):
         self.renovarConexion()
-        self._sql = "Select distinct street_address, Seguridad.departments.location_id " \
-                    "from (Seguridad.departments inner join Seguridad.locations " \
-                    "on Seguridad.departments.location_id = Seguridad.locations.location_id);"
+        self._sql = "select distinct street_address, location_id from Seguridad.vwDepartments;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()

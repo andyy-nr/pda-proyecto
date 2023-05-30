@@ -7,6 +7,7 @@ from datos.Dt_Tbl_user import Dt_tbl_user
 from datos.departments import Dt_departments
 from datos.dependents import Dt_dependents
 from datos.Dt_tbl_UserRol import Dt_tbl_UserRol
+from datos.Dt_Tbl_opcion import Dt_tbl_opcion
 
 from controlador.ctrGestionOpciones import CtrlFrmGestionOpcion
 from controlador.ctrGestionUsuarios import CtrlFrmGestionUser

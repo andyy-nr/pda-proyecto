@@ -1,5 +1,6 @@
 from vistas.frmPaises import Ui_frmPaises
 from datos.countries import Dt_countries
+from entidades.Countries import countries
 from PyQt5 import QtWidgets
 
 class CtrlGestionPaises(QtWidgets.QWidget):
@@ -17,9 +18,14 @@ class CtrlGestionPaises(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_paises.clicked.connect(self.seleccionarElementos)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarCombobox()
         self.cargarDatos(0)
         self.limpiarCampos()
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_nombre.setText("")
@@ -27,11 +33,13 @@ class CtrlGestionPaises(QtWidgets.QWidget):
         self.ui.cbox_cod_region.setCurrentIndex(0)
         self.ui.txt_buscar.setText("")
         self.cargarDatos(0)
+        self.ui.tbl_paises.clearSelection()
 
     def cargarDatos(self, modo):
         if modo == 1: # Buscar
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_paises.clearSelection()
                 listaPaises = self.dtu.buscarPais(texto)
             else:
                 QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -67,8 +75,9 @@ class CtrlGestionPaises(QtWidgets.QWidget):
 
     def seleccionarElementos(self):
         try:
+            nombre = self.ui.txt_buscar.text()
             fila = self.ui.tbl_paises.selectedIndexes()[0].row()
-            pais = self.dtu.listaPaises()
+            pais = self.dtu.buscarPais(nombre)
             pais_seleccionado = pais[fila]
             self.ui.txt_codigo.setText(pais_seleccionado._country_id)
             self.ui.cbox_cod_region.setCurrentText(pais_seleccionado._region_name)
@@ -83,8 +92,9 @@ class CtrlGestionPaises(QtWidgets.QWidget):
         if self.validarVacios():
             codigo_pais = self.ui.txt_codigo.text()[:2].upper()
             nombre = self.ui.txt_nombre.text()
-            region = self.ui.cbox_cod_region.currentData()
-            self.dtu.agregarPais(codigo_pais, nombre, region)
+            region_cod = self.ui.cbox_cod_region.currentData()
+            pais = countries(codigo_pais, nombre, region_cod)
+            self.dtu.agregarPais(pais)
             self.cargarDatos(0)
             self.limpiarCampos()
         else:
