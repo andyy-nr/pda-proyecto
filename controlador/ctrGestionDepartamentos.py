@@ -14,25 +14,32 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         self.ui.tbl_departamentos.setSelectionBehavior(QTableView.SelectRows)
     dtd = Dt_departments()
 
+
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDepartamento)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda : self.cargarDatos(1))
         self.ui.tbl_departamentos.clicked.connect(self.seleccionarElemento)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
         self.cargarCombobox()
 
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
+
     def limpiarCampos(self):
+        self.ui.txt_codigo.setText("")
         self.ui.txt_nombre.setText("")
         self.ui.cbox_cod_localidad.setCurrentIndex(0)
         self.ui.txt_buscar.setText("")
-
         self.cargarDatos(0)
 
     def cargarDatos(self, modo):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_departamentos.clearSelection()
                 listaDepartamentos = self.dtd.buscarDepartamento(texto)
             else:
                 QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -67,7 +74,7 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_departamentos.selectedIndexes()[0].row()
-            departamento = self.dtd.listaDepartamentos()
+            departamento = self.dtd.buscarDepartamento(self.ui.txt_buscar.text())
             dep_seleccionado = departamento[fila]
             self.ui.txt_codigo.setText(str(dep_seleccionado._department_id))
             self.ui.txt_nombre.setText(dep_seleccionado._department_name)

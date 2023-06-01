@@ -23,13 +23,19 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_opcionRol.clicked.connect(self.seleccionarElementos)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
         self.cargarCombobox()
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def cargarDatos(self, modo):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_opcionRol.clearSelection()
                 listaRolUsuario = self.dur.buscarUserRol(texto)
             else:
                 QMessageBox.about(self, "Error", "No se puede buscar con el campo vacio")
@@ -84,7 +90,7 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
     def seleccionarElementos(self):
         try:
             fila = self.ui.tbl_opcionRol.selectedIndexes()[0].row()
-            rolUsuarios = self.dur.listaUserRol()
+            rolUsuarios = self.dur.buscarUserRol(self.ui.txt_buscar.text())
             rolUsuario = rolUsuarios[fila]
             self.ui.cbox_rol.setCurrentText(rolUsuario._rol)
             self.ui.cbox_opcion.setCurrentText(rolUsuario._user)

@@ -90,7 +90,7 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_opcionRol.selectedIndexes()[0].row()
-            rolOpciones = self.dro.listaRolOpcion()
+            rolOpciones = self.dro.buscarRolOpcion(self.ui.txt_buscar.text())
             rolOpcion = rolOpciones[fila]
             self.ui.cbox_rol.setCurrentText(rolOpcion._rol)
             self.ui.cbox_opcion.setCurrentText(rolOpcion._opcion)

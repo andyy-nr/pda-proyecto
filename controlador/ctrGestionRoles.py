@@ -19,7 +19,12 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
         self.ui.btn_eliminar_2.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_roles.clicked.connect(self.seleccionarElemento)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
@@ -31,6 +36,7 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_roles.clearSelection()
                 listaRoles = self.dto.buscarRol(texto)
             else:
                 QMessageBox.warning(self, "Error", "No se ha ingresado un rol a buscar")
@@ -60,7 +66,7 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_roles.selectedIndexes()[0].row()
-            roles = self.dto.listaRoles()
+            roles = self.dto.buscarRol(self.ui.txt_buscar.text())
             rol = roles[fila]
             self.ui.txt_codigo.setText(str(rol._id_rol))
             self.ui.txt_rol.setText(rol._rol)

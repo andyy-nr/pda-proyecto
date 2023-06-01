@@ -784,6 +784,9 @@ color: rgb(235, 232, 235);
      <property name="sizeAdjustPolicy">
       <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
       <number>158</number>
      </attribute>

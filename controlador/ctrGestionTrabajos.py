@@ -19,7 +19,12 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_trabajo.clicked.connect(self.seleccionarElemento)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
@@ -33,6 +38,7 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.txt_buscar.clearSelection()
                 listaTrabajo = self.dttr.buscarTrabajo(texto)
             else:
                 QMessageBox.about(self, "Error", "No se puede buscar con el campo vacio")
@@ -61,7 +67,7 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_trabajo.selectedIndexes()[0].row()
-            trabajos = self.dttr.listaTrabajos()
+            trabajos = self.dttr.buscarTrabajo(self.ui.txt_buscar.text())
             trabajo = trabajos[fila]
             self.ui.txt_codigo.setText(str(trabajo._job_id))
             self.ui.txt_nombre_trabajo.setText(trabajo._job_title)

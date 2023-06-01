@@ -19,8 +19,13 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
         self.ui.limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_dependientes.clicked.connect(self.seleccionarElemento)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
         self.cargarCombobox()
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
@@ -35,6 +40,7 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_dependientes.clearSelection()
                 listaDependientes =self.dd.buscarDependiente(texto)
             else:
                 QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -76,7 +82,7 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_dependientes.selectedIndexes()[0].row()
-            dependientes = self.dd.listaDependents()
+            dependientes = self.dd.buscarDependiente(self.ui.txt_buscar.text())
             dep_seleccionado = dependientes[fila]
             self.ui.txt_nombres.setText(dep_seleccionado._first_name)
             self.ui.txt_apellidos.setText(dep_seleccionado._last_name)

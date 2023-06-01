@@ -19,8 +19,13 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_localidades.clicked.connect(self.seleccionarElemento)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
         self.cargarCombobox()
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_direccion.setText("")
@@ -36,6 +41,7 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_localidades.clearSelection()
                 listaLocalidades = self.dtl.buscarLocalidad(texto)
             else:
                 QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -75,7 +81,7 @@ class CtrlGestionLocalidades(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_localidades.selectedIndexes()[0].row()
-            localidades = self.dtl.listaLocalidades()
+            localidades = self.dtl.buscarLocalidad(self.ui.txt_buscar.text())
             localidad = localidades[fila]
             self.ui.txt_codigo.setText(str(localidad._location_id))
             self.ui.txt_direccion.setText(localidad._street_address)

@@ -20,7 +20,12 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_regiones.clicked.connect(self.seleccionarElemento)
+        self.ui.txt_buscar.clicked.connect(self.buscarVacio)
         self.cargarDatos(0)
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
@@ -33,6 +38,7 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_regiones.clearSelection()
                 listaRegiones = self.dtu.buscarRegion(texto)
             else:
                 QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -63,7 +69,7 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_regiones.selectedIndexes()[0].row()
-            regiones  = self.dtu.listaRegiones()
+            regiones  = self.dtu.buscarRegion(self.ui.txt_buscar.text())
             region = regiones[fila]
             self.ui.txt_codigo.setText(str(region._region_id))
             self.ui.txt_nombre_region.setText(region._region_name)

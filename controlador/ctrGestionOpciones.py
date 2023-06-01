@@ -18,7 +18,12 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.tbl_opcion.clicked.connect(self.seleccionarElemento)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_codigo.setText("")
@@ -30,6 +35,7 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
         if modo == 1: # Buscar
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_opcion.clearSelection()
                 listaOpciones = self.dto.buscarOpcion(texto)
             else:
                 QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -59,7 +65,7 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_opcion.selectedIndexes()[0].row()
-            opciones = self.dto.listaOpciones()
+            opciones = self.dto.buscarOpcion(self.ui.txt_buscar.text())
             opc_seleccionada = opciones[fila]
             self.ui.txt_codigo.setText(str(opc_seleccionada._id_opcion))
             self.ui.txt_opcion.setText(opc_seleccionada._opcion)

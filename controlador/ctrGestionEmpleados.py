@@ -24,8 +24,13 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.ui.btn_eliminar.clicked.connect(self.eliminarEmpleado)
         self.ui.btn_editar.clicked.connect(self.editarEmpleado)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
         self.cargarCombobox()
+
+    def buscarVacio(self):
+        if self.ui.txt_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.txt_telefono.setText("")
@@ -46,6 +51,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         if modo == 1:
             texto = self.ui.txt_buscar.text()
             if texto != "":
+                self.ui.tbl_employees.clearSelection()
                 listaEmpleados = self.dtu.buscarEmpleado(texto)
             else:
                 QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -126,8 +132,8 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
 
     def seleccionarElemento(self):
         try:
-            fila = self.ui.tbl_employees.selectedIndexes()[0].row()
-            empleados = self.dtu.listaEmpleados()
+            fila = self.ui.tbl_employees.currentRow()
+            empleados = self.dtu.buscarEmpleado(self.ui.txt_buscar.text())
             emp_seleccionado = empleados[fila]
             self.ui.txt_nombres.setText(emp_seleccionado._first_name)
             self.ui.txt_apellidos.setText(emp_seleccionado._last_name)

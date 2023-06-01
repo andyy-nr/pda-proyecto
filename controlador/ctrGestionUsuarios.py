@@ -20,8 +20,12 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_Usuario.clicked.connect(self.seleccionarElemento)
+        self.ui.le_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
 
+    def buscarVacio(self):
+        if self.ui.le_buscar.text() == "":
+            self.cargarDatos(0)
 
     def limpiarCampos(self):
         self.ui.le_codigo.setText("")
@@ -39,6 +43,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         if modo == 1: # Buscar
             texto = self.ui.le_buscar.text()
             if texto != "":
+                self.ui.tbl_Usuario.clearSelection()
                 listUsuario = self.dtu.buscarUsuario(texto)
             else:
                 QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -73,7 +78,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         return True
 
     def validarUsuarioRepetido(self):
-        usuarios = self.dtu.listTodosUsuarios()
+        usuarios = self.dtu.buscarUsuario(self.ui.le_buscar.text())
         for usuario in usuarios:
             if usuario._user == self.ui.le_nombre_usuario.text():
                 return False

@@ -262,6 +262,7 @@ class Ui_frmEmpleados(object):
         self.tbl_employees.setMaximumSize(QtCore.QSize(16777215, 500))
         self.tbl_employees.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.tbl_employees.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.tbl_employees.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.tbl_employees.setObjectName("tbl_employees")
         self.tbl_employees.setColumnCount(9)
         self.tbl_employees.setRowCount(0)

@@ -40,6 +40,7 @@ class CtrlGestionPaises(QtWidgets.QWidget):
             texto = self.ui.txt_buscar.text()
             if texto != "":
                 self.ui.tbl_paises.clearSelection()
+                self.ui.tbl_paises.clearSelection()
                 listaPaises = self.dtu.buscarPais(texto)
             else:
                 QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese un texto para buscar")
@@ -75,9 +76,8 @@ class CtrlGestionPaises(QtWidgets.QWidget):
 
     def seleccionarElementos(self):
         try:
-            nombre = self.ui.txt_buscar.text()
             fila = self.ui.tbl_paises.selectedIndexes()[0].row()
-            pais = self.dtu.buscarPais(nombre)
+            pais = self.dtu.buscarPais(self.ui.txt_buscar.text())
             pais_seleccionado = pais[fila]
             self.ui.txt_codigo.setText(pais_seleccionado._country_id)
             self.ui.cbox_cod_region.setCurrentText(pais_seleccionado._region_name)
