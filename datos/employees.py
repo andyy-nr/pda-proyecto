@@ -17,7 +17,7 @@ class Dt_employees:
 
     def totalEmpleados(self):
         self.renovarConexion()
-        self._sql = "select count(*) from Seguridad.vwDependents;"
+        self._sql = "select count(*) from Seguridad.vwEmployees;"
         try:
             self._cursor.execute(self._sql)
             resultado = self._cursor.fetchone()

@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QTableView, QMessageBox
 
 from vistas.frmDependientes import Ui_frmDependientes
@@ -13,6 +14,7 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_dependientes.setSelectionBehavior(QTableView.SelectRows)
     dd = Dt_dependents()
+    actualizar_info = pyqtSignal()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDependiente)
@@ -106,6 +108,8 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
                 self.dd.agregarDependientes(dependiente)
                 self.cargarDatos(0)
                 self.limpiarCampos()
+                self.actualizar_info.emit()
+
             except Exception as e:
                 print(f"Error al agregar dependiente: {e}")
         else:

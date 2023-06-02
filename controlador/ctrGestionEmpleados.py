@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox, QTableView
 
 from vistas.frmEmpleados import Ui_frmEmpleados
@@ -16,6 +16,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_employees.setSelectionBehavior(QTableView.SelectRows)
     dtu = Dt_employees()
+    actualizar_info = pyqtSignal()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarEmpleado)
@@ -127,6 +128,8 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             self.dtu.agregarEmpleado(empleado)
             self.cargarDatos(0)
             self.limpiarCampos()
+            self.actualizar_info.emit()
+
         else:
             print("Campos vacios")
 

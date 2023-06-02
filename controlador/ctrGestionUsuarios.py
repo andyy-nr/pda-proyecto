@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
 
 from vistas.frmUsuario import Ui_frmUsuario
@@ -13,6 +14,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         self.ui.setupUi(self)
         self.initControlGui()
         self.ui.tbl_Usuario.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
+    actualizar_info = pyqtSignal()
     dtu = Dt_tbl_user()
 
     def initControlGui(self):
@@ -118,7 +120,7 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
                     self.dtu.agregarUsuario(usuario)
                     self.cargarDatos(0)
                     self.limpiarCampos()
-                    #ctrInicio.cargarDatos()
+                    self.actualizar_info.emit()
                 except Exception as e:
                     print(f"Error al agregar el registro: {e}")
             else:

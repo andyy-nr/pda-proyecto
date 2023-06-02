@@ -62,14 +62,21 @@ class CtrlFrmMainWindow(QtWidgets.QMainWindow):
         self.ui.lbl_cant_dependientes.setText(dt_dependientes.totalDependientes())
         self.ui.lbl_cant_dependientes.setAlignment(Qt.AlignCenter)
 
+    def mostrarFormConData(self, form):
+        self.form = form()
+        self.form.showMaximized()
+        self.form.actualizar_info.connect(self.mostrarDatos)
+
     def mostrarFormulario(self, form):
         self.form = form()
         self.form.showMaximized()
 
+
     def initControlGui(self):
-        self.ui.btn_empleados.clicked.connect(lambda: self.mostrarFormulario(CtrlGestionEmpleados))
-        self.ui.btn_departamentos.clicked.connect(lambda: self.mostrarFormulario(CtrlGestionDepartaments))
-        self.ui.btn_dependientes.clicked.connect(lambda: self.mostrarFormulario(CtrlGestionDependientes))
+        self.ui.btn_empleados.clicked.connect(lambda: self.mostrarFormConData(CtrlGestionEmpleados))
+        self.ui.btn_departamentos.clicked.connect(lambda: self.mostrarFormConData(CtrlGestionDepartaments))
+        self.ui.btn_dependientes.clicked.connect(lambda: self.mostrarFormConData(CtrlGestionDependientes))
+        self.ui.btn_usuarios.clicked.connect(lambda: self.mostrarFormConData(CtrlFrmGestionUser))
         self.ui.btn_localidades.clicked.connect(lambda: self.mostrarFormulario(CtrlGestionLocalidades))
         self.ui.btn_opcion.clicked.connect(lambda: self.mostrarFormulario(CtrlFrmGestionOpcion))
         self.ui.btn_opcionRol.clicked.connect(lambda: self.mostrarFormulario(CtrlGestionRolOpcion))
@@ -78,4 +85,3 @@ class CtrlFrmMainWindow(QtWidgets.QMainWindow):
         self.ui.btn_roles.clicked.connect(lambda: self.mostrarFormulario(CtrlFrmGestionRoles))
         self.ui.btn_rolUsuario.clicked.connect(lambda: self.mostrarFormulario(CtrlGestionRolUsuario))
         self.ui.btn_trabajos.clicked.connect(lambda: self.mostrarFormulario(CtrlGestionTrabajos))
-        self.ui.btn_usuarios.clicked.connect(lambda: self.mostrarFormulario(CtrlFrmGestionUser))

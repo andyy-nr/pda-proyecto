@@ -17,7 +17,7 @@ class Dt_tbl_user:
 
     def totalUsuarios(self):
         self.renovarConexion()
-        self._sql = "select count(*) from Seguridad.vwUsuarios;"
+        self._sql = "select count(*) from Seguridad.vwUsuarios where estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             resultado = self._cursor.fetchone()

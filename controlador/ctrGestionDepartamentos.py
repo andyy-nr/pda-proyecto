@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMessageBox, QTableView
 
 from vistas.frmDepartamentos import Ui_frmDepartamentos
@@ -13,7 +14,7 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_departamentos.setSelectionBehavior(QTableView.SelectRows)
     dtd = Dt_departments()
-
+    actualizar_info = pyqtSignal()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDepartamento)
@@ -93,5 +94,7 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
             self.dtd.agregarDepartamento(departamento)
             self.limpiarCampos()
             self.cargarDatos(0)
+            self.actualizar_info.emit()
+
         else:
             print("Campos vacios")
