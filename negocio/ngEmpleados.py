@@ -1,0 +1,1 @@
+# toda la info repetida

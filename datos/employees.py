@@ -99,13 +99,13 @@ class Dt_employees:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def editarEmpleado(self, empleado_anterior, empleado_editado):
+    def editarEmpleado(self,empleado, emp_id):
         self.renovarConexion()
         self._sql = "UPDATE Seguridad.employees SET first_name = '{}', last_name = '{}', email = '{}', phone_number = '{}', " \
                     "hire_date = '{}', job_id = '{}', salary = '{}', manager_id = '{}', department_id = '{}'" \
-                    " WHERE employee_id = {};".format(empleado_editado.first_name, empleado_editado.last_name, empleado_editado.email,
-                                                      empleado_editado.phone, empleado_editado.hire_date, empleado_editado.job_id,
-                                                      empleado_editado.salary, empleado_editado.manager_id, empleado_editado.department_id, empleado_anterior.employee_id)
+                    " WHERE employee_id = {};".format(empleado.first_name, empleado.last_name, empleado.email,
+                                                      empleado.phone, empleado.hire_date, empleado.job_id,
+                                                      empleado.salary, empleado.manager_id, empleado.department_id, emp_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
@@ -132,7 +132,7 @@ class Dt_employees:
             print("Datos: Error listaManagers()", e)
         except self._cursor.Error as e:
             if e.errno == 1451:
-                QMessageBox.alert(self, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Abort)
+                QMessageBox.alert(self, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Ok)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

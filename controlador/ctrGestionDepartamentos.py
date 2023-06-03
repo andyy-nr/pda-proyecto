@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMessageBox, QTableView
 from vistas.frmDepartamentos import Ui_frmDepartamentos
 from datos.departments import Dt_departments
 from entidades.Departments import departments
+from negocio.ngDepartamentos import ngDepartamentos
 from PyQt5 import QtWidgets
 
 class CtrlGestionDepartaments(QtWidgets.QWidget):
@@ -14,12 +15,15 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_departamentos.setSelectionBehavior(QTableView.SelectRows)
     dtd = Dt_departments()
+    ngd = ngDepartamentos()
     actualizar_info = pyqtSignal()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDepartamento)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda : self.cargarDatos(1))
+        self.ui.btn_editar.clicked.connect(self.modificarDepartamento)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarDepartamento)
         self.ui.tbl_departamentos.clicked.connect(self.seleccionarElemento)
         self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
@@ -91,10 +95,32 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
             nombre = self.ui.txt_nombre.text()
             localidad = self.ui.cbox_cod_localidad.currentData()
             departamento = departments(department_name=nombre, location_id=localidad)
-            self.dtd.agregarDepartamento(departamento)
+            self.ngd.agregarDepartamento(departamento)
             self.limpiarCampos()
             self.cargarDatos(0)
             self.actualizar_info.emit()
 
-        else:
-            print("Campos vacios")
+    def modificarDepartamento(self):
+        if self.validarVacios():
+            id = self.ui.txt_codigo.text()
+            nombre = self.ui.txt_nombre.text()
+            localidad = self.ui.cbox_cod_localidad.currentData()
+            departamento = departments(department_id=id, department_name=nombre, location_id=localidad)
+            self.ngd.modificarDepartamento(departamento)
+            self.limpiarCampos()
+            self.cargarDatos(0)
+            self.ui.tbl_departamentos.clearSelection()
+
+    def eliminarDepartamento(self):
+        try:
+            fila = self.ui.tbl_departamentos.selectedIndexes()[0].row()
+            departamento = self.dtd.buscarDepartamento(self.ui.txt_buscar.text())
+            dep_seleccionado = departamento[fila]
+            self.dtd.eliminarDepartamento(dep_seleccionado)
+            self.limpiarCampos()
+            self.cargarDatos(0)
+            self.ui.tbl_departamentos.clearSelection()
+        except Exception as e:
+            print(e)
+        except IndexError as e:
+            QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")

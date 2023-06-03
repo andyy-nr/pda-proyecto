@@ -101,6 +101,30 @@ class Dt_tbl_user:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def editarUsuario(self, usuario, id):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_user SET user = '{}', pwd = '{}', nombres = '{}', apellidos = '{}', " \
+                    "email = '{}', pwd_temp = '{}', estado = '{}' " \
+                    "WHERE id_user = '{}';".format(usuario._user, usuario._pwd, usuario._nombres, usuario._apellidos,
+                                                   usuario._email, usuario._pwd_temp, usuario._estado, id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
 
-
+    def eliminarUsuario(self, usuario):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_user SET estado = 3 WHERE id_user = '{}';".format(usuario._id_user)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
 

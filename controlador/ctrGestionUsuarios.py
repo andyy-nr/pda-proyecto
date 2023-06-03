@@ -5,7 +5,7 @@ from vistas.frmUsuario import Ui_frmUsuario
 from datos.Dt_Tbl_user import Dt_tbl_user
 from PyQt5 import QtWidgets
 from entidades.Tbl_user import Tbl_user
-
+from negocio.ngUsuarios import ngUsuarios
 
 class CtrlFrmGestionUser(QtWidgets.QWidget):
     def __init__(self):
@@ -16,9 +16,12 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         self.ui.tbl_Usuario.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     actualizar_info = pyqtSignal()
     dtu = Dt_tbl_user()
+    ngu = ngUsuarios()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarUsuario)
+        self.ui.btn_editar.clicked.connect(self.editarUsuario)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarUsuario)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_Usuario.clicked.connect(self.seleccionarElemento)
@@ -79,12 +82,10 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             return False
         return True
 
-    def validarUsuarioRepetido(self):
-        usuarios = self.dtu.buscarUsuario(self.ui.le_buscar.text())
-        for usuario in usuarios:
-            if usuario._user == self.ui.le_nombre_usuario.text():
-                return False
-        return True
+    def validarCorreo(self):
+        if self.ui.le_email.text() == self.ui.le_confirmar_correo.text():
+            return True
+        return False
 
     def seleccionarElemento(self):
         try:
@@ -97,43 +98,76 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             self.ui.le_apellidos.setText(usuario._apellidos)
             self.ui.le_email.setText(usuario._email)
             self.ui.le_confirmar_correo.setText(usuario._email)
-            self.ui.le_contrasena.setText(usuario._pwd)
-            self.ui.le_confirmacion.setText(usuario._pwd_temp)
         except Exception as e:
             print(e)
-        except IndexError as e:
-            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
+
 
     def agregarUsuario(self):
-        if self.validarVacios():
-            if self.validarUsuarioRepetido():
-                user = self.ui.le_nombre_usuario.text()
-                pwd = self.ui.le_contrasena.text()
-                nombres = self.ui.le_nombres.text()
-                apellidos = self.ui.le_apellidos.text()
-                email = self.ui.le_email.text()
-                pwd_temp = self.ui.le_confirmacion.text()
-                estado = 1
-                usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
-                                   pwd_temp=pwd_temp, estado=estado)
-                try:
-                    self.dtu.agregarUsuario(usuario)
-                    self.cargarDatos(0)
-                    self.limpiarCampos()
-                    self.actualizar_info.emit()
-                except Exception as e:
-                    print(f"Error al agregar el registro: {e}")
-            else:
-                print("El usuario ya se encuentra en la BD")
-                self.limpiarCampos()
-        else:
+        if not self.validarVacios():
             print("Campos vacios")
+            return
+        if not self.validarCorreo():
+            print("Correos no coinciden")
+            return
+
+        user = self.ui.le_nombre_usuario.text()
+        pwd = self.ui.le_contrasena.text()
+        nombres = self.ui.le_nombres.text()
+        apellidos = self.ui.le_apellidos.text()
+        email = self.ui.le_email.text()
+        pwd_temp = self.ui.le_confirmacion.text()
+        estado = 1
+        usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
+                           pwd_temp=pwd_temp, estado=estado)
+        try:
+            self.ngu.agregarUsuario(usuario)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+            self.actualizar_info.emit()
+        except Exception as e:
+            print(f"Error al agregar el registro: {e}")
+
 
     def eliminarUsuario(self):
-        pass
+        try:
+            fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
+            usuarios = self.dtu.listUsuariosNoEliminados()
+            usuario = usuarios[fila]
+            self.dtu.eliminarUsuario(usuario)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+            self.actualizar_info.emit()
+        except IndexError as e:
+            QMessageBox.warning(self, "Advertencia", "Seleccione un registro para eliminar")
+        except Exception as e:
+            print(e)
 
     def editarUsuario(self):
-        pass
-
+        if self.validarVacios():
+            user = self.ui.le_nombre_usuario.text()
+            pwd = self.ui.le_contrasena.text()
+            nombres = self.ui.le_nombres.text()
+            apellidos = self.ui.le_apellidos.text()
+            email = self.ui.le_email.text()
+            pwd_temp = self.ui.le_confirmacion.text()
+            estado = 2
+            usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
+                               pwd_temp=pwd_temp, estado=estado)
+            try:
+                fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
+                usuarios = self.dtu.listTodosUsuarios()
+                user_act = usuarios[fila]
+                usr_id = user_act[fila]._id_user
+                contra_vieja = user_act[fila]._pwd
+                self.ngu.modificarUsuario(usuario, contra_vieja, usr_id)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+                self.ui.tbl_Usuario.clearSelection()
+            except IndexError as e:
+                QMessageBox.warning(self, "Advertencia", "Seleccione un registro para editar")
+            except Exception as e:
+                print(f"Modificar usuario {e}")
+        else:
+            print("Campos vacios")
 
 

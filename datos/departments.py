@@ -1,3 +1,5 @@
+from PyQt5.QtWidgets import QMessageBox, QWidget
+
 from datos.Conexion import Conexion
 from entidades.Departments import departments
 
@@ -68,6 +70,37 @@ class Dt_departments:
             print("Registro agregado correctamente")
         except Exception as e:
             print(f"Error al agregar el registro: {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def modificarDepartamento(self, departamento):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.departments SET department_name = '{}', location_id = '{}' " \
+                    "WHERE department_id = '{}';".format(departamento._department_name, departamento._location_id, departamento._department_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+            print("Registro modificado correctamente")
+        except Exception as e:
+            print("Error al editar el departamento: ", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarDepartamento(self, departamento):
+        self.renovarConexion()
+        self._sql = "DELETE FROM Seguridad.departments WHERE department_id = '{}';".format(departamento._department_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+            print("Registro eliminado correctamente")
+        except self._cursor.Error as e:
+            if e.args[0] == 1451:
+                widget = QWidget()
+                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Ok)
+        except Exception as e:
+            print("Error al eliminar el departamento: ", e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

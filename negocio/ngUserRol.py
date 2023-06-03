@@ -1,0 +1,1 @@
+# un usuario puede tener un rol dos veces
