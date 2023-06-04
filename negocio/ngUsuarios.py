@@ -13,17 +13,26 @@ class ngUsuarios:
         self.user = Tbl_user()
     dtu = Dt_tbl_user()
 
-    def validarUsuarioRepetido(self, user):
+    def validarUsuarioRepetido(self, user, user_id=None):
         usuarios = self.dtu.listTodosUsuarios()
-        for usuario in usuarios:
-            if usuario._user == user._user:
-                return False
-            if usuario._email == user._email:
-                return False
+        if user_id is None:
+            for usuario in usuarios:
+                if usuario._user == user._user:
+                    return False
+                if usuario._email == user._email:
+                    return False
+        else:
+            for usuario in usuarios:
+                if not usuario._id_user == user_id: # Para que no se compare consigo mismo y no sirva la validacion
+                    if usuario._user == user._user:
+                        return False
+                    if usuario._email == user._email:
+                        return False
         return True
 
+
     def contraseniaSegura(self, user):
-        if len(user._pwd_temp) <= 8:
+        if not len(user._pwd_temp) <= 8:
             print("La contraseña debe tener al menos 8 caracteres")
             #QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener al menos 8 caracteres", QtWidgets.QMessageBox.Ok)
             return False
@@ -47,8 +56,6 @@ class ngUsuarios:
             return False
         return True
 
-
-
     def contraseniaNueva(self, user, contra_vieja):
         if user._pwd != contra_vieja:
             QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese la contrasena anterior correctamente")
@@ -65,13 +72,15 @@ class ngUsuarios:
         self.dtu.agregarUsuario(user)
         return True
 
-    def modificarUsuario(self, user, contra_vieja, id):
+    def modificarUsuario(self, user, contra_vieja, user_id):
+        if not self.validarUsuarioRepetido(user, user_id):
+            return False
         if not self.contraseniaSegura(user):
             return False
         if not self.contraseniaNueva(user, contra_vieja):
             return False
         user._pwd = user._pwd_temp
-        self.dtu.editarUsuario(user, id)
+        self.dtu.editarUsuario(user)
         return True
 
 

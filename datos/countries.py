@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QWidget
 from datos.Conexion import Conexion
 from entidades.Countries import countries
 from entidades.Regions import regions
@@ -77,6 +77,34 @@ class Dt_countries:
             return listaRegiones
         except Exception as e:
             print("Datos: Error listaRegiones()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def modificarPais(self, pais):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.countries SET country_name = '{}', region_id = '{}' WHERE country_id = '{}';".format(pais.country_name, pais.region_id, pais.country_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print("Datos: Error modificarPais()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarPais(self, pais):
+        self.renovarConexion()
+        self._sql = "DELETE FROM Seguridad.countries WHERE country_id = '{}';".format(pais.country_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except self._cursor.Error as e:
+            if e.args[0] == 1451:
+                widget = QWidget()
+                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Ok)
+        except Exception as e:
+            print("Datos: Error eliminarPais()", e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

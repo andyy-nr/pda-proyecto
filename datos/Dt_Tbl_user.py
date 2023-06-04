@@ -84,6 +84,20 @@ class Dt_tbl_user:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def obtenerIdUsuario(self, usuario):
+        self.renovarConexion()
+        self._sql = "SELECT id_user from Seguridad.tbl_user WHERE user like '%{}%';".format(usuario)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchone()
+            id = registros['id_user']
+            return id
+        except Exception as e:
+            print("Error obtenerIDUsuario()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
     def agregarUsuario(self, usuario):
         self.renovarConexion()
 
@@ -101,12 +115,12 @@ class Dt_tbl_user:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def editarUsuario(self, usuario, id):
+    def editarUsuario(self, usuario):
         self.renovarConexion()
         self._sql = "UPDATE Seguridad.tbl_user SET user = '{}', pwd = '{}', nombres = '{}', apellidos = '{}', " \
                     "email = '{}', pwd_temp = '{}', estado = '{}' " \
                     "WHERE id_user = '{}';".format(usuario._user, usuario._pwd, usuario._nombres, usuario._apellidos,
-                                                   usuario._email, usuario._pwd_temp, usuario._estado, id)
+                                                   usuario._email, usuario._pwd_temp, usuario._estado, usuario._id_user)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

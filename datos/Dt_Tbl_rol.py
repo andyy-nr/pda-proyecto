@@ -1,4 +1,6 @@
 import pymysql
+from PyQt5.QtWidgets import QWidget, QMessageBox
+
 from datos.Conexion import Conexion
 from entidades.Tbl_rol import Tbl_rol
 
@@ -14,7 +16,7 @@ class Dt_tbl_rol:
 
     def listaRoles(self):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.tbl_rol;"
+        self._sql = "Select * from Seguridad.tbl_rol where estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -31,7 +33,7 @@ class Dt_tbl_rol:
 
     def buscarRol(self, texto):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.tbl_rol where rol like '%{}%';".format(texto)
+        self._sql = "Select * from Seguridad.tbl_rol where rol like '%{}%' and estado <> 3;".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -56,6 +58,35 @@ class Dt_tbl_rol:
             print(f"Rol ingresado correctamente")
         except Exception as e:
             print(f"Error al insertar rol {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def modificarRol(self, rol):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_rol SET rol = '{}', estado = '2' WHERE id_rol = '{}';".format(rol._rol, rol._estado, rol._id_rol)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print("Datos, error ModificarRol(): ", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarRol(self, rol):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_rol SET estado = '3' WHERE id_rol = '{}';".format(rol._id_rol)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except self._cursor.Error as e:
+            if e.args[0] == 1451:
+                widget = QWidget()
+                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros",
+                                    QMessageBox.Ok)
+        except Exception as e:
+            print("Datos, error EliminarRol(): ", e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

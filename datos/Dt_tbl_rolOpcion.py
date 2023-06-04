@@ -60,4 +60,29 @@ class Dt_tbl_rolOpcion:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def modificarRolOpcion(self, rolOpcion):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_rolOpcion SET id_rol='{}', id_opcion='{}', estado = '2' WHERE id_rolOpcion='{}';".format(rolOpcion._id_rol, rolOpcion._id_opcion, rolOpcion._id_rolOpcion)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(f"Error al modificar rolOpcion {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarRolOpcion(self, rolOpcion):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_rolOpcion SET estado ='3' WHERE id_rolOpcion='{}';".format(
+            rolOpcion._id_rol, rolOpcion._id_opcion, rolOpcion._id_rolOpcion)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(f"Error al modificar rolOpcion {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
 

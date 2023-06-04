@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QTableView, QMessageBox
 from vistas.frmDependientes import Ui_frmDependientes
 from datos.dependents import Dt_dependents
 from entidades.Dependents import dependents
+from negocio.ngDependientes import ngDependientes
 from PyQt5 import QtWidgets
 
 class CtrlGestionDependientes(QtWidgets.QWidget):
@@ -14,11 +15,14 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_dependientes.setSelectionBehavior(QTableView.SelectRows)
     dd = Dt_dependents()
+    ngd = ngDependientes()
     actualizar_info = pyqtSignal()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarDependiente)
         self.ui.limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_editar.clicked.connect(self.modificarDependiente)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarDependiente)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_dependientes.clicked.connect(self.seleccionarElemento)
         self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
@@ -114,3 +118,28 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
                 print(f"Error al agregar dependiente: {e}")
         else:
             print("Campos vacios")
+
+    def modificarDependiente(self):
+        if self.validarVacio():
+            nombres = self.ui.txt_nombres.text()
+            apellidos = self.ui.txt_apellidos.text()
+            relacion = self.ui.txt_relacion.text()
+            empleado = self.ui.cbox_empleado.currentData()
+            dependiente = dependents(first_name=nombres, last_name=apellidos, relationship=relacion,
+                                     employee_id=empleado)
+            try:
+                self.dd.agregarDependientes(dependiente)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+
+            except Exception as e:
+                print(f"Error al modificar dependiente: {e}")
+        else:
+            print("Campos vacios")
+
+    def eliminarDependiente(self):
+        dependiente = self.seleccionarElemento()
+        if dependiente is not None:
+            self.dd.eliminarDependiente(dependiente)
+            self.cargarDatos(0)
+            self.limpiarCampos()

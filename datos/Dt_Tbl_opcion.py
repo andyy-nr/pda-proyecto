@@ -52,13 +52,12 @@ class Dt_tbl_opcion:
             Conexion.closeConnection()
 
 
-    def agregarOpcion(self, nombre_opcion, estado):
+    def agregarOpcion(self, opcion):
         self.renovarConexion()
-        opcion = [ nombre_opcion, estado]
         self._sql = "INSERT INTO Seguridad.tbl_opcion (opcion, estado) " \
-                    "values (%s, %s);"
+                    "values ('{}', '{}');".format(opcion._opcion, opcion._estado)
         try:
-            self._cursor.execute(self._sql, opcion)
+            self._cursor.execute(self._sql)
             self._con.commit()
             print(f"Opcion ingresado correctamente")
         except Exception as e:
@@ -67,4 +66,6 @@ class Dt_tbl_opcion:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def modificarOpcion(self, opcion):
+        self.renovarConexion()
 

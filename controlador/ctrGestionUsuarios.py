@@ -151,12 +151,14 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             email = self.ui.le_email.text()
             pwd_temp = self.ui.le_confirmacion.text()
             estado = 2
-            usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
+            id = self.dtu.obtenerIdUsuario(user)
+            usuario = Tbl_user(id_user= id, user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
                                pwd_temp=pwd_temp, estado=estado)
             try:
                 fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
-                usuarios = self.dtu.listTodosUsuarios()
+                usuarios = self.dtu.listUsuariosNoEliminados()
                 user_act = usuarios[fila]
+                print(user_act._user)
                 usr_id = user_act[fila]._id_user
                 contra_vieja = user_act[fila]._pwd
                 self.ngu.modificarUsuario(usuario, contra_vieja, usr_id)

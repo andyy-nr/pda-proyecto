@@ -1,4 +1,6 @@
 import pymysql
+from PyQt5.QtWidgets import QMessageBox, QWidget
+
 from datos.Conexion import Conexion
 from entidades.Dependents import dependents
 
@@ -71,6 +73,39 @@ class Dt_dependents:
             self._con.commit()
         except Exception as e:
             print(f"Ocurrio un error en agregar dependendientes {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def modificarDependientes(self, dependiente):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.dependents SET " \
+                    "first_name = '{}', last_name = '{}', relationship = '{}', employee_id = '{}' " \
+                    "WHERE dependent_id = '{}';".format(dependiente.first_name, dependiente.last_name,
+                                                        dependiente.relationship, dependiente.employee_id,
+                                                        dependiente.dependent_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(f"Ocurrio un error en modificar dependendientes {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarDependiente(self, dependiente):
+        self.renovarConexion()
+        self._sql = "DELETE FROM Seguridad.dependents WHERE dependent_id = '{}';".format(dependiente.dependent_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except self._cursor.Error as e:
+            if e.args[0] == 1451:
+                widget = QWidget()
+                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros",
+                                    QMessageBox.Ok)
+        except Exception as e:
+            print(f"Ocurrio un error en eliminar dependendientes {e}")
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

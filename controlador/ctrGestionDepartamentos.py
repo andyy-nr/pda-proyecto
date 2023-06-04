@@ -112,15 +112,8 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
             self.ui.tbl_departamentos.clearSelection()
 
     def eliminarDepartamento(self):
-        try:
-            fila = self.ui.tbl_departamentos.selectedIndexes()[0].row()
-            departamento = self.dtd.buscarDepartamento(self.ui.txt_buscar.text())
-            dep_seleccionado = departamento[fila]
-            self.dtd.eliminarDepartamento(dep_seleccionado)
-            self.limpiarCampos()
+        departamento = self.seleccionarElemento()
+        if departamento is not None:
+            self.dtd.eliminarDepartamento(departamento)
             self.cargarDatos(0)
-            self.ui.tbl_departamentos.clearSelection()
-        except Exception as e:
-            print(e)
-        except IndexError as e:
-            QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
+            self.limpiarCampos()
