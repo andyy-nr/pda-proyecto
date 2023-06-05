@@ -127,7 +127,6 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         except Exception as e:
             print(f"Error al agregar el registro: {e}")
 
-
     def eliminarUsuario(self):
         try:
             fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
@@ -151,14 +150,12 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             email = self.ui.le_email.text()
             pwd_temp = self.ui.le_confirmacion.text()
             estado = 2
-            id = self.dtu.obtenerIdUsuario(user)
-            usuario = Tbl_user(id_user= id, user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
+            usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
                                pwd_temp=pwd_temp, estado=estado)
             try:
                 fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
-                usuarios = self.dtu.listUsuariosNoEliminados()
+                usuarios = self.dtu.listTodosUsuarios()
                 user_act = usuarios[fila]
-                print(user_act._user)
                 usr_id = user_act[fila]._id_user
                 contra_vieja = user_act[fila]._pwd
                 self.ngu.modificarUsuario(usuario, contra_vieja, usr_id)
@@ -167,9 +164,5 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
                 self.ui.tbl_Usuario.clearSelection()
             except IndexError as e:
                 QMessageBox.warning(self, "Advertencia", "Seleccione un registro para editar")
-            except Exception as e:
-                print(f"Modificar usuario {e}")
         else:
             print("Campos vacios")
-
-

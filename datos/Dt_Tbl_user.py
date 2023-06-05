@@ -115,12 +115,12 @@ class Dt_tbl_user:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def editarUsuario(self, usuario):
+    def editarUsuario(self, usuario, user_id):
         self.renovarConexion()
         self._sql = "UPDATE Seguridad.tbl_user SET user = '{}', pwd = '{}', nombres = '{}', apellidos = '{}', " \
                     "email = '{}', pwd_temp = '{}', estado = '{}' " \
                     "WHERE id_user = '{}';".format(usuario._user, usuario._pwd, usuario._nombres, usuario._apellidos,
-                                                   usuario._email, usuario._pwd_temp, usuario._estado, usuario._id_user)
+                                                   usuario._email, usuario._pwd_temp, usuario._estado, user_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

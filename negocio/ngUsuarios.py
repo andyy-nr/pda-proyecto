@@ -21,20 +21,22 @@ class ngUsuarios:
                     return False
                 if usuario._email == user._email:
                     return False
+            return True
         else:
             for usuario in usuarios:
-                if not usuario._id_user == user_id: # Para que no se compare consigo mismo y no sirva la validacion
+                if usuario._id_user != user_id: # Para que no se compare consigo mismo y no sirva la validacion
                     if usuario._user == user._user:
                         return False
                     if usuario._email == user._email:
                         return False
-        return True
+                return True
 
 
     def contraseniaSegura(self, user):
-        if not len(user._pwd_temp) <= 8:
+        if len(user._pwd_temp) <= 8:
+            print(len(user._pwd_temp))
             print("La contraseña debe tener al menos 8 caracteres")
-            #QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener al menos 8 caracteres", QtWidgets.QMessageBox.Ok)
+            # QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener al menos 8 caracteres", QtWidgets.QMessageBox.Ok)
             return False
         if not any(letra.isupper() for letra in user._pwd_temp) and any(letra.islower() for letra in user._pwd_temp):
             print("La contrase;a debe tener al menos una mayuscula y una minuscula")
@@ -52,13 +54,15 @@ class ngUsuarios:
 
     def contraseniaCoincide(self, user):
         if user._pwd != user._pwd_temp:
-            QtWidgets.QMessageBox.warning(self, "Advertencia", "Las contraseñas no coinciden", QtWidgets.QMessageBox.Ok)
+            widget = QtWidgets.QWidget()
+            QtWidgets.QMessageBox.warning(widget, "Advertencia", "Las contraseñas no coinciden", QtWidgets.QMessageBox.Ok)
             return False
         return True
 
     def contraseniaNueva(self, user, contra_vieja):
         if user._pwd != contra_vieja:
-            QtWidgets.QMessageBox.warning(self, "Advertencia", "Ingrese la contrasena anterior correctamente")
+            widget = QtWidgets.QWidget()
+            QtWidgets.QMessageBox.warning(widget, "Advertencia", "Ingrese la contrasena anterior correctamente")
             return False
         return True
 
@@ -80,7 +84,6 @@ class ngUsuarios:
         if not self.contraseniaNueva(user, contra_vieja):
             return False
         user._pwd = user._pwd_temp
-        self.dtu.editarUsuario(user)
+        self.dtu.editarUsuario(user, user_id)
         return True
-
 
