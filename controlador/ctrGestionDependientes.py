@@ -95,6 +95,7 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
             self.ui.txt_codigo.setText(str(dep_seleccionado._dependent_id))
             self.ui.txt_relacion.setText(dep_seleccionado._relationship)
             self.ui.cbox_empleado.setCurrentText(dep_seleccionado._employee)
+            return dep_seleccionado
         except IndexError as e:
             QMessageBox.Warning(self, "Error", "Seleccione un elemento")
         except Exception as e:
@@ -109,7 +110,7 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
             dependiente = dependents(first_name=nombres, last_name=apellidos, relationship=relacion, employee_id=empleado)
 
             try:
-                self.dd.agregarDependientes(dependiente)
+                self.ngd.agregarDependientes(dependiente)
                 self.cargarDatos(0)
                 self.limpiarCampos()
                 self.actualizar_info.emit()
@@ -121,6 +122,7 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
 
     def modificarDependiente(self):
         if self.validarVacio():
+            dep_id = self.ui.txt_codigo.text()
             nombres = self.ui.txt_nombres.text()
             apellidos = self.ui.txt_apellidos.text()
             relacion = self.ui.txt_relacion.text()
@@ -128,9 +130,10 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
             dependiente = dependents(first_name=nombres, last_name=apellidos, relationship=relacion,
                                      employee_id=empleado)
             try:
-                self.dd.agregarDependientes(dependiente)
+                self.ngd.modificarDependiente(dependiente, dep_id)
                 self.cargarDatos(0)
                 self.limpiarCampos()
+                self.ui.tbl_dependientes.clearSelection()
 
             except Exception as e:
                 print(f"Error al modificar dependiente: {e}")
@@ -143,3 +146,4 @@ class CtrlGestionDependientes(QtWidgets.QWidget):
             self.dd.eliminarDependiente(dependiente)
             self.cargarDatos(0)
             self.limpiarCampos()
+            self.ui.tbl_dependientes.clearSelection()

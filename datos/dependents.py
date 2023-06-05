@@ -16,7 +16,7 @@ class Dt_dependents:
 
     def totalDependientes(self):
         self.renovarConexion()
-        self._sql = "select count(*) from Seguridad.vwDependents;"
+        self._sql = "select count(*) from Seguridad.vwDependents where dep_estado <> 3 and emp_estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             resultado = self._cursor.fetchone()
@@ -26,7 +26,7 @@ class Dt_dependents:
 
     def listaDependents(self):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.vwDependents;"
+        self._sql = "Select * from Seguridad.vwDependents where dep_estado <> 3 and emp_estado <> 3;"
 
         try:
             self._cursor.execute(self._sql)
@@ -45,7 +45,8 @@ class Dt_dependents:
 
     def buscarDependiente(self, texto):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.vwDependents where first_name like '%{}%' or last_name like '%{}%';".format(texto, texto)
+        self._sql = "Select * from Seguridad.vwDependents where first_name like '%{}%' or last_name like '%{}%' " \
+                    "and dep_estado <> 3 and emp_estado <> 3;".format(texto, texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -77,13 +78,13 @@ class Dt_dependents:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def modificarDependientes(self, dependiente):
+    def modificarDependientes(self, dependiente, dep_id):
         self.renovarConexion()
         self._sql = "UPDATE Seguridad.dependents SET " \
-                    "first_name = '{}', last_name = '{}', relationship = '{}', employee_id = '{}' " \
-                    "WHERE dependent_id = '{}';".format(dependiente.first_name, dependiente.last_name,
-                                                        dependiente.relationship, dependiente.employee_id,
-                                                        dependiente.dependent_id)
+                    "first_name = '{}', last_name = '{}', relationship = '{}', employee_id = '{}', estado = '2' " \
+                    "WHERE dependent_id = '{}';".format(dependiente._first_name, dependiente._last_name,
+                                                        dependiente._relationship, dependiente._employee_id,
+                                                        dep_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
@@ -95,7 +96,7 @@ class Dt_dependents:
 
     def eliminarDependiente(self, dependiente):
         self.renovarConexion()
-        self._sql = "UPDATE FROM Seguridad.dependents SET estado = '3' WHERE dependent_id = '{}';".format(dependiente.dependent_id)
+        self._sql = "UPDATE Seguridad.dependents SET estado = '3' WHERE dependent_id = '{}';".format(dependiente.dependent_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

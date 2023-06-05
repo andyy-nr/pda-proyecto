@@ -11,33 +11,27 @@ class ngDependientes:
         dependientes = self.dd.listaDependents()
         if dep_id is None:
             for dep in dependientes:
-                if dep._first_name == dependiente._first_name:
-                    return False
-                if dep._last_name == dependiente._last_name:
-                    return False
-                if dep._relationship == dependiente._relationship:
-                    return False
-                if dep._employee_id == dependiente._employee_id:
+                if (dep._first_name == dependiente._first_name and
+                        dep._last_name == dependiente._last_name and
+                        dep._relationship == dependiente._relationship and
+                        dep._employee_id == dependiente._employee_id):
                     return False
         else:
             for dep in dependientes:
-                if dep_id != dependiente._dependent_id:
-                    if dep._first_name == dependiente._first_name:
+                if dep_id != dep._dependent_id:
+                    if  (dep._first_name == dependiente._first_name and
+                            dep._last_name == dependiente._last_name and
+                            dep._relationship == dependiente._relationship and
+                            dep._employee_id == dependiente._employee_id):
                         return False
-                    if dep._last_name == dependiente._last_name:
-                        return False
-                    if dep._relationship == dependiente._relationship:
-                        return False
-                    if dep._employee_id == dependiente._employee_id:
-                        return False
-            return True
+        return True
 
     def agregarDependientes(self, dependiente):
         if not self.validarRepetido(dependiente):
             return False
         self.dd.agregarDependientes(dependiente)
 
-    def modificarDependiente(self, dependiente):
-        if not self.validarRepetido(dependiente):
+    def modificarDependiente(self, dependiente, dep_id):
+        if not self.validarRepetido(dependiente, dep_id):
             return False
-        self.dd.modificarDependientes(dependiente)
+        self.dd.modificarDependientes(dependiente, dep_id)
