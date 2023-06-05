@@ -13,7 +13,7 @@ class Dt_Regions:
 
     def listaRegiones(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.regions;"
+        self._sql = "SELECT * FROM Seguridad.regions where estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -32,7 +32,7 @@ class Dt_Regions:
 
     def buscarRegion(self, texto):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.regions WHERE region_name LIKE '%{}%';".format(texto)
+        self._sql = "SELECT * FROM Seguridad.regions WHERE region_name LIKE '%{}%' and estado <> 3;".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -75,7 +75,7 @@ class Dt_Regions:
 
     def eliminarRegion(self, reg_id):
         self.renovarConexion()
-        self._sql = "UPDATE FROM Seguridad.regions SET estado = '3' WHERE region_id = {};".format(reg_id)
+        self._sql = "UPDATE Seguridad.regions SET estado = '3' WHERE region_id = '{}';".format(reg_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

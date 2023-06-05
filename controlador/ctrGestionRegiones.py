@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMessageBox
 from vistas.frmRegiones import Ui_frmRegiones
 from datos.regions import Dt_Regions
 from entidades.Regions import regions
+from negocio.ngRegiones import ngRegiones
 from PyQt5 import QtWidgets
 
 
@@ -14,13 +15,16 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_regiones.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dtu = Dt_Regions()
+    ngr = ngRegiones()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRegion)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_editar.clicked.connect(self.modificarRegion)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarRegion)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_regiones.clicked.connect(self.seleccionarElemento)
-        self.ui.txt_buscar.clicked.connect(self.buscarVacio)
+        self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
         self.cargarDatos(0)
 
     def buscarVacio(self):
@@ -58,14 +62,6 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
             return False
         return True
 
-    def validarNoRepetido(self):
-        nombre_region = self.ui.txt_nombre_region.text()
-        listaRegiones = self.dtu.listaRegiones()
-        for row in listaRegiones:
-            if nombre_region == row._region_name:
-                return False
-        return True
-
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_regiones.selectedIndexes()[0].row()
@@ -81,16 +77,39 @@ class CtrlGestionRegiones(QtWidgets.QWidget):
 
     def agregarRegion(self):
         if self.validarVacios():
-            if not self.validarNoRepetido():
-                print("Region ya existe")
-                return
             nombre_region = self.ui.txt_nombre_region.text()
             region = regions(region_name=nombre_region)
             try:
-                self.dtu.agregarRegion(nombre_region)
+                self.ngr.agregarRegion(region)
                 self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar region: {e}")
+        else:
+            print("Campos vacios")
+
+    def modificarRegion(self):
+        if self.validarVacios():
+            codigo = self.ui.txt_codigo.text()
+            nombre_region = self.ui.txt_nombre_region.text()
+            region = regions(region_id=codigo, region_name=nombre_region)
+            try:
+                self.ngr.modificarRegion(region, codigo)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+            except Exception as e:
+                print(f"Error al modificar region: {e}")
+        else:
+            print("Campos vacios")
+
+    def eliminarRegion(self):
+        if self.validarVacios():
+            codigo = self.ui.txt_codigo.text()
+            try:
+                self.dtu.eliminarRegion(codigo)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+            except Exception as e:
+                print(f"Error al eliminar region: {e}")
         else:
             print("Campos vacios")
