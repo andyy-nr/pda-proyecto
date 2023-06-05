@@ -51,7 +51,7 @@ class Dt_Regions:
 
     def agregarRegion(self, region):
         self.renovarConexion()
-        self._sql = "INSERT INTO Seguridad.regions(region_name) VALUES ({});".format(region._region_name)
+        self._sql = "INSERT INTO Seguridad.regions(region_name) VALUES ('{}');".format(region._region_name)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

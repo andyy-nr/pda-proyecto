@@ -28,8 +28,8 @@ class ngPaises:
             return False
         self.dd.agregarPais(pais)
 
-    def modificarPais(self, pais):
-        if not self.validarRepetido(pais):
+    def modificarPais(self, pais, cod_pais):
+        if not self.validarRepetido(pais, cod_pais):
             return False
         self.dd.modificarPais(pais)
 

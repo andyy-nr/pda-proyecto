@@ -1,6 +1,7 @@
 from vistas.frmPaises import Ui_frmPaises
 from datos.countries import Dt_countries
 from entidades.Countries import countries
+from negocio.ngPaises import ngPaises
 from PyQt5 import QtWidgets
 
 class CtrlGestionPaises(QtWidgets.QWidget):
@@ -12,10 +13,13 @@ class CtrlGestionPaises(QtWidgets.QWidget):
         self.cargarDatos(0)
         self.ui.tbl_paises.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dtu = Dt_countries()
+    ngp = ngPaises()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarPais)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_editar.clicked.connect(self.modificarPais)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarPais)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_paises.clicked.connect(self.seleccionarElementos)
         self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
@@ -94,8 +98,34 @@ class CtrlGestionPaises(QtWidgets.QWidget):
             nombre = self.ui.txt_nombre.text()
             region_cod = self.ui.cbox_cod_region.currentData()
             pais = countries(codigo_pais, nombre, region_cod)
-            self.dtu.agregarPais(pais)
+            self.ngp.agregarPais(pais)
             self.cargarDatos(0)
             self.limpiarCampos()
         else:
             print("Campos vacios")
+
+    def modificarPais(self):
+        if self.validarVacios():
+            codigo_pais = self.ui.txt_codigo.text()
+            nombre = self.ui.txt_nombre.text()
+            region_cod = self.ui.cbox_cod_region.currentData()
+            pais = countries(codigo_pais, nombre, region_cod)
+            self.ngp.modificarPais(pais, codigo_pais)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+            self.ui.tbl_paises.clearSelection()
+        else:
+            print("Seleccione un pais")
+
+    def eliminarPais(self):
+        if self.validarVacios():
+            codigo_pais = self.ui.txt_codigo.text()
+            nombre = self.ui.txt_nombre.text()
+            region_cod = self.ui.cbox_cod_region.currentData()
+            pais = countries(codigo_pais, nombre, region_cod)
+            self.dtu.eliminarPais(pais)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+            self.ui.tbl_paises.clearSelection()
+        else:
+            print("Seleccione un pais")

@@ -15,7 +15,7 @@ class Dt_countries:
 
     def listaPaises(self):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.vwCountries;"
+        self._sql = "Select * from Seguridad.vwCountries where estado <> 3 and reg_estado <> 3;"
 
         try:
             self._cursor.execute(self._sql)
@@ -34,7 +34,7 @@ class Dt_countries:
 
     def buscarPais(self, texto):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.vwCountries where country_name like '%{}%';".format(texto)
+        self._sql = "Select * from Seguridad.vwCountries where country_name like '%{}%' and estado <> 3 and reg_estado <> 3;".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -52,7 +52,7 @@ class Dt_countries:
 
     def agregarPais(self, pais):
         self.renovarConexion()
-        self._sql = "INSERT INTO Seguridad.countries (country_id, country_name, region_id) VALUES ('{}', '{}', '{}');".format(pais.country_id, pais.country_name, pais.region_id)
+        self._sql = "INSERT INTO Seguridad.countries (country_id, country_name, region_id, estado) VALUES ('{}', '{}', '{}', '1');".format(pais.country_id, pais.country_name, pais.region_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
@@ -65,7 +65,7 @@ class Dt_countries:
 
     def listaRegiones(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.regions;"
+        self._sql = "SELECT * FROM Seguridad.regions where estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -95,7 +95,7 @@ class Dt_countries:
 
     def eliminarPais(self, pais):
         self.renovarConexion()
-        self._sql = "UPDATE FROM Seguridad.countries SET estado = '3' WHERE country_id = '{}';".format(pais.country_id)
+        self._sql = "UPDATE Seguridad.countries SET estado = '3' WHERE country_id = '{}';".format(pais.country_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
