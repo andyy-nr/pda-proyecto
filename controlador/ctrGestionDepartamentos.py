@@ -84,6 +84,7 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
             self.ui.txt_codigo.setText(str(dep_seleccionado._department_id))
             self.ui.txt_nombre.setText(dep_seleccionado._department_name)
             self.ui.cbox_cod_localidad.setCurrentText(dep_seleccionado._location_name)
+            return dep_seleccionado
         except Exception as e:
             print(e)
         except IndexError as e:

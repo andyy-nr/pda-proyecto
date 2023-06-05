@@ -15,7 +15,7 @@ class Dt_departments:
 
     def totalDepartamentos(self):
         self.renovarConexion()
-        self._sql = "select count(*) from Seguridad.vwDepartments;"
+        self._sql = "select count(*) from Seguridad.vwDepartments where loc_estado <> 3 and dep_estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             resultado = self._cursor.fetchone()
@@ -25,7 +25,7 @@ class Dt_departments:
 
     def listaDepartamentos(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.vwDepartments;"
+        self._sql = "Select * from Seguridad.vwDepartments where loc_estado <> 3 and dep_estado <> 3;"
 
         try:
             self._cursor.execute(self._sql)
@@ -44,7 +44,7 @@ class Dt_departments:
 
     def buscarDepartamento(self, texto):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.vwDepartments WHERE department_name LIKE '%{}%';".format(texto)
+        self._sql = "SELECT * FROM Seguridad.vwDepartments WHERE department_name LIKE '%{}%' and loc_estado <> 3 and dep_estado <> 3;".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -76,12 +76,11 @@ class Dt_departments:
 
     def modificarDepartamento(self, departamento):
         self.renovarConexion()
-        self._sql = "UPDATE Seguridad.departments SET department_name = '{}', location_id = '{}' " \
+        self._sql = "UPDATE Seguridad.departments SET department_name = '{}', location_id = '{}', estado = '2' " \
                     "WHERE department_id = '{}';".format(departamento._department_name, departamento._location_id, departamento._department_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-            print("Registro modificado correctamente")
         except Exception as e:
             print("Error al editar el departamento: ", e)
         finally:
@@ -90,15 +89,10 @@ class Dt_departments:
 
     def eliminarDepartamento(self, departamento):
         self.renovarConexion()
-        self._sql = "DELETE FROM Seguridad.departments WHERE department_id = '{}';".format(departamento._department_id)
+        self._sql = "UPDATE  Seguridad.departments SET estado = '3' WHERE department_id = '{}';".format(departamento._department_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-            print("Registro eliminado correctamente")
-        except self._cursor.Error as e:
-            if e.args[0] == 1451:
-                widget = QWidget()
-                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Ok)
         except Exception as e:
             print("Error al eliminar el departamento: ", e)
         finally:
@@ -107,7 +101,7 @@ class Dt_departments:
 
     def listaLocalidades(self):
         self.renovarConexion()
-        self._sql = "select distinct street_address, location_id from Seguridad.vwDepartments;"
+        self._sql = "select distinct street_address, location_id from Seguridad.vwLocations where loc_estado <> 3 and country_estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
