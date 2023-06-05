@@ -1,5 +1,5 @@
 # nombre repetido
-from datos.locations import locations
+from datos.locations import Dt_locations
 from entidades.Locations import locations
 
 class ngLocalidades:

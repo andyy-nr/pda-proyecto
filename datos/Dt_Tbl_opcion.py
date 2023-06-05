@@ -68,4 +68,26 @@ class Dt_tbl_opcion:
 
     def modificarOpcion(self, opcion):
         self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_opcion SET opcion = '{}', estado = '{}' " \
+                    "WHERE id_opcion = '{}';".format(opcion._opcion, opcion._estado, opcion._id_opcion)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(f"Error al modificar opcion {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarOpcion(self, opcion):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.tbl_opcion SET estado = 3 WHERE id_opcion = '{}';".format(opcion._id_opcion)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(f"Error al eliminar opcion {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
 

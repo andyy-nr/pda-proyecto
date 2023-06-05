@@ -95,15 +95,10 @@ class Dt_dependents:
 
     def eliminarDependiente(self, dependiente):
         self.renovarConexion()
-        self._sql = "DELETE FROM Seguridad.dependents WHERE dependent_id = '{}';".format(dependiente.dependent_id)
+        self._sql = "UPDATE FROM Seguridad.dependents SET estado = '3' WHERE dependent_id = '{}';".format(dependiente.dependent_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-        except self._cursor.Error as e:
-            if e.args[0] == 1451:
-                widget = QWidget()
-                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros",
-                                    QMessageBox.Ok)
         except Exception as e:
             print(f"Ocurrio un error en eliminar dependendientes {e}")
         finally:

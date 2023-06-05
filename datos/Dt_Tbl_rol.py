@@ -80,11 +80,6 @@ class Dt_tbl_rol:
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-        except self._cursor.Error as e:
-            if e.args[0] == 1451:
-                widget = QWidget()
-                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros",
-                                    QMessageBox.Ok)
         except Exception as e:
             print("Datos, error EliminarRol(): ", e)
         finally:

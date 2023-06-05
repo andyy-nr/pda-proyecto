@@ -13,7 +13,7 @@ class Dt_locations:
 
     def listaLocalidades(self):
         self.renovarConexion()
-        self._sql = "Select * from Seguridad.vwLocations;"
+        self._sql = "Select * from Seguridad.vwLocations where loc_estado <> 3 and country_estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -31,9 +31,28 @@ class Dt_locations:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def listaCiudades(self):
+        self.renovarConexion()
+        self._sql = "Select distinct country_name, country_id from Seguridad.countries where estado <> 3;"
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaCiudades = []
+
+            for tc in registros:
+                tcs = locations(country_id=tc['country_id'], country_name=tc['country_name'])
+                listaCiudades.append(tcs)
+            return listaCiudades
+        except Exception as e:
+            print("Datos: error listaCiudades()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
     def buscarLocalidad(self, texto):
         self.renovarConexion()
-        self._sql = "select * from Seguridad.vwLocations where street_address like '%{}%';".format(texto)
+        self._sql = "select * from Seguridad.vwLocations where street_address like '%{}%' and loc_estado <> 3 " \
+                    "and country_estado <> 3;".format(texto)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -60,28 +79,34 @@ class Dt_locations:
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-            print("Registro agregado correctamente")
         except Exception as e:
             print(f"Error al agregar el registro: {e}")
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def listaCiudades(self):
+    def modificarLocalidad(self, localidad):
         self.renovarConexion()
-        self._sql = "Select distinct country_name, country_id from Seguridad.countries;"
+        self._sql = "UPDATE Seguridad.locations SET street_address = '{}', postal_code = '{}', city = '{}', " \
+                    "state_province = '{}', country_id = '{}' WHERE location_id = '{}';".format(localidad._street_address, localidad._postal_code,  localidad._city,
+                                                                                                localidad._state_province, localidad._country_id, localidad._location_id)
         try:
             self._cursor.execute(self._sql)
-            registros = self._cursor.fetchall()
-            listaCiudades = []
-
-            for tc in registros:
-                tcs = locations(country_id=tc['country_id'], country_name=tc['country_name'])
-                listaCiudades.append(tcs)
-            return listaCiudades
+            self._con.commit()
         except Exception as e:
-            print("Datos: error listaCiudades()", e)
+            print(f"Error al modificar el registro: {e}")
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def eliminarLocalidad(self, localidad):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.locations SET loc_estado = 3 WHERE location_id = '{}';".format(localidad._location_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print(f"Error al eliminar el registro: {e}")
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()

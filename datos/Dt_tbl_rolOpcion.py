@@ -14,7 +14,7 @@ class Dt_tbl_rolOpcion:
 
     def listaRolOpcion(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.vwRolOpcion;"
+        self._sql = "SELECT * FROM Seguridad.vwRolOpcion WHERE estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -74,7 +74,7 @@ class Dt_tbl_rolOpcion:
 
     def eliminarRolOpcion(self, rolOpcion):
         self.renovarConexion()
-        self._sql = "DELETE FROM Seguridad.tbl_rolOpcion WHERE id_rolOpcion='{}';".format(
+        self._sql = "UPDATE FROM Seguridad.tbl_rolOpcion SET estado = '3' WHERE id_rolOpcion='{}';".format(
             rolOpcion._id_rol, rolOpcion._id_opcion, rolOpcion._id_rolOpcion)
         try:
             self._cursor.execute(self._sql)

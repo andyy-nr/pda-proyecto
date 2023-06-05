@@ -19,3 +19,15 @@ class ngUserRol:
                     if rol._id_user == tbl_userRol._id_user and rol._id_rol == tbl_userRol._id_rol:
                         return False
         return True
+
+    def agregarUserRol(self, tbl_userRol):
+        if not self.validarRepetido(tbl_userRol):
+            return False
+        self.dtur.agregarUserRol(tbl_userRol)
+
+    def modificarUserRol(self, tbl_userRol):
+        if not self.validarRepetido(tbl_userRol, tbl_userRol._id_userRol):
+            return False
+        self.dtur.modificarUserRol(tbl_userRol)
+
+

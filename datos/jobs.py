@@ -56,7 +56,6 @@ class Dt_jobs:
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-            #QMessageBox.information(self, "Agregar Trabajo", "Trabajo agregado correctamente", QMessageBox.Abort)
         except Exception as e:
             print("Datos: Error agregarTrabajo()", e)
             QMessageBox.warning(self, "Agregar Trabajo", f"Error al agregar Trabajo, {e}", QMessageBox.Abort)
@@ -66,13 +65,24 @@ class Dt_jobs:
 
     def modificarTrabajo(self, trabajo):
         self.renovarConexion()
-        self._sql = f"UPDATE Seguridad.jobs SET job_title = '{trabajo.job_title}', min_salary = '{trabajo.min_salary}', " \
-                    f"max_salary = '{trabajo.max_salary}' WHERE job_id = '{trabajo.job_id}';"
+        self._sql = "UPDATE Seguridad.jobs SET job_title = '{}', min_salary = '{}', max_salary = '{}' WHERE job_id = '{}';".format(trabajo.job_title, trabajo.min_salary, trabajo.max_salary, trabajo.job_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
         except Exception as e:
             print("Datos: Error modificarTrabajo()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarTrabajo(self, trabajo):
+        self.renovarConexion()
+        self._sql = f"UPDATE Seguridad.jobs SET estado = 3 WHERE job_id = '{trabajo.job_id}';"
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print("Datos: Error eliminarTrabajo()", e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

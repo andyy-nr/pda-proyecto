@@ -139,7 +139,7 @@ class Dt_employees:
 
     def listaDepartamentos(self):
         self.renovarConexion()
-        self._sql = "select distinct department_name, department_id from Seguridad.vwDepartments;"
+        self._sql = "select distinct department_name, department_id from Seguridad.vwDepartments where dep_estado <> 3 and loc_estado <> 3;"
 
         try:
             self._cursor.execute(self._sql)
@@ -158,7 +158,7 @@ class Dt_employees:
 
     def listaTrabajos(self):
         self.renovarConexion()
-        self._sql = "Select distinct job_title,job_id from Seguridad.jobs;"
+        self._sql = "Select distinct job_title,job_id from Seguridad.jobs where estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
