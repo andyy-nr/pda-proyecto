@@ -7,17 +7,29 @@ class ngDependientes:
         self.dependiente = dependents()
     dd = Dt_dependents()
 
-    def validarRepetido(self, dependiente):
-        dependientes = self.dd.listaDependientes()
-        for dep in dependientes:
-            if dep._first_name == dependiente._first_name:
-                return False
-            if dep._last_name == dependiente._last_name:
-                return False
-            if dep._relationship == dependiente._relationship:
-                return False
-            if dep._employee_id == dependiente._employee_id:
-                return False
+    def validarRepetido(self, dependiente, dep_id=None):
+        dependientes = self.dd.listaDependents()
+        if dep_id is None:
+            for dep in dependientes:
+                if dep._first_name == dependiente._first_name:
+                    return False
+                if dep._last_name == dependiente._last_name:
+                    return False
+                if dep._relationship == dependiente._relationship:
+                    return False
+                if dep._employee_id == dependiente._employee_id:
+                    return False
+        else:
+            for dep in dependientes:
+                if dep_id != dependiente._dependent_id:
+                    if dep._first_name == dependiente._first_name:
+                        return False
+                    if dep._last_name == dependiente._last_name:
+                        return False
+                    if dep._relationship == dependiente._relationship:
+                        return False
+                    if dep._employee_id == dependiente._employee_id:
+                        return False
             return True
 
     def agregarDependientes(self, dependiente):

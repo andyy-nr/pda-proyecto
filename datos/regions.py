@@ -60,3 +60,27 @@ class Dt_Regions:
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
+
+    def modificarRegion(self, region, reg_id):
+        self.renovarConexion()
+        self._sql = "UPDATE Seguridad.regions SET region_name = '{}' WHERE region_id = {};".format(region._region_name, reg_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print("Datos: Error modificarRegion()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def eliminarRegion(self, reg_id):
+        self.renovarConexion()
+        self._sql = "UPDATE FROM Seguridad.regions SET estado = '3' WHERE region_id = {};".format(reg_id)
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print("Datos: Error eliminarRegion()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()

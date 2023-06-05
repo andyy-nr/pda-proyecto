@@ -6,11 +6,17 @@ class ngOpciones:
         self.opcion = Tbl_opcion()
     do = Dt_tbl_opcion()
 
-    def validarNombre(self, opcion):
+    def validarNombre(self, opc, opc_id=None):
         opciones = self.do.listaOpciones()
-        for op in opciones:
-            if op.opcion == self.opcion.opcion:
-                return False
+        if opc_id is None:
+            for op in opciones:
+                if op.opcion == opc.opcion:
+                    return False
+        else:
+            for op in opciones:
+                if op.opcion_id != opc_id:
+                    if op.opcion == opc.opcion:
+                        return False
         return True
 
     def agregarOpcion(self, opcion):

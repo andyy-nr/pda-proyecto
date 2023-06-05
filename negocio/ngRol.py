@@ -8,11 +8,18 @@ class ngTbl_rol:
         self.rol = Tbl_rol()
     dr = Dt_tbl_rol()
 
-    def validarNombre(self, rol):
+    def validarNombre(self, rol, rol_id=None):
         roles = self.dr.listaRoles()
-        for ro in roles:
-            if ro.rol == rol.rol:
-                return False
+        if rol_id is None:
+            for ro in roles:
+                if ro.rol == rol.rol:
+                    return False
+            return True
+        else:
+            for ro in roles:
+                if ro.id_rol != rol_id:
+                    if ro.rol == rol.rol:
+                        return False
         return True
 
     def agregarRol(self, rol):

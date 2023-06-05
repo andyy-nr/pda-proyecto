@@ -15,7 +15,7 @@ class Dt_jobs:
 
     def listaTrabajos(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.jobs;"
+        self._sql = "SELECT * FROM Seguridad.jobs where estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -60,6 +60,19 @@ class Dt_jobs:
         except Exception as e:
             print("Datos: Error agregarTrabajo()", e)
             QMessageBox.warning(self, "Agregar Trabajo", f"Error al agregar Trabajo, {e}", QMessageBox.Abort)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def modificarTrabajo(self, trabajo):
+        self.renovarConexion()
+        self._sql = f"UPDATE Seguridad.jobs SET job_title = '{trabajo.job_title}', min_salary = '{trabajo.min_salary}', " \
+                    f"max_salary = '{trabajo.max_salary}' WHERE job_id = '{trabajo.job_id}';"
+        try:
+            self._cursor.execute(self._sql)
+            self._con.commit()
+        except Exception as e:
+            print("Datos: Error modificarTrabajo()", e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()

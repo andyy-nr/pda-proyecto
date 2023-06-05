@@ -95,14 +95,10 @@ class Dt_countries:
 
     def eliminarPais(self, pais):
         self.renovarConexion()
-        self._sql = "DELETE FROM Seguridad.countries WHERE country_id = '{}';".format(pais.country_id)
+        self._sql = "UPDATE FROM Seguridad.countries SET estado = '3' WHERE country_id = '{}';".format(pais.country_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-        except self._cursor.Error as e:
-            if e.args[0] == 1451:
-                widget = QWidget()
-                QMessageBox.warning(widget, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Ok)
         except Exception as e:
             print("Datos: Error eliminarPais()", e)
         finally:
