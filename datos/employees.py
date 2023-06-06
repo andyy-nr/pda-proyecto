@@ -176,7 +176,7 @@ class Dt_employees:
 
     def salarioMinYMax(self, usuario):
         self.renovarConexion()
-        self._sql = "select min_salary, max_salary from Seguridad.jobs where job_id = '{}';".format(usuario.job_id)
+        self._sql = "select min_salary, max_salary from Seguridad.jobs where job_id = '{}';".format(usuario._job_id)
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()

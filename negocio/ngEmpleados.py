@@ -12,36 +12,21 @@ class ngEmpleados:
         empleados = self.de.listaEmpleados()
         if emp_id == None:
             for emp in empleados:
-                if emp._employee_id == empleado._employee_id:
-                    return False
-                if emp._first_name == empleado._first_name:
-                    return False
-                if emp._last_name == empleado._last_name:
-                    return False
-                if emp._email == empleado._email:
-                    return False
-                if emp._phone_number == empleado._phone_number:
+                if emp._employee_id == empleado._employee_id and emp._first_name == empleado._first_name and emp._last_name == empleado._last_namea and emp._email == empleado._email and  emp._phone == empleado._phone:
                     return False
         else:
             for emp in empleados:
-                if emp._employee_id != empleado._employee_id:
-                    if emp._first_name == empleado._first_name:
-                        return False
-                    if emp._last_name == empleado._last_name:
-                        return False
-                    if emp._email == empleado._email:
-                        return False
-                    if emp._phone_number == empleado._phone_number:
+                if emp._employee_id == empleado._employee_id and  emp._first_name == empleado._first_name and emp._last_name == empleado._last_name and emp._email == empleado._email and emp._phone == empleado._phone:
                         return False
         return True
 
     def validarSalario(self, empleado):
         salarios = self.de.salarioMinYMax(empleado)
         widget = QWidget()
-        if salarios._min_salary > empleado._salary:
+        if int(salarios[0]._min_salary) > int(empleado._salary):
             QMessageBox.warning(widget, "Error", "El salario no puede ser menor al salario mínimo del puesto")
             return False
-        if salarios._max_salary < empleado._salary:
+        if int(salarios[0]._max_salary) < int(empleado._salary):
             QMessageBox.warning(widget, "Error", "El salario no puede ser mayor al salario máximo del puesto")
             return False
         return True
