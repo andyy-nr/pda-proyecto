@@ -24,8 +24,8 @@ class ngDepartamentos:
             return False
         self.dd.agregarDepartamento(departamento)
 
-    def modificarDepartamento(self, departamento):
-        if not self.validarNombre(departamento):
+    def modificarDepartamento(self, departamento, id):
+        if not self.validarNombre(departamento, id):
             return False
         self.dd.modificarDepartamento(departamento)
 

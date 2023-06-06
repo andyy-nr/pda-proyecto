@@ -50,8 +50,7 @@ class Dt_tbl_rol:
 
     def agregarRol(self, rol):
         self.renovarConexion()
-        self._sql = "INSERT INTO Seguridad.tbl_rol (rol, estado) " \
-                    "values ({}, {});".format(rol._rol, rol._estado)
+        self._sql = "INSERT INTO Seguridad.tbl_rol rol values ('{}');".format(rol._rol)
         try:
             self._cursor.execute(self._sql, rol)
             self._con.commit()

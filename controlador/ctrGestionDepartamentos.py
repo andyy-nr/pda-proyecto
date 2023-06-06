@@ -90,7 +90,6 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
         except IndexError as e:
             QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
-
     def agregarDepartamento(self):
         if self.validarVacios():
             nombre = self.ui.txt_nombre.text()
@@ -107,7 +106,7 @@ class CtrlGestionDepartaments(QtWidgets.QWidget):
             nombre = self.ui.txt_nombre.text()
             localidad = self.ui.cbox_cod_localidad.currentData()
             departamento = departments(department_id=id, department_name=nombre, location_id=localidad)
-            self.ngd.modificarDepartamento(departamento)
+            self.ngd.modificarDepartamento(departamento, departamento._department_id)
             self.limpiarCampos()
             self.cargarDatos(0)
             self.ui.tbl_departamentos.clearSelection()
