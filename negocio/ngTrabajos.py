@@ -14,8 +14,7 @@ class ngTrabajo:
                     return False
         else:
             for tj in trabajos:
-                if job_id != tj._job_id:
-                    if tj.job_title == trabajo._job_title:
+                if job_id == tj._job_id and tj.job_title == trabajo._job_title:
                         return False
         return True
 

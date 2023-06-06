@@ -101,7 +101,7 @@ class Dt_locations:
 
     def eliminarLocalidad(self, localidad):
         self.renovarConexion()
-        self._sql = "UPDATE Seguridad.locations SET loc_estado = 3 WHERE location_id = '{}';".format(localidad._location_id)
+        self._sql = "UPDATE Seguridad.locations SET estado = 3 WHERE location_id = '{}';".format(localidad._location_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

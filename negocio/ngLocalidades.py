@@ -7,7 +7,7 @@ class ngLocalidades:
         self.localidad = locations()
     dl = Dt_locations()
 
-    def validarRepetido(self, localidad, loc_id = None):
+    def validarRepetido(self, localidad, loc_id=None):
         localidades = self.dl.listaLocalidades()
         if loc_id is None:
             for loc in localidades:
@@ -15,9 +15,9 @@ class ngLocalidades:
                     return False
         else:
             for loc in localidades:
-                if not loc_id == loc._location_id:
-                    if loc.street_address == localidad._street_address:
-                        return False
+                if loc_id == loc._location_id and loc.street_address == localidad._street_address:
+                    print("Devolvio falso")
+                    return False
         return True
 
     def agregarLocalidad(self, localidad):
