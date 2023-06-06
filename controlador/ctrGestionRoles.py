@@ -18,7 +18,7 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRol)
-        self.ui.btn_eliminar_2.clicked.connect(self.limpiarCampos)
+        self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.btn_eliminar.clicked.connect(self.eliminarRol)
         self.ui.btn_editar.clicked.connect(self.modificarRol)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
