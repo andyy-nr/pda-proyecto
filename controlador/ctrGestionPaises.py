@@ -81,7 +81,7 @@ class CtrlGestionPaises(QtWidgets.QWidget):
     def seleccionarElementos(self):
         try:
             fila = self.ui.tbl_paises.selectedIndexes()[0].row()
-            pais = self.dtu.buscarPais(self.ui.txt_buscar.text())
+            pais = self.dtu.listaPaises()
             pais_seleccionado = pais[fila]
             self.ui.txt_codigo.setText(pais_seleccionado._country_id)
             self.ui.cbox_cod_region.setCurrentText(pais_seleccionado._region_name)

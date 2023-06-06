@@ -50,15 +50,15 @@ class ngUsuarios:
 
     def contraseniaCoincide(self, user):
         if user._pwd != user._pwd_temp:
-            widget = QtWidgets.QWidget()
-            QtWidgets.QMessageBox.warning(widget, "Advertencia", "Las contraseñas no coinciden", QtWidgets.QMessageBox.Ok)
+            widget = QWidget()
+            QMessageBox.warning(widget, "Advertencia", "Las contraseñas no coinciden", QMessageBox.Ok)
             return False
         return True
 
     def contraseniaNueva(self, user, contra_vieja):
         if user._pwd != contra_vieja:
-            widget = QtWidgets.QWidget()
-            QtWidgets.QMessageBox.warning(widget, "Advertencia", "Ingrese la contrasena anterior correctamente")
+            widget = QWidget()
+            QMessageBox.warning(widget, "Advertencia", "Ingrese la contrasena anterior correctamente")
             return False
         return True
 
