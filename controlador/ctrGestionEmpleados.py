@@ -121,7 +121,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             salario = int(float(self.ui.txt_salario.text()))
             correo = self.ui.txt_correo.text()
             telefono = self.ui.txt_telefono.text()
-            fecha = self.ui.date_fecha_contratacion.date()
+            fecha = self.ui.date_fecha_contratacion.date().toPyDate()
             gerente = self.ui.cbox_gerente.currentData()
             departamento = self.ui.cbox_departamento.currentData()
             trabajo = self.ui.cbox_trabajo.currentData()
