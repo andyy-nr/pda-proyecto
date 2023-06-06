@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmEmpleados(object):
     def setupUi(self, frmEmpleados):
@@ -228,12 +228,6 @@ class Ui_frmEmpleados(object):
         self.lbl_foto.setPixmap(QtGui.QPixmap(":/iconos/JAPI1.png"))
         self.lbl_foto.setScaledContents(True)
         self.lbl_foto.setObjectName("lbl_foto")
-        self.lbl_nombre_usuario = QtWidgets.QLabel(self.frame)
-        self.lbl_nombre_usuario.setGeometry(QtCore.QRect(120, 10, 211, 31))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.lbl_nombre_usuario.setFont(font)
-        self.lbl_nombre_usuario.setObjectName("lbl_nombre_usuario")
         self.gridLayout.addWidget(self.frame, 0, 9, 1, 1)
         self.txt_telefono = QtWidgets.QLineEdit(frmEmpleados)
         self.txt_telefono.setMinimumSize(QtCore.QSize(400, 40))
@@ -310,7 +304,6 @@ class Ui_frmEmpleados(object):
         self.btn_buscar.setToolTip(_translate("frmEmpleados", "Buscar"))
         self.btn_limpiar.setToolTip(_translate("frmEmpleados", "Limpiar información seleccionada"))
         self.btn_limpiar.setText(_translate("frmEmpleados", "Limpiar"))
-        self.lbl_nombre_usuario.setText(_translate("frmEmpleados", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.txt_telefono.setPlaceholderText(_translate("frmEmpleados", "Telefono*"))
         self.btn_agregar.setToolTip(_translate("frmEmpleados", "Agregar información de empleado"))
         self.btn_agregar.setText(_translate("frmEmpleados", "Agregar"))
@@ -332,7 +325,7 @@ class Ui_frmEmpleados(object):
         item.setText(_translate("frmEmpleados", "Gerente"))
         item = self.tbl_employees.horizontalHeaderItem(8)
         item.setText(_translate("frmEmpleados", "Departamento"))
-
+from vistas.imagenes import imagenes
 
 if __name__ == "__main__":
     import sys

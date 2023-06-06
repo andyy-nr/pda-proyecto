@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmUsuario(object):
     def setupUi(self, frmUsuario):
@@ -210,12 +210,6 @@ class Ui_frmUsuario(object):
         self.lbl_foto.setPixmap(QtGui.QPixmap(":/iconos/JAPI1.png"))
         self.lbl_foto.setScaledContents(True)
         self.lbl_foto.setObjectName("lbl_foto")
-        self.lbl_nombre_usuario = QtWidgets.QLabel(self.frame)
-        self.lbl_nombre_usuario.setGeometry(QtCore.QRect(120, 10, 211, 31))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.lbl_nombre_usuario.setFont(font)
-        self.lbl_nombre_usuario.setObjectName("lbl_nombre_usuario")
         self.gridLayout.addWidget(self.frame, 0, 7, 1, 1, QtCore.Qt.AlignRight)
         self.le_apellidos = QtWidgets.QLineEdit(frmUsuario)
         self.le_apellidos.setMinimumSize(QtCore.QSize(380, 40))
@@ -306,7 +300,6 @@ class Ui_frmUsuario(object):
         item = self.tbl_Usuario.horizontalHeaderItem(3)
         item.setText(_translate("frmUsuario", "Correo Electrónico"))
         self.le_contrasena.setPlaceholderText(_translate("frmUsuario", "Contraseña*"))
-        self.lbl_nombre_usuario.setText(_translate("frmUsuario", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.le_apellidos.setPlaceholderText(_translate("frmUsuario", "Apellidos*"))
         self.btn_eliminar.setToolTip(_translate("frmUsuario", "Eliminar información de usuario´"))
         self.btn_eliminar.setText(_translate("frmUsuario", "Eliminar"))
@@ -318,7 +311,7 @@ class Ui_frmUsuario(object):
         self.btn_agregar.setToolTip(_translate("frmUsuario", "Agregar información de usuario"))
         self.btn_agregar.setText(_translate("frmUsuario", "Agregar"))
         self.btn_buscar.setToolTip(_translate("frmUsuario", "Buscar elemento"))
-
+from vistas.imagenes import imagenes
 
 if __name__ == "__main__":
     import sys

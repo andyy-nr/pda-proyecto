@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMessageBox
 
-from vistas.frmRolesUsuario import Ui_frmRolesUsuario
+from vistas.frmRolesUsuario import Ui_frmRolUsuario
 from datos.Dt_Tbl_rol import Dt_tbl_rol
 from datos.Dt_Tbl_user import Dt_tbl_user
 from datos.Dt_tbl_UserRol import Dt_tbl_UserRol
@@ -11,7 +11,7 @@ from PyQt5 import QtWidgets
 class CtrlGestionRolUsuario(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.ui = Ui_frmRolesUsuario()
+        self.ui = Ui_frmRolUsuario()
         self.ui.setupUi(self)
         self.initControlGui()
         self.ui.tbl_opcionRol.setSelectionBehavior(QtWidgets.QTableWidget.SelectRows)

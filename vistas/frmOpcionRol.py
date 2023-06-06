@@ -125,12 +125,6 @@ class Ui_frmOpcionRol(object):
         self.lbl_foto.setPixmap(QtGui.QPixmap(":/iconos/fotoUsuario.png"))
         self.lbl_foto.setScaledContents(True)
         self.lbl_foto.setObjectName("lbl_foto")
-        self.lbl_nombre_usuario = QtWidgets.QLabel(self.frame)
-        self.lbl_nombre_usuario.setGeometry(QtCore.QRect(120, 10, 211, 31))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.lbl_nombre_usuario.setFont(font)
-        self.lbl_nombre_usuario.setObjectName("lbl_nombre_usuario")
         self.gridLayout.addWidget(self.frame, 0, 7, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem, 2, 5, 1, 1)
@@ -259,7 +253,6 @@ class Ui_frmOpcionRol(object):
     def retranslateUi(self, frmOpcionRol):
         _translate = QtCore.QCoreApplication.translate
         frmOpcionRol.setWindowTitle(_translate("frmOpcionRol", "Gestión de Opción-Rol"))
-        self.lbl_nombre_usuario.setText(_translate("frmOpcionRol", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.cbox_rol.setPlaceholderText(_translate("frmOpcionRol", "Rol*"))
         self.txt_codigo.setPlaceholderText(_translate("frmOpcionRol", "Código*"))
         self.btn_eliminar.setToolTip(_translate("frmOpcionRol", "Eliminar información de opción-rol"))
@@ -279,7 +272,6 @@ class Ui_frmOpcionRol(object):
         item = self.tbl_opcionRol.horizontalHeaderItem(2)
         item.setText(_translate("frmOpcionRol", "Rol"))
 from vistas.imagenes import imagenes
-
 
 if __name__ == "__main__":
     import sys

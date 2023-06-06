@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmLocalidades(object):
     def setupUi(self, frmLocalidades):
@@ -303,12 +303,6 @@ class Ui_frmLocalidades(object):
         self.lbl_foto.setPixmap(QtGui.QPixmap(":/iconos/JAPI1.png"))
         self.lbl_foto.setScaledContents(True)
         self.lbl_foto.setObjectName("lbl_foto")
-        self.lbl_nombre_usuario = QtWidgets.QLabel(self.frame)
-        self.lbl_nombre_usuario.setGeometry(QtCore.QRect(120, 10, 211, 31))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.lbl_nombre_usuario.setFont(font)
-        self.lbl_nombre_usuario.setObjectName("lbl_nombre_usuario")
         self.gridLayout.addWidget(self.frame, 0, 7, 1, 1, QtCore.Qt.AlignRight)
         self.btn_eliminar = QtWidgets.QPushButton(frmLocalidades)
         self.btn_eliminar.setMinimumSize(QtCore.QSize(150, 50))
@@ -393,7 +387,6 @@ class Ui_frmLocalidades(object):
         self.txt_cod_postal.setPlaceholderText(_translate("frmLocalidades", "Código Postal *"))
         self.txt_provincia.setPlaceholderText(_translate("frmLocalidades", "Provincia *"))
         self.txt_direccion.setPlaceholderText(_translate("frmLocalidades", "Dirección *"))
-        self.lbl_nombre_usuario.setText(_translate("frmLocalidades", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.btn_eliminar.setToolTip(_translate("frmLocalidades", "Eliminar información de localidad"))
         self.btn_eliminar.setText(_translate("frmLocalidades", "Eliminar"))
         self.btn_buscar.setToolTip(_translate("frmLocalidades", "Buscar"))
@@ -410,7 +403,7 @@ class Ui_frmLocalidades(object):
         item.setText(_translate("frmLocalidades", "Provincia"))
         item = self.tbl_localidades.horizontalHeaderItem(5)
         item.setText(_translate("frmLocalidades", "Dirección"))
-
+from vistas.imagenes import imagenes
 
 if __name__ == "__main__":
     import sys

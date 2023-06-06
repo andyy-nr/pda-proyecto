@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmRegiones(object):
     def setupUi(self, frmRegiones):
@@ -129,12 +129,6 @@ class Ui_frmRegiones(object):
         self.lbl_foto.setPixmap(QtGui.QPixmap(":/iconos/fotoUsuario.png"))
         self.lbl_foto.setScaledContents(True)
         self.lbl_foto.setObjectName("lbl_foto")
-        self.lbl_nombre_usuario = QtWidgets.QLabel(self.frame)
-        self.lbl_nombre_usuario.setGeometry(QtCore.QRect(120, 10, 211, 31))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.lbl_nombre_usuario.setFont(font)
-        self.lbl_nombre_usuario.setObjectName("lbl_nombre_usuario")
         self.gridLayout.addWidget(self.frame, 0, 7, 1, 1, QtCore.Qt.AlignRight)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 5, 4, 1, 1)
@@ -163,7 +157,19 @@ class Ui_frmRegiones(object):
         self.btn_eliminar.setObjectName("btn_eliminar")
         self.gridLayout.addWidget(self.btn_eliminar, 5, 5, 1, 1)
         self.txt_codigo = QtWidgets.QLineEdit(frmRegiones)
+        self.txt_codigo.setEnabled(False)
         self.txt_codigo.setMinimumSize(QtCore.QSize(400, 40))
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(235, 232, 235))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(235, 232, 235))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(235, 232, 235))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
+        self.txt_codigo.setPalette(palette)
         self.txt_codigo.setObjectName("txt_codigo")
         self.gridLayout.addWidget(self.txt_codigo, 1, 0, 1, 5)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
@@ -251,7 +257,6 @@ class Ui_frmRegiones(object):
         _translate = QtCore.QCoreApplication.translate
         frmRegiones.setWindowTitle(_translate("frmRegiones", "Gestión de Regiones"))
         self.txt_nombre_region.setPlaceholderText(_translate("frmRegiones", "Nombre de la región*"))
-        self.lbl_nombre_usuario.setText(_translate("frmRegiones", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.btn_limpiar.setToolTip(_translate("frmRegiones", "Limpiar información seleccionada"))
         self.btn_limpiar.setText(_translate("frmRegiones", "Limpiar"))
         self.btn_eliminar.setToolTip(_translate("frmRegiones", "Eliminar información de región"))
@@ -268,8 +273,7 @@ class Ui_frmRegiones(object):
         item.setText(_translate("frmRegiones", "Código"))
         item = self.tbl_regiones.horizontalHeaderItem(1)
         item.setText(_translate("frmRegiones", "Región"))
-
-
+from vistas.imagenes import imagenes
 
 if __name__ == "__main__":
     import sys

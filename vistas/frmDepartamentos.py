@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_frmDepartamentos(object):
     def setupUi(self, frmDepartamentos):
@@ -184,12 +184,6 @@ class Ui_frmDepartamentos(object):
         self.lbl_foto.setPixmap(QtGui.QPixmap(":/iconos/JAPI1.png"))
         self.lbl_foto.setScaledContents(True)
         self.lbl_foto.setObjectName("lbl_foto")
-        self.lbl_nombre_usuario = QtWidgets.QLabel(self.frame)
-        self.lbl_nombre_usuario.setGeometry(QtCore.QRect(120, 10, 211, 31))
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.lbl_nombre_usuario.setFont(font)
-        self.lbl_nombre_usuario.setObjectName("lbl_nombre_usuario")
         self.gridLayout.addWidget(self.frame, 0, 7, 1, 1)
         self.txt_codigo = QtWidgets.QLineEdit(frmDepartamentos)
         self.txt_codigo.setEnabled(False)
@@ -274,7 +268,6 @@ class Ui_frmDepartamentos(object):
         self.txt_buscar.setPlaceholderText(_translate("frmDepartamentos", "Buscar"))
         self.btn_editar.setToolTip(_translate("frmDepartamentos", "Editar información de departamento"))
         self.btn_editar.setText(_translate("frmDepartamentos", "Editar"))
-        self.lbl_nombre_usuario.setText(_translate("frmDepartamentos", "<html><head/><body><p align=\"right\">Nombre de usuario</p></body></html>"))
         self.txt_codigo.setPlaceholderText(_translate("frmDepartamentos", "Codigo"))
         self.btn_eliminar.setToolTip(_translate("frmDepartamentos", "Eliminar información de departamento"))
         self.btn_eliminar.setText(_translate("frmDepartamentos", "Eliminar"))
@@ -287,7 +280,7 @@ class Ui_frmDepartamentos(object):
         item.setText(_translate("frmDepartamentos", "Localidad"))
         item = self.tbl_departamentos.horizontalHeaderItem(2)
         item.setText(_translate("frmDepartamentos", "Nombre del Departamento"))
-
+from vistas.imagenes import imagenes
 
 if __name__ == "__main__":
     import sys

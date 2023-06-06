@@ -9,12 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from vistas.imagenes import imagenes
+
 
 class Ui_mw_inicio(object):
     def setupUi(self, mw_inicio):
         mw_inicio.setObjectName("mw_inicio")
-        mw_inicio.resize(1378, 1042)
+        mw_inicio.resize(1371, 1040)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(229, 234, 245))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -646,30 +646,6 @@ class Ui_mw_inicio(object):
         self.frame_3.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
-        self.layoutWidget1 = QtWidgets.QWidget(self.frame_3)
-        self.layoutWidget1.setGeometry(QtCore.QRect(40, 30, 152, 68))
-        self.layoutWidget1.setObjectName("layoutWidget1")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.layoutWidget1)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.label = QtWidgets.QLabel(self.layoutWidget1)
-        self.label.setMinimumSize(QtCore.QSize(150, 30))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-        self.verticalLayout_2.addWidget(self.label)
-        self.label_2 = QtWidgets.QLabel(self.layoutWidget1)
-        self.label_2.setMinimumSize(QtCore.QSize(150, 30))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout_2.addWidget(self.label_2)
         self.gridLayout.addWidget(self.frame_3, 1, 8, 1, 2, QtCore.Qt.AlignRight|QtCore.Qt.AlignBottom)
         mw_inicio.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(mw_inicio)
@@ -718,9 +694,7 @@ class Ui_mw_inicio(object):
         self.btn_usuarios.setText(_translate("mw_inicio", "Usuarios"))
         self.btn_opcionRol.setToolTip(_translate("mw_inicio", "Gestión de localidades"))
         self.btn_opcionRol.setText(_translate("mw_inicio", "Opción de rol"))
-        self.label.setText(_translate("mw_inicio", "<html><head/><body><p align=\"center\">Hora</p></body></html>"))
-        self.label_2.setText(_translate("mw_inicio", "<html><head/><body><p align=\"center\">Fecha</p></body></html>"))
-
+from vistas.imagenes import imagenes
 
 if __name__ == "__main__":
     import sys
