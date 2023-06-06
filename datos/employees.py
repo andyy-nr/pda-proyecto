@@ -75,8 +75,8 @@ class Dt_employees:
         self.renovarConexion()
         self._sql = "INSERT INTO Seguridad.employees (first_name, last_name, email, " \
                     "phone_number, hire_date, job_id, salary, manager_id, department_id) " \
-                    "VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');". format(empleado.first_name, empleado.last_name, empleado.email, empleado.phone,
-                                                                          empleado.hire_date, empleado.job_id, empleado.salary, empleado.manager_id, empleado.department_id)
+                    "VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');". format(empleado._first_name, empleado._last_name, empleado._email, empleado._phone,
+                                                                          empleado._hire_date, empleado._job_id, empleado._salary, empleado._manager_id, empleado._department_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
