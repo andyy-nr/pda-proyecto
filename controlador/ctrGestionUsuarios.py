@@ -142,27 +142,25 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             print(e)
 
     def editarUsuario(self):
-        if self.validarVacios():
-            user = self.ui.le_nombre_usuario.text()
-            pwd = self.ui.le_contrasena.text()
-            nombres = self.ui.le_nombres.text()
-            apellidos = self.ui.le_apellidos.text()
-            email = self.ui.le_email.text()
-            pwd_temp = self.ui.le_confirmacion.text()
-            estado = 2
-            usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
-                               pwd_temp=pwd_temp, estado=estado)
-            try:
-                fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
-                usuarios = self.dtu.listTodosUsuarios()
-                user_act = usuarios[fila]
-                usr_id = user_act[fila]._id_user
-                contra_vieja = user_act[fila]._pwd
-                self.ngu.modificarUsuario(usuario, contra_vieja, usr_id)
-                self.cargarDatos(0)
-                self.limpiarCampos()
-                self.ui.tbl_Usuario.clearSelection()
-            except IndexError as e:
-                QMessageBox.warning(self, "Advertencia", "Seleccione un registro para editar")
-        else:
-            print("Campos vacios")
+        user = self.ui.le_nombre_usuario.text()
+        pwd = self.ui.le_contrasena.text()
+        nombres = self.ui.le_nombres.text()
+        apellidos = self.ui.le_apellidos.text()
+        email = self.ui.le_email.text()
+        pwd_temp = self.ui.le_confirmacion.text()
+        estado = 2
+        usuario = Tbl_user(user=user, pwd=pwd, nombres=nombres, apellidos=apellidos, email=email,
+                           pwd_temp=pwd_temp, estado=estado)
+        try:
+            fila = self.ui.tbl_Usuario.selectedIndexes()[0].row()
+            usuarios = self.dtu.listTodosUsuarios()
+            user_act = usuarios[fila]
+            usr_id = user_act[fila]._id_user
+            contra_vieja = user_act[fila]._pwd
+            self.ngu.modificarUsuario(usuario, contra_vieja, usr_id)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+            self.ui.tbl_Usuario.clearSelection()
+        except IndexError as e:
+            QMessageBox.warning(self, "Advertencia", "Seleccione un registro para editar")
+

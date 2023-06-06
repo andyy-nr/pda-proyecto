@@ -5,6 +5,7 @@ from datos.Dt_Tbl_rol import Dt_tbl_rol
 from datos.Dt_Tbl_opcion import Dt_tbl_opcion
 from datos.Dt_tbl_rolOpcion import Dt_tbl_rolOpcion
 from entidades.Tbl_rolOpcion import Tbl_rolOpcion
+from negocio.ngRolOpcion import ngRolOpcion
 from PyQt5 import QtWidgets
 
 class CtrlGestionRolOpcion(QtWidgets.QWidget):
@@ -14,6 +15,7 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
         self.ui.setupUi(self)
         self.initControlGui()
         self.ui.tbl_opcionRol.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
+    ngro = ngRolOpcion()
     dro = Dt_tbl_rolOpcion()
     do = Dt_tbl_opcion()
     dr = Dt_tbl_rol()
@@ -21,6 +23,7 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRolOpcion)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarRolOpcion)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_opcionRol.clicked.connect(self.seleccionarElemento)
         self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
@@ -78,22 +81,18 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
         self.ui.cbox_rol.setCurrentIndex(0)
         self.ui.cbox_opcion.setCurrentIndex(0)
         self.ui.txt_buscar.setText("")
+        self.ui.tbl_opcionRol.clearSelection()
         self.cargarDatos(0)
-
-    def validarNoRepetido(self):
-        rolOpcion = self.dro.listaRolOpcion()
-        for row in rolOpcion:
-            if row._rol == self.ui.cbox_rol.currentText() and row._opcion == self.ui.cbox_opcion.currentText():
-                return False
-        return True
 
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_opcionRol.selectedIndexes()[0].row()
-            rolOpciones = self.dro.buscarRolOpcion(self.ui.txt_buscar.text())
+            rolOpciones = self.dro.listaRolOpcion()
             rolOpcion = rolOpciones[fila]
+            self.ui.txt_codigo.setText(str(rolOpcion._id_rolOpcion))
             self.ui.cbox_rol.setCurrentText(rolOpcion._rol)
             self.ui.cbox_opcion.setCurrentText(rolOpcion._opcion)
+            return rolOpcion
         except Exception as e:
             print(e)
         except IndexError as e:
@@ -101,16 +100,20 @@ class CtrlGestionRolOpcion(QtWidgets.QWidget):
 
     def agregarRolOpcion(self):
         if self.validarVacio():
-            if not self.validarNoRepetido():
-                print("Rol y opcion ya existen")
-                return
             rol = self.ui.cbox_rol.currentData()
             opcion = self.ui.cbox_opcion.currentData()
             rolOpcion = Tbl_rolOpcion(id_opcion=opcion, id_rol=rol)
-            self.dro.agregarRolOpcion(opcion)
+            self.ngro.agregarRolOpcion(rolOpcion)
             self.cargarDatos(0)
             self.limpiarCampos()
         else:
-            print("Hay campos vacios")
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Rellene todos los campos para continuar")
 
-
+    def eliminarRolOpcion(self):
+        rolOpcion = self.seleccionarElemento()
+        if rolOpcion is not None:
+            self.dro.eliminarRolOpcion(rolOpcion)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+        else:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")

@@ -12,9 +12,26 @@ class Dt_tbl_UserRol:
         self._con = Conexion.getConnection()
         self._cursor = Conexion.getCursor()
 
-    def listaUserRol(self):
+    def listaUserRolTodos(self):
         self.renovarConexion()
         self._sql = "Select * from Seguridad.vwUserRol;"
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaUserRol = []
+            for tur in registros:
+                turs = Tbl_UserRol(tur['id_UserRol'], tur['id_user'], tur['user'], tur['id_rol'], tur['rol'])
+                listaUserRol.append(turs)
+            return listaUserRol
+        except Exception as e:
+            print("Datos: Error listaUserRol()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
+    def listaUserRol(self):
+        self.renovarConexion()
+        self._sql = "Select * from Seguridad.vwUserRol where ur_estado <> 3 and u_estado <> 3 and rol_estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -73,9 +90,9 @@ class Dt_tbl_UserRol:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def eliminarUserRol(self, idUserRol):
+    def eliminarUserRol(self, userRol):
         self.renovarConexion()
-        self._sql = "DELETE FROM Seguridad.tbl_UserRol WHERE id_UserRol = '{}';".format(idUserRol)
+        self._sql = "UPDATE Seguridad.tbl_UserRol SET estado = '3' WHERE id_UserRol = '{}';".format(userRol._id_UserRol)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
@@ -85,14 +102,3 @@ class Dt_tbl_UserRol:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def modificarUserRol(self, rolUsuario):
-        self.renovarConexion()
-        self._sql = "UPDATE Seguridad.tbl_UserRol SET id_user = '{}', id_rol = '{}' WHERE id_UserRol = '{}';".format(rolUsuario._id_user, rolUsuario._id_rol, rolUsuario._id_UserRol)
-        try:
-            self._cursor.execute(self._sql)
-            self._con.commit()
-        except Exception as e:
-            print(f"Error al actualizar userRol {e}")
-        finally:
-            Conexion.closeCursor()
-            Conexion.closeConnection()

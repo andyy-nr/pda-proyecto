@@ -7,17 +7,11 @@ class ngUserRol:
         self.tbl_userRol = Tbl_UserRol()
     dtur = Dt_tbl_UserRol()
 
-    def validarRepetido(self, tbl_userRol, id_userRol=None):
-        rolOpciones = self.dtur.listaUserRol()
-        if id_userRol is None:
-            for rol in rolOpciones:
-                if rol._id_user == tbl_userRol._id_user and rol._id_rol == tbl_userRol._id_rol:
-                    return False
-        else:
-            for rol in rolOpciones:
-                if rol._id_userRol != id_userRol:
-                    if rol._id_user == tbl_userRol._id_user and rol._id_rol == tbl_userRol._id_rol:
-                        return False
+    def validarRepetido(self, tbl_userRol):
+        rolOpciones = self.dtur.listaUserRolTodos()
+        for rol in rolOpciones:
+            if rol._id_user == tbl_userRol._id_user and rol._id_rol == tbl_userRol._id_rol:
+                return False
         return True
 
     def agregarUserRol(self, tbl_userRol):
@@ -25,9 +19,5 @@ class ngUserRol:
             return False
         self.dtur.agregarUserRol(tbl_userRol)
 
-    def modificarUserRol(self, tbl_userRol):
-        if not self.validarRepetido(tbl_userRol, tbl_userRol._id_userRol):
-            return False
-        self.dtur.modificarUserRol(tbl_userRol)
 
 

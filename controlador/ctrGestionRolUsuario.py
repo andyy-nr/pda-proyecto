@@ -5,6 +5,7 @@ from datos.Dt_Tbl_rol import Dt_tbl_rol
 from datos.Dt_Tbl_user import Dt_tbl_user
 from datos.Dt_tbl_UserRol import Dt_tbl_UserRol
 from entidades.Tbl_UserRol import Tbl_UserRol
+from negocio.ngUserRol import ngUserRol
 from PyQt5 import QtWidgets
 
 class CtrlGestionRolUsuario(QtWidgets.QWidget):
@@ -17,10 +18,12 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
     dr = Dt_tbl_rol()
     du = Dt_tbl_user()
     dur = Dt_tbl_UserRol()
+    ngur = ngUserRol()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRolUsuario)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarRolUsuario)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_opcionRol.clicked.connect(self.seleccionarElementos)
         self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
@@ -90,7 +93,7 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
     def seleccionarElementos(self):
         try:
             fila = self.ui.tbl_opcionRol.selectedIndexes()[0].row()
-            rolUsuarios = self.dur.buscarUserRol(self.ui.txt_buscar.text())
+            rolUsuarios = self.dur.listaUserRol()
             rolUsuario = rolUsuarios[fila]
             self.ui.cbox_rol.setCurrentText(rolUsuario._rol)
             self.ui.cbox_opcion.setCurrentText(rolUsuario._user)
@@ -107,8 +110,21 @@ class CtrlGestionRolUsuario(QtWidgets.QWidget):
             rol = self.ui.cbox_rol.currentData()
             user = self.ui.cbox_opcion.currentData()
             rolUsuario = Tbl_UserRol(id_user=user, id_rol=rol)
-            self.dur.agregarUserRol(rolUsuario)
+            self.ngur.agregarUserRol(rolUsuario)
             self.cargarDatos(0)
             self.limpiarCampos()
         else:
             print("Campos vacios")
+
+    def eliminarRolUsuario(self):
+        try:
+            fila = self.ui.tbl_opcionRol.selectedIndexes()[0].row()
+            rolUsuarios = self.dur.buscarUserRol(self.ui.txt_buscar.text())
+            rolUsuario = rolUsuarios[fila]
+            self.dur.eliminarUserRol(rolUsuario)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+        except Exception as e:
+            print(e)
+        except IndexError as e:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")

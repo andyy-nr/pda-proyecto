@@ -12,9 +12,26 @@ class Dt_tbl_rolOpcion:
         self._con = Conexion.getConnection()
         self._cursor = Conexion.getCursor()
 
+    def listaRolOpcionTodos(self):
+        self.renovarConexion()
+        self._sql = "SELECT * FROM Seguridad.vwRolOpcion;"
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaRolOpcion = []
+            for tro in registros:
+                tros = Tbl_rolOpcion(tro['id_rolOpcion'], tro['id_rol'], tro['rol'], tro['id_opcion'], tro['opcion'])
+                listaRolOpcion.append(tros)
+            return listaRolOpcion
+        except Exception as e:
+            print("Datos: Error listaRolOpcion()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()
+
     def listaRolOpcion(self):
         self.renovarConexion()
-        self._sql = "SELECT * FROM Seguridad.vwRolOpcion WHERE estado <> 3;"
+        self._sql = "SELECT * FROM Seguridad.vwRolOpcion WHERE rol_estado <> 3 and ro_estado <> 3 and opc_estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -46,7 +63,6 @@ class Dt_tbl_rolOpcion:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-
     def agregarRolOpcion(self, rolOpcion):
         self.renovarConexion()
         self._sql = "INSERT INTO Seguridad.tbl_rolOpcion (id_rol, id_opcion) values ('{}','{}');".format(rolOpcion._id_rol, rolOpcion._id_opcion)
@@ -60,22 +76,9 @@ class Dt_tbl_rolOpcion:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
-    def modificarRolOpcion(self, rolOpcion):
-        self.renovarConexion()
-        self._sql = "UPDATE Seguridad.tbl_rolOpcion SET id_rol='{}', id_opcion='{}', estado = '2' WHERE id_rolOpcion='{}';".format(rolOpcion._id_rol, rolOpcion._id_opcion, rolOpcion._id_rolOpcion)
-        try:
-            self._cursor.execute(self._sql)
-            self._con.commit()
-        except Exception as e:
-            print(f"Error al modificar rolOpcion {e}")
-        finally:
-            Conexion.closeCursor()
-            Conexion.closeConnection()
-
     def eliminarRolOpcion(self, rolOpcion):
         self.renovarConexion()
-        self._sql = "UPDATE FROM Seguridad.tbl_rolOpcion SET estado = '3' WHERE id_rolOpcion='{}';".format(
-            rolOpcion._id_rol, rolOpcion._id_opcion, rolOpcion._id_rolOpcion)
+        self._sql = "UPDATE Seguridad.tbl_rolOpcion SET estado = '3' WHERE id_rolOpcion='{}';".format(rolOpcion._id_rolOpcion)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

@@ -79,11 +79,13 @@ class ngUsuarios:
     def modificarUsuario(self, user, contra_vieja, user_id):
         if not self.validarUsuarioRepetido(user, user_id):
             return False
-        if not self.contraseniaSegura(user):
-            return False
-        if not self.contraseniaNueva(user, contra_vieja):
-            return False
-        user._pwd = user._pwd_temp
-        self.dtu.editarUsuario(user, user_id)
+
+        if user._pwd_temp != "":
+            if not self.contraseniaSegura(user):
+                return False
+            if not self.contraseniaNueva(user, contra_vieja):
+                return False
+            user._pwd = user._pwd_temp
+            self.dtu.editarUsuario(user, user_id)
         return True
 
