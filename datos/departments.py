@@ -89,7 +89,7 @@ class Dt_departments:
 
     def eliminarDepartamento(self, departamento):
         self.renovarConexion()
-        self._sql = "UPDATE  Seguridad.departments SET estado = '3' WHERE department_id = '{}';".format(departamento._department_id)
+        self._sql = "UPDATE Seguridad.departments SET estado = '3' WHERE department_id = '{}';".format(departamento._department_id)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

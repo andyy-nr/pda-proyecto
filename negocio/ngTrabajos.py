@@ -1,35 +1,30 @@
-# salario min no mayor q sal max
-# nombre repetido
-from datos.jobs import Dt_jobs
 from entidades.Jobs import jobs
+from datos.jobs import Dt_jobs
 
-class ngJobs:
+class ngTrabajo:
     def __init__(self):
-        self.job = jobs()
-    dtj = Dt_jobs()
+        self.trabajo = jobs()
+    dj = Dt_jobs()
 
-    def validarNombreRepetido(self, job, job_id=None):
-        jobs = self.dtj.listaTrabajos()
+    def validarNombre(self, trabajo, job_id=None):
+        trabajos = self.dj.listaTrabajos()
         if job_id is None:
-            for jb in jobs:
-                if jb._job_title == job._job_title:
+            for tj in trabajos:
+                if tj.job_title == trabajo._job_title:
                     return False
         else:
-            for jb in jobs:
-                if jb._job_id != job_id:
-                    if jb._job_title == job._job_title:
+            for tj in trabajos:
+                if job_id != tj._job_id:
+                    if tj.job_title == trabajo._job_title:
                         return False
         return True
 
-    def salarioMinMenorSalarioMax(self, job):
-        if job._min_salary > job._max_salary:
+    def agregarTrabajo(self, trabajo):
+        if not self.validarNombre(trabajo):
             return False
-        return True
+        self.dj.agregarTrabajo(trabajo)
 
-    def agregarJob(self, job):
-        if not self.validarNombreRepetido(job):
+    def modificarTrabajo(self, trabajo, job_id):
+        if not self.validarNombre(trabajo, job_id):
             return False
-        if self.salarioMinMenorSalarioMax(job):
-            return False
-        self.dtj.agregarTrabajo(job)
-
+        self.dj.modificarTrabajo(trabajo)

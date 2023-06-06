@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMessageBox
 from vistas.frmTrabajo import Ui_frmTrabajo
 from datos.jobs import Dt_jobs
 from entidades.Jobs import jobs
+from negocio.ngTrabajos import ngTrabajo
 from PyQt5 import QtWidgets
 
 class CtrlGestionTrabajos(QtWidgets.QWidget):
@@ -13,10 +14,13 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_trabajo.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dttr = Dt_jobs()
+    ngtr = ngTrabajo()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarTrabajo)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
+        self.ui.btn_editar.clicked.connect(self.modificarTrabajo)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarTrabajo)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_trabajo.clicked.connect(self.seleccionarElemento)
         self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
@@ -73,6 +77,7 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
             self.ui.txt_nombre_trabajo.setText(trabajo._job_title)
             self.ui.txt_sal_maximo.setText(str(trabajo._max_salary))
             self.ui.txt_sal_minimo.setText(str(trabajo._min_salary))
+            return trabajo
         except Exception as e:
             print(e)
         except IndexError as e:
@@ -85,7 +90,7 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
             salario_minimo = float(self.ui.txt_sal_minimo.text())
             trabajo = jobs(job_title=nombre_trabajo, min_salary=salario_minimo, max_salary=salario_maximo)
             try:
-                self.dttr.agregarTrabajo(trabajo)
+                self.ngtr.agregarTrabajo(trabajo)
                 self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
@@ -93,4 +98,26 @@ class CtrlGestionTrabajos(QtWidgets.QWidget):
         else:
             print("Error: Campos vacios")
 
+    def modificarTrabajo(self):
+        if self.validarVacios():
+            codigo = self.ui.txt_codigo.text()
+            nombre_trabajo = self.ui.txt_nombre_trabajo.text()
+            salario_maximo = float(self.ui.txt_sal_maximo.text())
+            salario_minimo = float(self.ui.txt_sal_minimo.text())
+            trabajo = jobs(job_id=codigo, job_title=nombre_trabajo, min_salary=salario_minimo, max_salary=salario_maximo)
+            try:
+                self.ngtr.modificarTrabajo(trabajo, codigo)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+            except Exception as e:
+                print(f"Error al modificar el registro: {e}")
+        else:
+            print("Error: Campos vacios")
+
+    def eliminarTrabajo(self):
+        trabajo = self.seleccionarElemento()
+        if trabajo is not None:
+            self.dttr.eliminarTrabajo(trabajo)
+            self.cargarDatos(0)
+            self.limpiarCampos()
 

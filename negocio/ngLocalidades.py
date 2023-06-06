@@ -15,7 +15,7 @@ class ngLocalidades:
                     return False
         else:
             for loc in localidades:
-                if not loc_id == localidad._location_id:
+                if not loc_id == loc._location_id:
                     if loc.street_address == localidad._street_address:
                         return False
         return True
