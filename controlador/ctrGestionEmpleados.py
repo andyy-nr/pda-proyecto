@@ -118,7 +118,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         if self.validarVacios():
             nombre = self.ui.txt_nombres.text()
             apellido = self.ui.txt_apellidos.text()
-            salario = self.ui.txt_salario.text()
+            salario = int(float(self.ui.txt_salario.text()))
             correo = self.ui.txt_correo.text()
             telefono = self.ui.txt_telefono.text()
             fecha = self.ui.date_fecha_contratacion.date()
@@ -168,7 +168,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             emp_id= empleados[fila]._employee_id
             nombre = self.ui.txt_nombres.text()
             apellido = self.ui.txt_apellidos.text()
-            salario = self.ui.txt_salario.text()
+            salario = int(float(self.ui.txt_salario.text()))
             correo = self.ui.txt_correo.text()
             telefono = self.ui.txt_telefono.text()
             fecha = self.ui.date_fecha_contratacion.date().toPyDate()
