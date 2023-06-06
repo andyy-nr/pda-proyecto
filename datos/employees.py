@@ -92,10 +92,6 @@ class Dt_employees:
         try:
             self._cursor.execute(self._sql)
             self._con.commit()
-        except Exception as e:
-            if e.args[0] == 1451:
-                QMessageBox.warning(None, 'Error', "No puede eliminar este registro ya que de el dependen otros", QMessageBox.Ok)
-            print(e)
         finally:
             Conexion.closeCursor()
             Conexion.closeConnection()
