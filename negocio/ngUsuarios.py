@@ -34,8 +34,7 @@ class ngUsuarios:
 
     def contraseniaSegura(self, user):
         if len(user._pwd_temp) <= 8:
-            print(len(user._pwd_temp))
-            print("La contraseña debe tener al menos 8 caracteres")
+            
             # QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener al menos 8 caracteres", QtWidgets.QMessageBox.Ok)
             return False
         if not any(letra.isupper() for letra in user._pwd_temp) and any(letra.islower() for letra in user._pwd_temp):
@@ -79,13 +78,12 @@ class ngUsuarios:
     def modificarUsuario(self, user, contra_vieja, user_id):
         if not self.validarUsuarioRepetido(user, user_id):
             return False
-
         if user._pwd_temp != "":
             if not self.contraseniaSegura(user):
                 return False
             if not self.contraseniaNueva(user, contra_vieja):
                 return False
             user._pwd = user._pwd_temp
-            self.dtu.editarUsuario(user, user_id)
+        self.dtu.editarUsuario(user, user_id)
         return True
 
