@@ -50,11 +50,10 @@ class Dt_tbl_rol:
 
     def agregarRol(self, rol):
         self.renovarConexion()
-        self._sql = "INSERT INTO Seguridad.tbl_rol rol values ('{}');".format(rol._rol)
+        self._sql = f"INSERT INTO Seguridad.tbl_rol (rol, estado) values ('{rol._rol}', {rol._estado});"
         try:
-            self._cursor.execute(self._sql, rol)
+            self._cursor.execute(self._sql)
             self._con.commit()
-            print(f"Rol ingresado correctamente")
         except Exception as e:
             print(f"Error al insertar rol {e}")
         finally:
