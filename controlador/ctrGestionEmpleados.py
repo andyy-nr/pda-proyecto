@@ -125,8 +125,8 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             gerente = self.ui.cbox_gerente.currentData()
             departamento = self.ui.cbox_departamento.currentData()
             trabajo = self.ui.cbox_trabajo.currentData()
-            empleado = employee(nombre, apellido, correo, telefono, fecha, job_id=trabajo, salary=salario,
-                                manager_id=gerente, department_id=departamento)
+            empleado = employee(first_name=nombre, last_name=apellido, email=correo, phone=telefono, hire_date=fecha,
+                                job_id=trabajo, salary=salario, manager_id=gerente, department_id=departamento)
             self.nge.agregarEmpleado(empleado)
             self.cargarDatos(0)
             self.limpiarCampos()
