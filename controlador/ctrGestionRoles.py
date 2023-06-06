@@ -99,7 +99,6 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
             except Exception as e:
                 print(f"Error al agregar rol: {e}")
 
-
     def eliminarRol(self):
         rol = self.seleccionarElemento()
         if rol is not None:

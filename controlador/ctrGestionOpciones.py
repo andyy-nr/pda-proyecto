@@ -1,7 +1,9 @@
 from vistas.frmOpcion import Ui_frmOpcion
 from PyQt5 import QtWidgets
 from datos.Dt_Tbl_opcion import Dt_tbl_opcion
+from negocio.ngOpciones import ngOpciones
 from PyQt5.QtWidgets import QMessageBox, QTableView
+from entidades.Tbl_opcion import Tbl_opcion
 
 class CtrlFrmGestionOpcion(QtWidgets.QWidget):
     def __init__(self):
@@ -11,10 +13,12 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_opcion.setSelectionBehavior(QTableView.SelectRows)
     dto = Dt_tbl_opcion() # Instancia de la clase Dt_tbl_opcion
+    ngo = ngOpciones()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarOpcion)
-        self.ui.btn_regresar.clicked.connect(self.close)
+        self.ui.btn_editar.clicked.connect(self.modificarOpcion)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarOpcion)
         self.ui.btn_limpiar.clicked.connect(self.limpiarCampos)
         self.ui.tbl_opcion.clicked.connect(self.seleccionarElemento)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
@@ -55,13 +59,6 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
             return False
         return True
 
-    def validarNoRepetido(self):
-        listaOpciones = self.dto.listaOpciones()
-        for row in listaOpciones:
-            if self.ui.txt_opcion.text() == row._opcion:
-                return False
-        return True
-
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_opcion.selectedIndexes()[0].row()
@@ -69,21 +66,47 @@ class CtrlFrmGestionOpcion(QtWidgets.QWidget):
             opc_seleccionada = opciones[fila]
             self.ui.txt_codigo.setText(str(opc_seleccionada._id_opcion))
             self.ui.txt_opcion.setText(opc_seleccionada._opcion)
+            return opc_seleccionada
         except IndexError as e:
-            QMessageBox.Warning(self, "Advertencia", "Seleccione un elemento de la tabla")
+            QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
     def agregarOpcion(self):
         if self.validarVacios():
-            if not self.validarNoRepetido():
-                print("Opcion repetida")
-                return
-            opcion = self.ui.txt_opcion.text()
+            opc = self.ui.txt_opcion.text()
             estado = 1
+            opcion = Tbl_opcion(None, opc, estado)
             try:
-                self.dto.agregarOpcion(opcion, estado)
+                self.ngo.agregarOpcion(opcion)
                 self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar opcion: {e}")
         else:
-            print("Campos vacios")
+            QMessageBox.warning(self, "Advertencia", "Rellene todos los campos")
+
+    def modificarOpcion(self):
+        if self.validarVacios():
+            codigo = self.ui.txt_codigo.text()
+            opc = self.ui.txt_opcion.text()
+            estado = 2
+            opcion = Tbl_opcion(codigo, opc, estado)
+            try:
+                self.ngo.modificarOpcion(opcion, codigo)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+                self.ui.tbl_opcion.clearSelection()
+            except Exception as e:
+                print(f"ctrModificarOpcion: {e}")
+        else:
+            QMessageBox.warning(self, "Advertencia", "Seleccione un rol")
+
+    def eliminarOpcion(self):
+        opcion = self.seleccionarElemento()
+        if opcion is not None:
+            try:
+                self.dto.eliminarOpcion(opcion)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+                self.ui.tbl_opcion.clearSelection()
+            except Exception as e:
+                print(f"Error al eliminar opcion: {e}")

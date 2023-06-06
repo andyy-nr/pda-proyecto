@@ -17,7 +17,7 @@ class Dt_tbl_opcion:
 
     def listaOpciones(self):
         self.renovarConexion()
-        self._sql = "SELECT * from Seguridad.tbl_opcion;"
+        self._sql = "SELECT * from Seguridad.tbl_opcion where estado <> 3;"
         try:
             self._cursor.execute(self._sql)
             registros = self._cursor.fetchall()
@@ -68,8 +68,8 @@ class Dt_tbl_opcion:
 
     def modificarOpcion(self, opcion):
         self.renovarConexion()
-        self._sql = "UPDATE Seguridad.tbl_opcion SET opcion = '{}', estado = '{}' " \
-                    "WHERE id_opcion = '{}';".format(opcion._opcion, opcion._estado, opcion._id_opcion)
+        self._sql = "UPDATE Seguridad.tbl_opcion SET opcion = '{}', estado = '2' " \
+                    "WHERE id_opcion = '{}';".format(opcion._opcion, opcion._id_opcion)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

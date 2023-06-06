@@ -14,9 +14,8 @@ class ngOpciones:
                     return False
         else:
             for op in opciones:
-                if op.opcion_id != opc_id:
-                    if op.opcion == opc.opcion:
-                        return False
+                if op.id_opcion == opc_id and op.opcion == opc.opcion:
+                    return False
         return True
 
     def agregarOpcion(self, opcion):
@@ -24,8 +23,8 @@ class ngOpciones:
             return False
         self.do.agregarOpcion(opcion)
 
-    def modificarOpcion(self, opcion):
-        if not self.validarNombre(opcion):
+    def modificarOpcion(self, opcion, codigo):
+        if not self.validarNombre(opcion, codigo):
             return False
         self.do.modificarOpcion(opcion)
 
