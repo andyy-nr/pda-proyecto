@@ -101,15 +101,13 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
         except Exception as e:
             print(e)
 
-
     def agregarUsuario(self):
         if not self.validarVacios():
-            print("Campos vacios")
+            QMessageBox.warning(self, "Advertencia", "Rellene todos los campos para continuar")
             return
         if not self.validarCorreo():
-            print("Correos no coinciden")
+            QMessageBox.warning(self, "Advertencia", "Los correos no coinciden")
             return
-
         user = self.ui.le_nombre_usuario.text()
         pwd = self.ui.le_contrasena.text()
         nombres = self.ui.le_nombres.text()
@@ -142,6 +140,11 @@ class CtrlFrmGestionUser(QtWidgets.QWidget):
             print(e)
 
     def editarUsuario(self):
+        if not self.validarCorreo():
+            QMessageBox.warning(self, "Advertencia", "Los correos no coinciden")
+            self.limpiarCampos()
+            self.ui.tbl_Usuario.clearSelection()
+            return
         user = self.ui.le_nombre_usuario.text()
         pwd = self.ui.le_contrasena.text()
         nombres = self.ui.le_nombres.text()

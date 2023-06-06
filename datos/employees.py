@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMessageBox, QWidget
 
 from datos.Conexion import Conexion
 from entidades.Employees import employee
+from entidades.Jobs import jobs
 
 
 class Dt_employees:
@@ -173,3 +174,19 @@ class Dt_employees:
             Conexion.closeCursor()
             Conexion.closeConnection()
 
+    def salarioMinYMax(self, usuario):
+        self.renovarConexion()
+        self._sql = "select min_salary, max_salary from Seguridad.jobs where job_id = '{}';".format(usuario.job_id)
+        try:
+            self._cursor.execute(self._sql)
+            registros = self._cursor.fetchall()
+            listaSalario = []
+            for ts in registros:
+                tss = jobs(min_salary=ts['min_salary'], max_salary=ts['max_salary'])
+                listaSalario.append(tss)
+            return listaSalario
+        except Exception as e:
+            print("Datos: Error salarioMinYMax()", e)
+        finally:
+            Conexion.closeCursor()
+            Conexion.closeConnection()

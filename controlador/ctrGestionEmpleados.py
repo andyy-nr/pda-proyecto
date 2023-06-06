@@ -6,6 +6,7 @@ from datos.employees import Dt_employees
 import datetime
 from PyQt5 import QtWidgets, QtCore
 from entidades.Employees import employee
+from negocio.ngEmpleados import ngEmpleados
 
 
 class CtrlGestionEmpleados(QtWidgets.QWidget):
@@ -16,6 +17,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_employees.setSelectionBehavior(QTableView.SelectRows)
     dtu = Dt_employees()
+    nge = ngEmpleados()
     actualizar_info = pyqtSignal()
 
     def initControlGui(self):
@@ -125,7 +127,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             trabajo = self.ui.cbox_trabajo.currentData()
             empleado = employee(nombre, apellido, correo, telefono, fecha, job_id=trabajo, salary=salario,
                                 manager_id=gerente, department_id=departamento)
-            self.dtu.agregarEmpleado(empleado)
+            self.nge.agregarEmpleado(empleado)
             self.cargarDatos(0)
             self.limpiarCampos()
             self.actualizar_info.emit()
@@ -174,7 +176,7 @@ class CtrlGestionEmpleados(QtWidgets.QWidget):
             departamento = self.ui.cbox_departamento.currentData()
             trabajo = self.ui.cbox_trabajo.currentData()
             emp_nuevo = employee(nombre, apellido, correo, telefono, fecha, job_id=trabajo, salary=salario, manager_id=gerente, department_id=departamento)
-            self.dtu.editarEmpleado(emp_nuevo, emp_id)
+            self.nge.modificarEmpleado(emp_nuevo, emp_id)
             self.cargarDatos(0)
             self.limpiarCampos()
        except Exception as e:

@@ -1,3 +1,4 @@
+from PyQt5.QtWidgets import QWidget
 from PyQt5.uic.properties import QtWidgets
 
 from datos.Dt_Tbl_user import Dt_tbl_user
@@ -31,23 +32,19 @@ class ngUsuarios:
                         return False
                 return True
 
-
     def contraseniaSegura(self, user):
+        widget = QWidget()
         if len(user._pwd_temp) <= 8:
-            
-            # QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener al menos 8 caracteres", QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.warning(widget, "Advertencia", "La contraseña debe tener al menos 8 caracteres", QtWidgets.QMessageBox.Ok)
             return False
         if not any(letra.isupper() for letra in user._pwd_temp) and any(letra.islower() for letra in user._pwd_temp):
-            print("La contrase;a debe tener al menos una mayuscula y una minuscula")
-            #QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener al menos un número", QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.warning(widget, "Advertencia", "La contraseña debe tener al menos un número", QtWidgets.QMessageBox.Ok)
             return False
         if not any(letra.isdigit() for letra in user._pwd_temp):
-            print("La contrase;a debe tener al menos un numero")
-            #QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener mayúsculas y minúsculas", QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.warning(widget, "Advertencia", "La contraseña debe tener mayúsculas y minúsculas", QtWidgets.QMessageBox.Ok)
             return False
         if not any(letra.isalpha() for letra in user._pwd_temp):
-            print("La contrase;a debe tener al menos un caracter especial")
-            #QtWidgets.QMessageBox.warning(self, "Advertencia", "La contraseña debe tener al menos un caracter especial", QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.warning(widget, "Advertencia", "La contraseña debe tener al menos un caracter especial", QtWidgets.QMessageBox.Ok)
             return False
         return True
 
