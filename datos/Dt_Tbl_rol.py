@@ -64,7 +64,7 @@ class Dt_tbl_rol:
 
     def modificarRol(self, rol):
         self.renovarConexion()
-        self._sql = "UPDATE Seguridad.tbl_rol SET rol = '{}', estado = '2' WHERE id_rol = '{}';".format(rol._rol, rol._estado, rol._id_rol)
+        self._sql = "UPDATE Seguridad.tbl_rol SET rol = '{}', estado = '2' WHERE id_rol = '{}';".format(rol._rol, rol._id_rol)
         try:
             self._cursor.execute(self._sql)
             self._con.commit()

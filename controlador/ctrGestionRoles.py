@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMessageBox
 from vistas.frmRoles  import Ui_frmRoles
 from datos.Dt_Tbl_rol import Dt_tbl_rol
 from entidades.Tbl_rol import Tbl_rol
+from negocio.ngRol import ngTbl_rol
 from PyQt5 import QtWidgets
 
 class CtrlFrmGestionRoles(QtWidgets.QWidget):
@@ -13,10 +14,13 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
         self.initControlGui()
         self.ui.tbl_roles.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
     dto = Dt_tbl_rol()
+    ngr = ngTbl_rol()
 
     def initControlGui(self):
         self.ui.btn_agregar.clicked.connect(self.agregarRol)
         self.ui.btn_eliminar_2.clicked.connect(self.limpiarCampos)
+        self.ui.btn_eliminar.clicked.connect(self.eliminarRol)
+        self.ui.btn_editar.clicked.connect(self.modificarRol)
         self.ui.btn_buscar.clicked.connect(lambda: self.cargarDatos(1))
         self.ui.tbl_roles.clicked.connect(self.seleccionarElemento)
         self.ui.txt_buscar.textChanged.connect(self.buscarVacio)
@@ -56,38 +60,52 @@ class CtrlFrmGestionRoles(QtWidgets.QWidget):
             return False
         return True
 
-    def validarNoRepetido(self):
-        listaRoles = self.dto.listaRoles()
-        for row in listaRoles:
-            if row._rol == self.ui.txt_rol.text():
-                return False
-        return True
-
     def seleccionarElemento(self):
         try:
             fila = self.ui.tbl_roles.selectedIndexes()[0].row()
-            roles = self.dto.buscarRol(self.ui.txt_buscar.text())
+            roles = self.dto.listaRoles()
             rol = roles[fila]
             self.ui.txt_codigo.setText(str(rol._id_rol))
             self.ui.txt_rol.setText(rol._rol)
+            return rol
         except Exception as e:
             print(f"Error al seleccionar elemento: {e}")
         except IndexError as e:
             QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")
 
-
     def agregarRol(self):
         if self.validarVacios():
-            if not self.validarNoRepetido():
-                print("Rol ya existe")
-                return
             rol_texto = self.ui.txt_rol.text()
             estado = 1
             rol = Tbl_rol(rol=rol_texto, estado=estado)
             try:
-                #self.dto.agregarRol()
+                self.ngr.agregarRol(rol)
                 self.cargarDatos(0)
                 self.limpiarCampos()
             except Exception as e:
                 print(f"Error al agregar rol: {e}")
 
+    def modificarRol(self):
+        if self.validarVacios():
+            codigo = self.ui.txt_codigo.text()
+            rol_texto = self.ui.txt_rol.text()
+            estado = 1
+            rol = Tbl_rol(codigo, rol_texto, estado)
+            try:
+                self.ngr.modificarRol(rol, codigo)
+                self.cargarDatos(0)
+                self.limpiarCampos()
+                self.ui.tbl_roles.clearSelection()
+            except Exception as e:
+                print(f"Error al agregar rol: {e}")
+
+
+    def eliminarRol(self):
+        rol = self.seleccionarElemento()
+        if rol is not None:
+            self.dto.eliminarRol(rol)
+            self.cargarDatos(0)
+            self.limpiarCampos()
+            self.ui.tbl_roles.clearSelection()
+        else:
+            QtWidgets.QMessageBox.warning(self, "Advertencia", "Seleccione un elemento de la tabla")

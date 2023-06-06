@@ -14,12 +14,10 @@ class ngTbl_rol:
             for ro in roles:
                 if ro.rol == rol.rol:
                     return False
-            return True
         else:
             for ro in roles:
-                if ro.id_rol != rol_id:
-                    if ro.rol == rol.rol:
-                        return False
+                if ro.id_rol == rol_id and ro.rol == rol.rol:
+                    return False
         return True
 
     def agregarRol(self, rol):
@@ -27,8 +25,8 @@ class ngTbl_rol:
             return False
         self.dr.agregarRol(rol)
 
-    def modificarRol(self, rol):
-        if not self.validarNombre(rol):
+    def modificarRol(self, rol, id_rol):
+        if not self.validarNombre(rol, id_rol):
             return False
         self.dr.modificarRol(rol)
 
